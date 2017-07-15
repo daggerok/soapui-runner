@@ -1,0 +1,95 @@
+= SoapUI Test Runner Gradle Plugin (groovy) image:https://travis-ci.org/daggerok/soapui-testrunner-groovy.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner-groovy"]
+
+This repository contains simple gradle plugin (written in groovy) allowed configure and run SoapUI tests using gradle. link:https://github.com/daggerok/soapui-testrunner-groovy-example[see usage example]
+
+== why?
+
+SmartBear provides platform dependant scripts for SoapUI test project execution, but it's not so convenient.
+For example, to execute SoapUI tests using testrunner tool you can use these commands:
+
+==== windows
+
+[source,cmd]
+----
+C:\path\to\SoapUI-5.3.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml
+----
+
+==== unix
+
+[source,bash]
+----
+/path/to/SoapUI-5.3.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
+----
+
+but with configured build script you only need to execute this:
+
+[source,bash]
+gradle testrunner
+
+Also SmartBear currently supports only SoapUI link:http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom[plugin for maven], but not for Gradle.
+
+== what's inside?
+
+This plugin has quite simple functionality, but it is growing...
+
+At the moment optional testrunner task accepts only few configurations:
+
+- `failOnStart` - if true, and any misconfiguration's occurs than build will fail (default: false)
+- `projectFile` - path to SoapUI test project XML file (default: soapui-test-project.xml)
+- `outputFolder` - directory where testrunner will store results (default: build/soapui)
+
+[source,groovy]
+----
+buildscript {
+  ext {
+    pluginVersion = ...
+  }
+  repositories {
+    mavenLocal()
+    jcenter()
+    // maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+  dependencies {
+    classpath "io.github.daggerok:soapui-testrunner-groovy:$pluginVersion"
+  }
+}
+
+apply plugin: 'io.github.daggerok.soapui-testrunner-groovy'
+
+testrunner {
+  failOnStart true
+  projectFile "src/test/resources/soapui-test-project.xml"
+  outputFolder "out/tests"
+}
+----
+
+or
+
+[source,groovy]
+----
+buildscript {
+  repositories {
+    mavenLocal()
+    jcenter()
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+}
+
+plugins {
+  id 'io.github.daggerok.soapui-testrunner-groovy' version ...
+}
+
+testrunner {
+  failOnStart = false
+  projectFile = "$projectDir/soapui-test-project.xml"
+  outputFolder = "$buildDir/soapui"
+}
+----
+
+==== plugin info
+
+- Gradle API 4.0.1
+- Groovy 2.4.11
+- SoapUI 5.3.1-RC

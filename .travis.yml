@@ -1,0 +1,30 @@
+group: edge
+language: java
+jdk: oraclejdk8
+install: true
+before_install:
+  # gradle
+  - curl -s "https://get.sdkman.io" | bash
+  - mkdir -p "$HOME/.sdkman/etc"
+  - touch "$HOME/.sdkman/etc/config"
+  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - sdk use java 8u131-zulu
+  - sdk use groovy 2.4.11
+  - sdk use gradle 4.0.1
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
+script:
+  - gradle clean build install publishToMavenLocal
+  - bash gradlew clean build install publishToMavenLocal
+  - chmod +x gradlew
+  - ./gradlew clean build install publishToMavenLocal
+  - bash gradlew clean build license install publish
+before_cache:
+  - gradle --stop
+  - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.m2/
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
