@@ -24,57 +24,21 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
-package io.github.daggerok
+package io.github.daggerok.tasks.runners
 
+import com.eviware.soapui.tools.SoapUITestCaseRunner
 import groovy.transform.CompileStatic
 import groovy.transform.InheritConstructors
-import groovy.util.logging.Slf4j
-import io.github.daggerok.tasks.SoapUITestRunnerGroovyTask
-import org.gradle.api.Plugin
-import org.gradle.api.Project
 
-@Slf4j
+/**
+ * Fix jar-hell logger issue.
+ * <br/>
+ * read more: https://discuss.gradle.org/t/classpath-hell-soapui-and-gradle-api-logging-conflicts/8830/8
+ */
 @CompileStatic
 @InheritConstructors
-class SoapUITestRunnerGroovyPlugin implements Plugin<Project> {
+class SoapUITestCaseTestRunner extends SoapUITestCaseRunner {
 
   @Override
-  void apply(final Project project) {
-    createMainTask(project)
-    createExtFolder(project)
-  }
-
-  private void createMainTask(final Project project) {
-    project.getTasks().create("testrunner", SoapUITestRunnerGroovyTask)
-  }
-
-  /**
-   * SoapUI testrunner looking ext folder for external scripts and libraries.
-   *
-   * <br/>
-   * I will create that folder if it's not exists.
-   * Otherwise if it's exists and it's not a directory it might cause some unexpected issues...
-   *
-   * @param project applied to
-   */
-  void createExtFolder(final Project project) {
-
-    final String extDirName = 'ext'
-    final File extDir = project.file(extDirName)
-
-    try {
-
-      if (extDir.exists()) {
-        if (extDir.isDirectory()) return
-        log.error "$extDirName is reserved name for SoapUI libraries folder."
-        return
-      }
-
-      project.mkdir(extDirName)
-
-    } catch (Exception e) {
-
-      log.error "error on ext folder: ${e?.localizedMessage}"
-    }
-  }
+  protected void initGroovyLog() {}
 }

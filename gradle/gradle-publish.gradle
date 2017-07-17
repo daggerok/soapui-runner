@@ -28,17 +28,18 @@
 /*
  * read more: https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/
  */
-buildscript {
-  ext {
-    url = 'https://github.com/daggerok/soapui-testrunner-groovy'
-  }
-}
+
+version = prefixVersion
+group = 'io.github.daggerok'
+//version = "$prefixVersion-${new Date().time}"
+description = '''SoapUI Test Runner Gradle Plugin. 
+Allows configure and execute SoapUI test projects using it's testrunner.'''
 
 pluginBundle {
 
-  website = "$url"
+  website = url
   vcsUrl = "${url}.git"
-  description = "$description"
+  description = project.description
   tags = [
       'SoapUI',
       'soapui',
@@ -52,9 +53,9 @@ pluginBundle {
   ]
 
   plugins {
-    soapUITestRunnerGroovyPlugin {
+    soapUITestRunnerPlugin {
       id = "${group}.$rootProject.name"
-      displayName = "$description"
+      displayName = project.description
     }
   }
 }

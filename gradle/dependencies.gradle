@@ -30,9 +30,9 @@
  */
 configurations.all {
   resolutionStrategy {
-    force 'com.jgoodies:binding:2.0.1',
-          'com.jgoodies:forms:1.0.7',
-          'com.jgoodies:looks:2.2.0'
+    force "com.jgoodies:binding:$jgoodiesBindingVersion",
+          "com.jgoodies:forms:$jgoodiesFormsVersion",
+          "com.jgoodies:looks:$jgoodiesLooksVersion"
   }
 }
 
@@ -42,13 +42,18 @@ dependencies {
           gradleApi(),
           "org.codehaus.groovy:groovy-all:$groovyVersion"
 
-  compile("com.smartbear.soapui:soapui:$soapUiVersion") {
+  compile("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'com.jgoodies', module: 'forms'
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
   }
+
+  testCompile gradleTestKit()
+  testCompile ("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
+    exclude module: 'groovy-all'
+  }
 }
 
 task wrapper(type: Wrapper) {
-  gradleVersion = "$gradleVersion"
+  gradleVersion = gradleApiVersion
 }

@@ -1,4 +1,4 @@
-= SoapUI Test Runner Gradle Plugin (groovy) image:https://travis-ci.org/daggerok/soapui-testrunner-groovy.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner-groovy"]
+= SoapUI Test Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-testrunner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner"]
 
 This repository contains simple gradle plugin (written in groovy) allowed configure and run SoapUI tests using gradle. link:https://github.com/daggerok/soapui-testrunner-groovy-example[see usage example]
 
@@ -32,18 +32,76 @@ Also SmartBear currently supports only SoapUI link:http://smartbearsoftware.com/
 
 This plugin has quite simple functionality, but it is growing...
 
-At the moment optional testrunner task accepts only few configurations:
+At the moment we are support only optional test suite runner task `testrunner` with next configurations:
 
-- `failOnStart` - if true, and any misconfiguration's occurs than build will fail (default: false)
-- `projectFile` - path to SoapUI test project XML file (default: soapui-test-project.xml)
-- `outputFolder` - directory where testrunner will store results (default: build/soapui)
+[width="100%"]
+|==============================================================================================================================================================================================================================================================================
+| property                  | arg | default                 | description
+
+| projectFile               | N/A | soapui-test-project.xml | sets the SoapUI project file containing the tests to run
+| outputFolder              | -f  | build/soapui            | sets the output folder to export results to
+
+| projectProperties         | -P  |                         | sets system properties
+| globalProperties          | -G  |                         | sets global properties
+| systemProperties          | -D  |                         | sets system properties
+
+| settingsFile              | -t  |                         | sets the SoapUI settings file
+| endpoint                  | -e  |                         | sets the endpoint to use for all test requests
+| domain                    | -d  |                         | sets the domain to use for any authentications
+| host                      | -h  |                         | sets the host to use by all test-requests, the existing endpoint port and path will be used
+| username                  | -u  |                         | sets the username to use for any authentications
+| password                  | -p  |                         | sets the password to use for any authentications
+| wssPasswordType           | -w  |                         | sets the WSS password-type to use for any authentications. Setting this will result in the addition of WS-Security UsernamePassword tokens to any outgoing request containing the specified username and password
+| projectPassword           | -x  |                         | sets SoapUI project password
+| soapUISettingsPassword    | -v  |                         | sets SoapUI settings password
+
+| testSuite                 | -s  |                         | sets the TestSuite to run. If not set all TestSuites in the specified project file are run
+| testCase                  | -c  |                         | sets the test case to run
+
+| failOnError               | N/A | false                   | sets if execution should stop and fails on any errors occurs
+| printReport               | -r  | true                    | a flag controlling if a summary should be printed
+| exportAll                 | -a  | true                    | adds console appender results to groovy log
+| enableUI                  | -i  | false                   | enables Swing UI for scripts
+| junitReport               | -j  | true                    | сollects TestRun results and creates JUnitReports
+| junitReportWithProperties | -J  | true                    | include JUnit XML reports adding test
+| ignoreError               | -I  | false                   | do not stop if error occurs, ignore them
+| ignoreErrors              | N/A | false                   | a flag controlling if errors are ignored
+| printAlertSiteReport      | -M  | true                    | creates a Test Run Log Report in XML format
+| saveAfterRun              | -S  | false                   | saves the project after running the tests
+
+| failOnStart               | N/A | false                   | (deprecated) if any misconfiguration's occurs than build will fail
+
+|==============================================================================================================================================================================================================================================================================
+
+link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[Plugin on gradle portal]
+
+== usage
 
 [source,groovy]
 ----
 buildscript {
-  ext {
-    pluginVersion = ...
+  repositories {
+    jcenter()
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
+}
+
+plugins {
+  id 'io.github.daggerok.soapui-testrunner' version '0.0.1'
+}
+
+testrunner {
+  failOnStart true
+  projectFile 'src/test/resources/soapui-test-project.xml'
+  outputFolder 'out/tests'
+}
+----
+
+==== or
+
+[source,groovy]
+----
+buildscript {
   repositories {
     mavenLocal()
     jcenter()
@@ -51,45 +109,31 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath "io.github.daggerok:soapui-testrunner-groovy:$pluginVersion"
+    classpath 'gradle.plugins.io.github.daggerok:soapui-testrunner:0.0.1'
   }
 }
 
-apply plugin: 'io.github.daggerok.soapui-testrunner-groovy'
+apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
 
+/*
+// whole testrunner could be omitted if default properties are goot enough for you:
 testrunner {
-  failOnStart true
-  projectFile "src/test/resources/soapui-test-project.xml"
-  outputFolder "out/tests"
-}
-----
-
-or
-
-[source,groovy]
-----
-buildscript {
-  repositories {
-    mavenLocal()
-    jcenter()
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
-  }
-}
-
-plugins {
-  id 'io.github.daggerok.soapui-testrunner-groovy' version ...
-}
-
-testrunner {
-  failOnStart = false
   projectFile = "$projectDir/soapui-test-project.xml"
   outputFolder = "$buildDir/soapui"
 }
+*/
+----
+
+==== publish plugin
+
+[source,gradle]
+----
+bash gradlew clean build license install publish
+bash gradlew publishPlugins
 ----
 
 ==== plugin info
 
 - Gradle API 4.0.1
 - Groovy 2.4.11
-- SoapUI 5.3.1-RC
+- SoapUI 5.3.0

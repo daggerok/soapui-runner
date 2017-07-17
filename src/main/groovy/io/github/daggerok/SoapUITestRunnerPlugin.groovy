@@ -24,19 +24,54 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
-package io.github.daggerok.tasks.testcaserunner
+package io.github.daggerok
 
-import com.eviware.soapui.tools.SoapUITestCaseRunner
 import groovy.transform.CompileStatic
 import groovy.transform.InheritConstructors
+import groovy.util.logging.Slf4j
+import io.github.daggerok.tasks.SoapUITestRunnerTask
+import org.gradle.api.Plugin
+import org.gradle.api.Project
 
+import static io.github.daggerok.utils.Utils.tryWithLog
+
+@Slf4j
 @CompileStatic
 @InheritConstructors
-class SoapUITestCaseRunnerGroovy extends SoapUITestCaseRunner {
+class SoapUITestRunnerPlugin implements Plugin<Project> {
 
   @Override
-  protected void initGroovyLog() {
-    println "groovy log initialization..."
-    // read more: https://discuss.gradle.org/t/classpath-hell-soapui-and-gradle-api-logging-conflicts/8830/8
+  void apply(final Project project) {
+    createMainTask(project)
+    createExtFolder(project)
+  }
+
+  private static void createMainTask(final Project project) {
+    project.getTasks().create("testrunner", SoapUITestRunnerTask)
+  }
+
+  /**
+   * SoapUI testrunner looking for ext folder.
+   * All inside could be used as external scripts or libraries.
+   * <br/>
+   * I will create that folder if it's not exists.
+   * Otherwise if it's exists and it's not a directory it might cause some unexpected issues...
+   *
+   * @param project applied to
+   */
+  private static void createExtFolder(final Project project) {
+
+    final String extDirName = 'ext'
+    final File extDir = project.file(extDirName)
+
+    if (extDir.exists()) {
+      if (extDir.isDirectory()) return
+      log.info "$extDirName is reserved name for SoapUI libraries folder."
+      return
+    }
+
+    tryWithLog {
+      project.mkdir(extDirName)
+    }
   }
 }
