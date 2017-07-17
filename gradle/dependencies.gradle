@@ -47,11 +47,6 @@ dependencies {
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
   }
-
-  testCompile gradleTestKit()
-  testCompile ("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
-    exclude module: 'groovy-all'
-  }
 }
 
 task wrapper(type: Wrapper) {
