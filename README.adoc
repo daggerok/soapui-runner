@@ -146,15 +146,13 @@ link:https://github.com/daggerok/soapui-testrunner-example/commit/9a8b40311600ed
 
 [source,groovy]
 ----
-import io.github.daggerok.tasks.SoapUITestRunnerTask
-
 task soapUITestSuites(dependsOn: [
 
   'TestSuite 1',
   'TestSuite 2',
 
 ].collect { suiteName ->
-  tasks.create(name: suiteName, type: SoapUITestRunnerTask) {
+  tasks.create(name: suiteName, type: io.github.daggerok.tasks.SoapUITestRunnerTask) {
     testSuite = suiteName
     outputFolder = "$buildDir/soapui/$suiteName"
   }
@@ -194,13 +192,13 @@ Task[] soapUITasks = [
 task soapUITestCases(dependsOn: soapUITasks)
 ----
 
-==== plugin info
+== plugin info
 
 - Gradle API 4.0.1
 - Groovy 2.4.11
 - SoapUI 5.3.0
 
-==== development and contribution
+== development and contribution
 
 Feel free to contribute or link:https://github.com/daggerok/soapui-testrunner/issues[open an issue]
 
