@@ -12,14 +12,15 @@ before_install:
   - sdk use groovy 2.4.11
   - sdk use gradle 4.0.1
   - source "$HOME/.sdkman/bin/sdkman-init.sh"
+  - java -version
+  - bash gradlew -v
 script:
-  - gradle clean build install publishToMavenLocal
-  - bash gradlew clean build install publishToMavenLocal
-  - chmod +x gradlew
-  - ./gradlew clean build install publishToMavenLocal
-  - bash gradlew clean build license install publish
+  - bash gradlew clean assemble
+  - bash gradlew check
+  - bash gradlew license install publishToMavenLocal publish
 before_cache:
   - gradle --stop
+  - rm -rf $HOME/.m2/repository/io/github/daggerok/soapui-testrunner
   - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:
