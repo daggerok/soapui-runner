@@ -32,7 +32,7 @@ import org.gradle.api.GradleException
 
 @Slf4j
 @CompileStatic
-class Utils {
+class ExecutionUtils {
 
   /**
    * Try execute clojure. If error occurs then just log it and continue execution...
@@ -130,5 +130,5 @@ class Utils {
     }
   }
 
-  private Utils() {}
+  private ExecutionUtils() {}
 }

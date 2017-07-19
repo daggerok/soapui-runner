@@ -37,8 +37,8 @@ import org.gradle.api.tasks.TaskAction
 
 import java.text.DateFormat
 
-import static io.github.daggerok.utils.Utils.tryOrThrowIf
-import static io.github.daggerok.utils.Utils.tryWithMessage
+import static io.github.daggerok.utils.ExecutionUtils.tryOrThrowIf
+import static io.github.daggerok.utils.ExecutionUtils.tryWithMessage
 
 @Slf4j
 @CompileStatic

@@ -34,7 +34,7 @@ import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 
-import static io.github.daggerok.utils.Utils.tryWithLogMessage
+import static io.github.daggerok.utils.ExecutionUtils.tryWithLogMessage
 
 @Slf4j
 @CompileStatic
