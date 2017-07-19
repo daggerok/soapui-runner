@@ -89,7 +89,7 @@ testrunner {
 
     log.info 'start tests execution...'
 
-    tryOrThrowIf(failOnError) {
+    tryOrThrowIf(failOnError || failOnStart) {
       testCaseRunner.run()
     }
   }
@@ -100,7 +100,7 @@ testrunner {
 
     def message = "file $file doesn't exists or not accessible.\n$USAGE"
     log.error message
-    if (failOnError) throw new GradleException(message)
+    if (failOnError || failOnStart) throw new GradleException(message)
   }
 
   /**

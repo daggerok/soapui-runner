@@ -1,4 +1,6 @@
 = SoapUI Test Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-testrunner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner"]
+Maksim Kostromin
+:toc:
 
 This repository contains simple gradle plugin (written in groovy) allowed configure and run SoapUI tests using gradle. link:https://github.com/daggerok/soapui-testrunner-groovy-example[see usage example]
 
@@ -7,26 +9,32 @@ This repository contains simple gradle plugin (written in groovy) allowed config
 SmartBear provides platform dependant scripts for SoapUI test project execution, but it's not so convenient.
 For example, to execute SoapUI tests using testrunner tool you can use these commands:
 
-==== windows
+==== running tests on windows
 
 [source,cmd]
 ----
 C:\path\to\SoapUI-5.3.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml
 ----
 
-==== unix
+==== running tests on unix
 
 [source,bash]
 ----
 /path/to/SoapUI-5.3.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
 ----
 
+==== running tests using gradle plugin
+
 but with configured build script you only need to execute this:
 
 [source,bash]
 gradle testrunner
 
-Also SmartBear currently supports only SoapUI link:http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom[plugin for maven], but not for Gradle.
+note: you can pre-configure once all needed properties / configurations using different tasks for reuse
+
+==== official gradle plugin support
+
+Currently SmartBear is not supporting gradle plugin. At the moment they supports only SoapUI link:http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom[maven plugin]
 
 == what's inside?
 
@@ -41,9 +49,9 @@ At the moment we are support only optional test suite runner task `testrunner` w
 | projectFile               | N/A | soapui-test-project.xml | sets the SoapUI project file containing the tests to run
 | outputFolder              | -f  | build/soapui            | sets the output folder to export results to
 
-| projectProperties         | -P  |                         | sets system properties
-| globalProperties          | -G  |                         | sets global properties
-| systemProperties          | -D  |                         | sets system properties
+| projectProperties         | -P  |                         | sets list of "key=value" project properties
+| globalProperties          | -G  |                         | sets list of "key=value" global properties
+| systemProperties          | -D  |                         | sets list of "key=value" system properties
 
 | settingsFile              | -t  |                         | sets the SoapUI settings file
 | endpoint                  | -e  |                         | sets the endpoint to use for all test requests
@@ -58,7 +66,7 @@ At the moment we are support only optional test suite runner task `testrunner` w
 | testSuite                 | -s  |                         | sets the TestSuite to run. If not set all TestSuites in the specified project file are run
 | testCase                  | -c  |                         | sets the test case to run
 
-| failOnError               | N/A | false                   | sets if execution should stop and fails on any errors occurs
+| failOnError               | N/A | true                    | sets if gradle plugin execution should stop and fails on any plugin configuration errors occurs
 | printReport               | -r  | true                    | a flag controlling if a summary should be printed
 | exportAll                 | -a  | true                    | adds console appender results to groovy log
 | enableUI                  | -i  | false                   | enables Swing UI for scripts
@@ -69,13 +77,15 @@ At the moment we are support only optional test suite runner task `testrunner` w
 | printAlertSiteReport      | -M  | true                    | creates a Test Run Log Report in XML format
 | saveAfterRun              | -S  | false                   | saves the project after running the tests
 
-| failOnStart               | N/A | false                   | (deprecated) if any misconfiguration's occurs than build will fail
+| failOnStart               | N/A | false                   | (deprecated) if any gradle plugin misconfiguration's occurs than build will fail
 
 |==============================================================================================================================================================================================================================================================================
 
-link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[Plugin on gradle portal]
+link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[This plugin is hosted on gradle portal]
 
 == usage
+
+==== using plugins (gradle 2.1)
 
 [source,groovy]
 ----
@@ -87,17 +97,21 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-testrunner' version '0.0.1'
+  id 'io.github.daggerok.soapui-testrunner' version '0.0.2'
 }
 
 testrunner {
-  failOnStart true
   projectFile 'src/test/resources/soapui-test-project.xml'
   outputFolder 'out/tests'
+  failOnError true
+
+  projectProperties = [
+    'apiBaseUrl=https://api.github.com'
+  ]
 }
 ----
 
-==== or
+==== using apply plugin (old way)
 
 [source,groovy]
 ----
@@ -109,14 +123,13 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugins.io.github.daggerok:soapui-testrunner:0.0.1'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-testrunner:0.0.2'
   }
 }
 
 apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
 
-/*
-// whole testrunner could be omitted if default properties are goot enough for you:
+/* // whole testrunner clojure could be omitted if default properties are good enough for you
 testrunner {
   projectFile = "$projectDir/soapui-test-project.xml"
   outputFolder = "$buildDir/soapui"
@@ -124,12 +137,61 @@ testrunner {
 */
 ----
 
-==== publish plugin
+== testrunner configuration customization
 
-[source,gradle]
+using groovy API feel free to do pretty much whatever you need.
+link:https://github.com/daggerok/soapui-testrunner-example/commit/9a8b40311600ed631703e7c0de1effa3e29e805d[For example, to specify exact testSuites for run] you can use next configuration in your gradle build:
+
+==== execute only needed TestSuite list
+
+[source,groovy]
 ----
-bash gradlew clean build license install publish
-bash gradlew publishPlugins
+import io.github.daggerok.tasks.SoapUITestRunnerTask
+
+task soapUITestSuites(dependsOn: [
+
+  'TestSuite 1',
+  'TestSuite 2',
+
+].collect { suiteName ->
+  tasks.create(name: suiteName, type: SoapUITestRunnerTask) {
+    testSuite = suiteName
+    outputFolder = "$buildDir/soapui/$suiteName"
+  }
+})
+----
+
+note: same approach can be used for testCases.
+link:https://github.com/daggerok/soapui-testrunner-example/commit/84f71229b08934a0598fdef18acd497b8dacb1a1[For example: to execute only needed test cases] your build script might looks like so:
+
+==== execute some concrete TestCases
+
+[source,groovy]
+----
+import io.github.daggerok.tasks.SoapUITestRunnerTask
+
+Task[] soapUITasks = [
+
+    'TestCase 1',
+    'TestCase 2',
+    'TestCase 3',
+    'TestCase 4',
+    'TestCase 5',
+
+].collect { testCaseName ->
+
+  def noSpaceCase = testCaseName.replaceAll(/\s+$/, '').capitalize()
+
+  tasks.create(name: noSpaceCase, type: SoapUITestRunnerTask) {
+    testCase = noSpaceCase
+    outputFolder = "$buildDir/soapui/testCases/$noSpaceCase"
+    projectProperties = [
+        'apiEndpoint=https://jsonplaceholder.typicode.com'
+    ]
+  }
+}
+
+task soapUITestCases(dependsOn: soapUITasks)
 ----
 
 ==== plugin info
@@ -137,3 +199,19 @@ bash gradlew publishPlugins
 - Gradle API 4.0.1
 - Groovy 2.4.11
 - SoapUI 5.3.0
+
+==== development and contribution
+
+Feel free to contribute or link:https://github.com/daggerok/soapui-testrunner/issues[open an issue]
+
+Publish locally for development purpose:
+
+[source,gradle]
+bash gradlew clean build install publish
+
+For testing locally published plugin into maven repo publishing use link:https://github.com/daggerok/soapui-testrunner-example/blob/master/build.gradle[this] example
+
+Don't try publish new version of plugin to gradle portal (it's available only for owner)
+
+[source,gradle]
+bash gradlew publishPlugins

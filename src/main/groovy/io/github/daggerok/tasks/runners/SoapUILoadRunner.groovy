@@ -24,35 +24,21 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
+package io.github.daggerok.tasks.runners
 
-buildscript {
-  ext {
-    prefixVersion = '0.0.3'
-    soapUIVersion = '5.3.0'
-    jgoodiesBindingVersion = '2.0.1'
-    jgoodiesFormsVersion = '1.0.7'
-    jgoodiesLooksVersion = '2.2.0'
-    gradleApiVersion = '4.0.1'
-    groovyVersion = '2.4.11'
-    spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
-    url = 'https://github.com/daggerok/soapui-testrunner'
-  }
-  apply from: "$rootDir/gradle/repositories.gradle"
+import com.eviware.soapui.tools.SoapUILoadTestRunner
+import groovy.transform.CompileStatic
+import groovy.transform.InheritConstructors
+
+/**
+ * Fix jar-hell logger issue.
+ * <br/>
+ * read more: https://discuss.gradle.org/t/classpath-hell-soapui-and-gradle-api-logging-conflicts/8830/8
+ */
+@CompileStatic
+@InheritConstructors
+class SoapUILoadRunner extends SoapUILoadTestRunner {
+
+  @Override
+  protected void initGroovyLog() {}
 }
-
-plugins {
-  id 'groovy'
-  id 'maven'
-  id 'maven-publish'
-  id 'com.gradle.plugin-publish' version '0.9.7'
-  id 'com.github.hierynomus.license' version '0.14.0'
-}
-
-apply from: "$rootDir/gradle/license.gradle"
-apply from: "$rootDir/gradle/repositories.gradle"
-apply from: "$rootDir/gradle/dependencies.gradle"
-apply from: "$rootDir/gradle/gradle-publish.gradle"
-apply from: "$rootDir/gradle/soapui-testrunner.gradle"
-apply from: "$rootDir/gradle/local-maven-publish.gradle"
-
-println "use local version: $project.version"
