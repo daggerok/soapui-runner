@@ -27,13 +27,16 @@
 package io.github.daggerok
 
 import org.gradle.testkit.runner.GradleRunner
-import spock.lang.Specification
-
-import static org.gradle.testkit.runner.TaskOutcome.*
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
+import spock.lang.Specification
 
-class SoapUITestRunnerPluginFunctionalTest extends Specification {
+import static org.gradle.testkit.runner.TaskOutcome.FAILED
+import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
+
+class SoapUITestRunnerPlugin002FunctionalTest extends Specification {
+
+  static final String version = '0.0.2'
 
   static final String head = """
   buildscript {
@@ -44,7 +47,7 @@ class SoapUITestRunnerPluginFunctionalTest extends Specification {
   }
   
   plugins {
-    id 'io.github.daggerok.soapui-testrunner' version '0.0.1'
+    id 'io.github.daggerok.soapui-testrunner' version '$version'
   }
   """
 
@@ -63,7 +66,7 @@ class SoapUITestRunnerPluginFunctionalTest extends Specification {
     testrunner {
       projectFile "soapui-test-project.xml"
       outputFolder "soapui"
-      failOnStart false
+      failOnError false
     }
     """
 
@@ -83,7 +86,7 @@ class SoapUITestRunnerPluginFunctionalTest extends Specification {
     given:
     buildFile << """$head
     testrunner {
-      failOnStart = true
+      // failOnError true // default
     }
     """
 
