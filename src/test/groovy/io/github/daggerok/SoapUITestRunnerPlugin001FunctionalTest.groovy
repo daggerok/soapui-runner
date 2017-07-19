@@ -27,28 +27,17 @@
 package io.github.daggerok
 
 import org.gradle.testkit.runner.GradleRunner
-import spock.lang.Specification
-
-import static org.gradle.testkit.runner.TaskOutcome.*
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
+import spock.lang.Specification
+
+import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
+import static org.gradle.testkit.runner.TaskOutcome.FAILED
+import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 class SoapUITestRunnerPlugin001FunctionalTest extends Specification {
 
-  static final String version = '0.0.1'
-
-  static final String head = """
-  buildscript {
-    repositories {
-      jcenter()
-      maven { url 'http://smartbearsoftware.com/repository/maven2/' }
-    }
-  }
-  
-  plugins {
-    id 'io.github.daggerok.soapui-testrunner' version '$version'
-  }
-  """
+  static final String head = getGradleBuildHead('0.0.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
