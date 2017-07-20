@@ -27,15 +27,12 @@
 
 buildscript {
   ext {
-    prefixVersion = '0.0.4'
-    soapUIVersion = '5.3.0'
-    jgoodiesBindingVersion = '2.0.1'
-    jgoodiesFormsVersion = '1.0.7'
-    jgoodiesLooksVersion = '2.2.0'
+    prefixVersion = '4.6.1'
+    soapUIVersion = '4.6.1'
     gradleApiVersion = '4.0.1'
     groovyVersion = '2.4.11'
     spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
-    url = 'https://github.com/daggerok/soapui-testrunner'
+    url = 'https://github.com/daggerok/soapui-runner'
   }
   apply from: "$rootDir/gradle/repositories.gradle"
 }
@@ -51,8 +48,8 @@ plugins {
 apply from: "$rootDir/gradle/license.gradle"
 apply from: "$rootDir/gradle/repositories.gradle"
 apply from: "$rootDir/gradle/dependencies.gradle"
+apply from: "$rootDir/gradle/soapui-runner.gradle"
+apply from: "$rootDir/gradle/maven-publish.gradle"
 apply from: "$rootDir/gradle/gradle-publish.gradle"
-apply from: "$rootDir/gradle/soapui-testrunner.gradle"
-apply from: "$rootDir/gradle/local-maven-publish.gradle"
 
 println "use local version: $project.version"

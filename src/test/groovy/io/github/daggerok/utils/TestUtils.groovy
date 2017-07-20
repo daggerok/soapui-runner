@@ -35,13 +35,13 @@ class TestUtils {
     """
     buildscript {
       repositories {
-        jcenter()
+        maven { url 'https://plugins.gradle.org/m2/' }
         maven { url 'http://smartbearsoftware.com/repository/maven2/' }
       }
     }
     
     plugins {
-      id 'io.github.daggerok.soapui-testrunner' version '$pluginVersion'
+      id 'io.github.daggerok.soapui-runner' version '$pluginVersion'
     }
     """
   }

@@ -1,4 +1,4 @@
-= SoapUI Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-testrunner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner"]
+= SoapUI Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-runner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-runner"]
 Maksim Kostromin
 :toc:
 
@@ -7,20 +7,20 @@ This repository contains simple gradle plugin (written in groovy) allowed config
 == why?
 
 SmartBear provides platform dependant scripts for SoapUI test project execution, but it's not so convenient.
-For example, to execute SoapUI tests using testrunner tool you can use these commands:
+For example, to execute SoapUI tests using testrunner (version: 4.6.1) tool you can use these commands:
 
 ==== running tests on windows
 
 [source,cmd]
 ----
-C:\path\to\SoapUI-5.3.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml
+C:\path\to\SoapUI-4.6.1\bin\testrunner.bat C:\path\to\soapui-test-project.xml
 ----
 
 ==== running tests on unix
 
 [source,bash]
 ----
-/path/to/SoapUI-5.3.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
+/path/to/SoapUI-4.6.1.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
 ----
 
 ==== running tests using gradle plugin
@@ -105,7 +105,7 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '0.0.3'
+  id 'io.github.daggerok.soapui-runner' version '4.6.1'
 }
 
 testrunner {
@@ -131,7 +131,7 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:0.0.3'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:4.6.1'
   }
 }
 
@@ -208,7 +208,7 @@ task soapUITestCases(dependsOn: soapUITasks)
 
 - Gradle API 4.0.1
 - Groovy 2.4.11
-- SoapUI 5.3.0
+- SoapUI 4.6.1
 
 there are three plugins available:
 
@@ -218,7 +218,7 @@ there are three plugins available:
 
 == development and contribution
 
-Feel free to contribute or link:https://github.com/daggerok/soapui-testrunner/issues[open an issue]
+Feel free to contribute or link:https://github.com/daggerok/soapui-runner/issues[open an issue]
 
 Publish locally for development purpose:
 
