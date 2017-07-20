@@ -32,7 +32,12 @@
 version = prefixVersion
 group = 'io.github.daggerok'
 description = '''SoapUI Runner Gradle Plugin. 
-Allows configure and execute SoapUI test project Test Suites, Test Cases and Load Tests using it's testrunner.'''
+Allows configure and execute SoapUI test project using it's runners.
+
+Please, make sure you have added required SoapUI maven repository to your build script:
+maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+
+With this plugin you can run:'''
 
 pluginBundle {
 
@@ -56,6 +61,7 @@ pluginBundle {
       'testcases',
       'testcase',
       'test',
+      'loadtestrunner',
       'loadrunner',
       'loadtests',
       'loadtest',
@@ -69,21 +75,21 @@ pluginBundle {
       id = "${group}.soapui-testrunner"
       displayName = """\
                        |$project.description
-                       |Can run SoapUI TestSuites and TestCases.""".stripMargin()
+                       |SoapUI TestSuites and TestCases.""".stripMargin()
     }
 
     soapUILoadTestRunnerPlugin {
       id = "${group}.soapui-loadtestrunner"
       displayName = """\
                        |$project.description
-                       |Can run SoapUI Load Tests.""".stripMargin()
+                       |SoapUI Load Tests.""".stripMargin()
     }
 
     soapUIRunnerPlugin {
-      id = "${group}.soapui-runner"
+      id = "${group}.$rootProject.name"
       displayName = """\
                        |$project.description
-                       |Contains both: soapui-testrunner and soapui-loadtestrunner.""".stripMargin()
+                       |all tasks from io.github.daggerok.soapui-testrunner and io.github.daggerok.soapui-loadtestrunner plugins.""".stripMargin()
     }
   }
 }
