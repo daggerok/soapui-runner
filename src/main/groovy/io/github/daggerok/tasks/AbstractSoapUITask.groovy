@@ -26,11 +26,11 @@
  */
 package io.github.daggerok.tasks
 
+import com.eviware.soapui.tools.AbstractSoapUITestRunner
 import groovy.transform.CompileStatic
-import groovy.transform.InheritConstructors
 import groovy.util.logging.Slf4j
-import io.github.daggerok.tasks.runners.SoapUITestCaseTestRunner
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
 
@@ -38,35 +38,55 @@ import static io.github.daggerok.utils.ExecutionUtils.tryWithLogMessage
 
 @Slf4j
 @CompileStatic
-@InheritConstructors
 abstract class AbstractSoapUITask extends DefaultTask {
 
-  @Optional String outputFolder = "$project.buildDir/soapui"
-  @Optional String projectFile = 'soapui-test-project.xml'
-  @Optional String settingsFile
+  @Optional @Input boolean failOnError = true
 
-  @Optional String[] systemProperties
-  @Optional String[] globalProperties
-  @Optional String[] projectProperties
+  @Optional @Input String outputFolder = "$project.buildDir/soapui"
+  @Optional @Input String projectFile = 'soapui-test-project.xml'
 
-  @Optional String endpoint
-  @Optional String domain
-  @Optional String password
-  @Optional String username
-  @Optional String host
-  @Optional String wssPasswordType
-  @Optional String projectPassword
-  @Optional String soapUISettingsPassword
+  @Optional @Input String[] systemProperties
+  @Optional @Input String[] globalProperties
+  @Optional @Input String[] projectProperties
 
-  def setupRequired(final SoapUITestCaseTestRunner runner) {
+  @Optional @Input String settingsFile
+  @Optional @Input String endpoint
+  @Optional @Input String domain
+  @Optional @Input String host
+  @Optional @Input String username
+  @Optional @Input String password
+  @Optional @Input String wssPasswordType
+  @Optional @Input String projectPassword
+  @Optional @Input String soapUISettingsPassword
+
+  @Optional @Input boolean enableUI = false
+
+  AbstractSoapUITask(final String id) {
+    description = "SoapUI $id task"
+    group = 'SoapUI runner'
+  }
+
+  @TaskAction
+  void run() {
+    action()
+  }
+
+  abstract void action()
+
+  void setupParent(final AbstractSoapUITestRunner runner) {
+    setupRequired runner
+    setupProps runner
+  }
+
+  private void setupRequired(final AbstractSoapUITestRunner runner) {
 
     runner.setProjectFile projectFile
     runner.setOutputFolder outputFolder
 
-    log.info "required options configured."
+    log.info "base options configured."
   }
 
-  def setupProperties(final SoapUITestCaseTestRunner runner) {
+  private void setupProps(final AbstractSoapUITestRunner runner) {
 
     tryWithLogMessage('parsing system properties failed.') {
       String[] props = System.properties.collect { "$it.key=$it.value" }
@@ -75,13 +95,6 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
     if (globalProperties) runner.globalProperties = globalProperties
     if (projectProperties) runner.projectProperties = projectProperties
-
-    log.info "properties configured."
-  }
-
-  def setupOptionals(final SoapUITestCaseTestRunner runner) {
-
-    if (settingsFile) runner.settingsFile = settingsFile
 
     if (settingsFile) runner.settingsFile = settingsFile
     if (endpoint) runner.endpoint = endpoint
@@ -93,15 +106,19 @@ abstract class AbstractSoapUITask extends DefaultTask {
     if (projectPassword) runner.projectPassword = projectPassword
     if (soapUISettingsPassword) runner.soapUISettingsPassword = soapUISettingsPassword
 
-    log.info "optional options configured."
+    runner.setEnableUI enableUI
   }
 
-  @TaskAction
-  abstract void run()
+  // setters
 
-  /*
-   * required
+  /**
+   * @param failOnError sets if execution should fails on any errors occurs.
+   *
+   * @default: true
    */
+  void setFailOnError(final boolean failOnError) {
+    this.failOnError = failOnError
+  }
 
   void setOutputFolder(final String outputFolder) {
     this.outputFolder = outputFolder
@@ -125,10 +142,6 @@ abstract class AbstractSoapUITask extends DefaultTask {
     this.settingsFile = settingsFile
   }
 
-  /*
-   * properties
-   */
-
   void setSystemProperties(final String[] systemProperties) {
     this.systemProperties = systemProperties
   }
@@ -140,10 +153,6 @@ abstract class AbstractSoapUITask extends DefaultTask {
   void setProjectProperties(final String[] projectProperties) {
     this.projectProperties = projectProperties
   }
-
-  /*
-   * optionals
-   */
 
   /**
    * Sets the endpoint to use for all test requests
@@ -208,5 +217,9 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   void setSoapUISettingsPassword(final String soapUISettingsPassword) {
     this.soapUISettingsPassword = soapUISettingsPassword
+  }
+
+  void setEnableUI(final boolean enableUI) {
+    this.enableUI = enableUI
   }
 }

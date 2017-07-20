@@ -29,10 +29,37 @@ package io.github.daggerok.utils
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
 import org.gradle.api.GradleException
+import org.gradle.api.Project
+
+import java.text.DateFormat
 
 @Slf4j
 @CompileStatic
 class ExecutionUtils {
+
+  static final String usage(final String taskName) {
+    """\
+       |Please, make sure you properly configured $taskName task.
+       |Minimal required configuration is existed SoapUI test project file.
+       |Default path is: "\${projectDir}/soapui-test-project.xml"
+       |
+       |$taskName {
+       |  projectFile = 'soapui-test-project.xml'
+       |}""".stripMargin()
+  }
+
+  static void validate(final File file, final String taskName, final boolean failOnError) {
+
+    if (file.exists() && file.canRead()) return
+
+    def message = "file $file doesn't exists or not accessible.\n${usage(taskName)}"
+    log.error message
+    if (failOnError) throw new GradleException(message)
+  }
+
+  static String today() {
+    DateFormat.getDateTimeInstance().format new Date()
+  }
 
   /**
    * Try execute clojure. If error occurs then just log it and continue execution...
@@ -91,26 +118,6 @@ class ExecutionUtils {
   }
 
   /**
-   * try execute closure content. If error will occurs, re-throw an error.
-   *
-   * @param closure closure to be executed.
-   */
-  @SuppressWarnings("unused")
-  static void tryOrThrow(final Closure closure) {
-
-    try {
-
-      closure()
-
-    } catch (final Exception e) {
-
-      def message = e?.localizedMessage
-      log.error "execution error: {}", message, e
-      throw new GradleException(message)
-    }
-  }
-
-  /**
    * try execute closure content. If error will occurs, re-throw an error only if failOnError is true.
    *
    * @param failOnError throw an error if execution will fails.
@@ -127,6 +134,31 @@ class ExecutionUtils {
       def message = e?.localizedMessage
       log.error "execution error: {}", message, e
       if (failOnError) throw new GradleException(message)
+    }
+  }
+
+  /**
+   * SoapUI runner looking for ext folder.
+   * All inside could be used as external scripts or libraries.
+   * <br/>
+   * I will create that folder if it's not exists.
+   * Otherwise if it's exists and it's not a directory it might cause some unexpected issues...
+   *
+   * @param project applied to
+   */
+  static void createExtFolder(final Project project) {
+
+    final String extDirName = 'ext'
+    final File extDir = project.file(extDirName)
+
+    if (extDir.exists()) {
+      if (extDir.isDirectory()) return
+      log.info "$extDirName is reserved name for SoapUI libraries folder."
+      return
+    }
+
+    tryWithLog {
+      project.mkdir(extDirName)
     }
   }
 

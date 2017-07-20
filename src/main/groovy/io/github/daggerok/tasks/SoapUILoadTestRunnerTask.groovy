@@ -26,10 +26,10 @@
  */
 package io.github.daggerok.tasks
 
-import com.eviware.soapui.tools.SoapUITestCaseRunner
+import com.eviware.soapui.tools.SoapUILoadTestRunner
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import io.github.daggerok.tasks.runners.SoapUITestRunner
+import io.github.daggerok.tasks.runners.SoapUILoadRunner
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 
@@ -37,29 +37,26 @@ import static io.github.daggerok.utils.ExecutionUtils.*
 
 @Slf4j
 @CompileStatic
-class SoapUITestRunnerTask extends AbstractSoapUITask {
+class SoapUILoadTestRunnerTask extends AbstractSoapUITask {
 
-  static final String name = 'testrunner'
+  static final String name = 'loadtestrunner'
 
   @Optional @Input String testSuite
   @Optional @Input String testCase
+  @Optional @Input String loadTest
 
   @Optional @Input boolean printReport = true
-  @Optional @Input boolean printAlertSiteReport = true
-  @Optional @Input boolean exportAll = true
-  @Optional @Input boolean ignoreErrors = false
-  @Optional @Input boolean junitReport = true
-  @Optional @Input boolean junitReportWithProperties = true
   @Optional @Input boolean saveAfterRun = false
 
-  @Optional @Input int maxErrors = 5
+  @Optional @Input int limit = -1
+  @Optional @Input long threadCount = -1
 
-  SoapUITestRunnerTask() {
+  SoapUILoadTestRunnerTask() {
     super(name)
   }
 
   /**
-   * testrunner task.
+   * loadtestrunner task.
    */
   @Override
   void action() {
@@ -68,7 +65,7 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
       validate project.file(projectFile), name, failOnError
     }
 
-    final def testRunner = new SoapUITestRunner("running $name of $project.name: ${today()}")
+    final def testRunner = new SoapUILoadRunner("running $name of $project.name: ${today()}")
 
     setupParent testRunner
     setupProps testRunner
@@ -86,19 +83,17 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
    *
    * @param runner SoapUI test case runner to be configured.
    */
-  void setupProps(final SoapUITestCaseRunner runner) {
+  void setupProps(final SoapUILoadTestRunner runner) {
 
     if (testSuite) runner.setTestSuite testSuite
     if (testCase) runner.setTestCase testCase
-    if (maxErrors) runner.setMaxErrors maxErrors
+    if (loadTest) runner.setLoadTest loadTest
 
     runner.setPrintReport printReport
-    runner.setPrintAlertSiteReport printAlertSiteReport
-    runner.setExportAll exportAll
-    runner.setIgnoreErrors ignoreErrors
-    runner.setJUnitReport junitReport
-    runner.setJUnitReportWithProperties junitReportWithProperties
     runner.setSaveAfterRun saveAfterRun
+
+    if (limit > 0) runner.setLimit limit
+    if (threadCount > 0) runner.setThreadCount threadCount
 
     log.info "$name props configured."
   }
@@ -124,8 +119,8 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
     this.testCase = testCase
   }
 
-  void setMaxErrors(final int maxErrors) {
-    this.maxErrors = maxErrors
+  void setLoadTest(final String loadTest) {
+    this.loadTest = loadTest
   }
 
   /**
@@ -137,30 +132,15 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
     this.printReport = printReport
   }
 
-  void setPrintAlertSiteReport(final boolean printAlertSiteReport) {
-    this.printAlertSiteReport = printAlertSiteReport
-  }
-
-  /**
-   * Add console appender to groovy log
-   */
-  void setExportAll(final boolean exportAll) {
-    this.exportAll = exportAll
-  }
-
-  void setIgnoreErrors(final boolean ignoreErrors) {
-    this.ignoreErrors = ignoreErrors
-  }
-
-  void setJunitReport(final boolean junitReport) {
-    this.junitReport = junitReport
-  }
-
-  void setJunitReportWithProperties(final boolean junitReportWithProperties) {
-    this.junitReportWithProperties = junitReportWithProperties
-  }
-
   void setSaveAfterRun(final boolean saveAfterRun) {
     this.saveAfterRun = saveAfterRun
+  }
+
+  void setLimit(final int limit) {
+    this.limit = limit
+  }
+
+  void setThreadCount(final long threadCount) {
+    this.threadCount = threadCount
   }
 }

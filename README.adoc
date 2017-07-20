@@ -40,7 +40,7 @@ Currently SmartBear is not supporting gradle plugin. At the moment they supports
 
 This plugin has quite simple functionality, but it is growing...
 
-At the moment we are support only optional test suite runner task `testrunner` with next configurations:
+At the moment we are support only `testrunner` and `loadtestrunner` tasks with next configurations:
 
 [width="100%"]
 |==============================================================================================================================================================================================================================================================================
@@ -62,22 +62,25 @@ At the moment we are support only optional test suite runner task `testrunner` w
 | wssPasswordType           | -w  |                         | sets the WSS password-type to use for any authentications. Setting this will result in the addition of WS-Security UsernamePassword tokens to any outgoing request containing the specified username and password
 | projectPassword           | -x  |                         | sets SoapUI project password
 | soapUISettingsPassword    | -v  |                         | sets SoapUI settings password
+| enableUI                  | -i  | false                   | enables Swing UI components
 
 | testSuite                 | -s  |                         | sets the TestSuite to run. If not set all TestSuites in the specified project file are run
 | testCase                  | -c  |                         | sets the test case to run
 
+| loadTest                  | -l  |                         | sets the test case to run
+| limit                     | -m  |                         | sets the test case to run
+| threadCount               | -n  |                         | sets the test case to run
+
 | failOnError               | N/A | true                    | sets if gradle plugin execution should stop and fails on any plugin configuration errors occurs
 | printReport               | -r  | true                    | a flag controlling if a summary should be printed
 | exportAll                 | -a  | true                    | adds console appender results to groovy log
-| enableUI                  | -i  | false                   | enables Swing UI for scripts
 | junitReport               | -j  | true                    | сollects TestRun results and creates JUnitReports
 | junitReportWithProperties | -J  | true                    | include JUnit XML reports adding test
-| ignoreError               | -I  | false                   | do not stop if error occurs, ignore them
-| ignoreErrors              | N/A | false                   | a flag controlling if errors are ignored
+| ignoreErrors              | -I  | false                   | a flag controlling if errors are ignored
 | printAlertSiteReport      | -M  | true                    | creates a Test Run Log Report in XML format
 | saveAfterRun              | -S  | false                   | saves the project after running the tests
 
-| failOnStart               | N/A | false                   | (deprecated) if any gradle plugin misconfiguration's occurs than build will fail
+| maxErrors                 | -m  | 5                       | ets the maximum number of TestStep errors to save for each testcase
 
 |==============================================================================================================================================================================================================================================================================
 
@@ -97,7 +100,7 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-testrunner' version '0.0.2'
+  id 'io.github.daggerok.soapui-runner' version '0.0.3'
 }
 
 testrunner {
@@ -123,16 +126,20 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-testrunner:0.0.2'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:0.0.3'
   }
 }
 
-apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
+apply plugin: io.github.daggerok.SoapUIRunnerPlugin
 
-/* // whole testrunner clojure could be omitted if default properties are good enough for you
+/*
+// testrunner and loadtestrunner tasks could be omitted if default properties are good enough for you
 testrunner {
   projectFile = "$projectDir/soapui-test-project.xml"
-  outputFolder = "$buildDir/soapui"
+}
+
+loadtestrunner {
+  projectFile = "$projectDir/soapui-test-project.xml"
 }
 */
 ----
@@ -197,6 +204,12 @@ task soapUITestCases(dependsOn: soapUITasks)
 - Gradle API 4.0.1
 - Groovy 2.4.11
 - SoapUI 5.3.0
+
+there are three plugins available:
+
+. soapui-testrunner (`io.github.daggerok.soapui-testrunner`)
+. soapui-loadtestrunner (`io.github.daggerok.soapui-loadtestrunner`)
+. soapui-runner (`io.github.daggerok.soapui-runner`) - contains all tasks: testrunner and loadtestrunner
 
 == development and contribution
 

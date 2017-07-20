@@ -24,21 +24,21 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
-package io.github.daggerok
+package io.github.daggerok.tasks.runners
 
+import com.eviware.soapui.tools.SoapUITestCaseRunner
 import groovy.transform.CompileStatic
-import io.github.daggerok.tasks.SoapUITestRunnerTask
-import org.gradle.api.Plugin
-import org.gradle.api.Project
+import groovy.transform.InheritConstructors
 
-import static io.github.daggerok.utils.ExecutionUtils.createExtFolder
-
+/**
+ * Fix jar-hell logger issue.
+ * <br/>
+ * read more: https://discuss.gradle.org/t/classpath-hell-soapui-and-gradle-api-logging-conflicts/8830/8
+ */
 @CompileStatic
-class SoapUITestRunnerPlugin implements Plugin<Project> {
+@InheritConstructors
+class SoapUITestRunner extends SoapUITestCaseRunner {
 
   @Override
-  void apply(final Project project) {
-    project.getTasks().create('testrunner', SoapUITestRunnerTask)
-    createExtFolder(project)
-  }
+  protected void initGroovyLog() {}
 }
