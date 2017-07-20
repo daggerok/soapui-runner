@@ -1,4 +1,4 @@
-= SoapUI Test Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-testrunner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner"]
+= SoapUI Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-testrunner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-testrunner"]
 Maksim Kostromin
 :toc:
 
@@ -29,6 +29,7 @@ but with configured build script you only need to execute this:
 
 [source,bash]
 gradle testrunner
+gradle loadtestrunner
 
 note: you can pre-configure once all needed properties / configurations using different tasks for reuse
 
@@ -84,7 +85,11 @@ At the moment we are support only `testrunner` and `loadtestrunner` tasks with n
 
 |==============================================================================================================================================================================================================================================================================
 
-link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[This plugin is hosted on gradle portal]
+==== plugins are hosted on Gradle Portal
+
+- link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[SoapUI Gradle Test Runner Plugin]
+- link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-loadtestrunner[SoapUI Gradle Load Test Runner Plugin]
+- link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-runner[SoapUI Gradle Runner Plugin]
 
 == usage
 

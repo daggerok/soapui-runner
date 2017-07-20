@@ -25,4 +25,4 @@
  * https://tldrlegal.com/license/mit-license
  */
 
-rootProject.name = 'soapui-testrunner'
+rootProject.name = 'soapui-runner'
