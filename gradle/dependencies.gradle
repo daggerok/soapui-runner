@@ -36,7 +36,7 @@ buildscript {
 }
 
 /*
- * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/4.6.1/soapui-maven-plugin-4.6.1.pom
+ * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/4.6.2/soapui-maven-plugin-4.6.2.pom
  */
 configurations.all {
   resolutionStrategy {
