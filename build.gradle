@@ -27,8 +27,7 @@
 
 buildscript {
   ext {
-    prefixVersion = '4.6.2'
-    soapUIVersion = '4.6.2'
+    soapUIVersion = '4.6.3'
     gradleApiVersion = '4.0.1'
     groovyVersion = '2.4.11'
     spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')

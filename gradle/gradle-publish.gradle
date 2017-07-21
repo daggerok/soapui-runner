@@ -29,7 +29,7 @@
  * read more: https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/
  */
 
-version = prefixVersion
+version = soapUIVersion
 group = 'io.github.daggerok'
 description = '''SoapUI Runner Gradle Plugin. 
 Allows configure and execute SoapUI test project using it's runners.
