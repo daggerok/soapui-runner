@@ -29,15 +29,9 @@
  * read more: https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/
  */
 
-version = soapUIVersion
-group = 'io.github.daggerok'
-description = '''SoapUI Runner Gradle Plugin. 
-Allows configure and execute SoapUI test project using it's runners.
-
-Please, make sure you have added required SoapUI maven repository to your build script:
-maven { url 'http://smartbearsoftware.com/repository/maven2/' }
-
-With this plugin you can run:'''
+project.group = 'io.github.daggerok'
+project.version = "$soapUIVersion-rc.0"
+project.description = info('Allows run SoapUI testrunner and loadtestrunner.')
 
 pluginBundle {
 
@@ -72,24 +66,38 @@ pluginBundle {
   plugins {
 
     soapUITestRunnerPlugin {
+
       id = "${group}.soapui-testrunner"
-      displayName = """\
-                       |$project.description
-                       |SoapUI TestSuites and TestCases.""".stripMargin()
+      // max length 254 characters:
+      description = displayName = info('Allows run SoapUI TestSuites and TestCases using testrunner.')
     }
 
     soapUILoadTestRunnerPlugin {
+
       id = "${group}.soapui-loadtestrunner"
-      displayName = """\
-                       |$project.description
-                       |SoapUI Load Tests.""".stripMargin()
+      description = displayName = info('Allows run SoapUI Load Tests using loadtestrunner.')
     }
 
     soapUIRunnerPlugin {
+
       id = "${group}.$rootProject.name"
-      displayName = """\
-                       |$project.description
-                       |all tasks from io.github.daggerok.soapui-testrunner and io.github.daggerok.soapui-loadtestrunner plugins.""".stripMargin()
+      displayName = project.description
     }
   }
+}
+
+/**
+ * Plugin displayName / description helper builder.
+ * <br/>
+ * @param suffix plugin specific information.
+ * @return plugin displayName / description.
+ */
+static String info(final String suffix) {
+  """\
+     |SoapUI Runner Gradle Plugin.
+     |
+     |Please, make sure you have added required plugin repository in buildscript: 
+     |maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+     |
+     |$suffix""".stripMargin()
 }

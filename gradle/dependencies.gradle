@@ -27,6 +27,8 @@
 
 buildscript {
   ext {
+    engineVersion = '3.3'
+    xulrunnerVersion = '3.3'
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
@@ -38,7 +40,23 @@ buildscript {
  */
 configurations.all {
   resolutionStrategy {
-    force "com.jgoodies:binding:$jgoodiesBindingVersion",
+    force 'teamdev:jxbrowser:3.3',
+          'teamdev:comfyj:2.9',
+          'teamdev:winpack:3.8.3',
+          "teamdev:xulrunner-windows:$xulrunnerVersion",
+          "teamdev:xulrunner-linux64:$xulrunnerVersion",
+          "teamdev:xulrunner-linux:$xulrunnerVersion",
+          "teamdev:xulrunner-mac:$xulrunnerVersion",
+          'teamdev:MozillaInterfaces:3.0',
+          "teamdev:engine-gecko:$engineVersion",
+          "teamdev:engine-gecko15:$engineVersion",
+          "teamdev:engine-ie:$engineVersion",
+          "teamdev:engine-webkit:$engineVersion",
+          'teamdev:jniwrap:3.8.4',
+          "teamdev:xulrunner15-mac:$xulrunnerVersion",
+          "teamdev:xulrunner15-windows:$xulrunnerVersion",
+
+          "com.jgoodies:binding:$jgoodiesBindingVersion",
           "com.jgoodies:forms:$jgoodiesFormsVersion",
           "com.jgoodies:looks:$jgoodiesLooksVersion"
   }
