@@ -27,9 +27,9 @@
 
 buildscript {
   ext {
-    soapUIVersion = '4.6.3'
-    gradleApiVersion = '4.0.1'
+    soapUIVersion = '4.6.4'
     groovyVersion = '2.4.11'
+    gradleApiVersion = '4.0.1'
     spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
     url = 'https://github.com/daggerok/soapui-runner'
   }
