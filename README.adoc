@@ -7,20 +7,20 @@ This repository contains simple gradle plugin (written in groovy) allowed config
 == why?
 
 SmartBear provides platform dependant scripts for SoapUI test project execution, but it's not so convenient.
-For example, to execute SoapUI tests using testrunner (version: 4.6.4) tool you can use these commands:
+For example, to execute SoapUI tests using testrunner (version: 5.0.0) tool you can use these commands:
 
 ==== running tests on windows
 
 [source,cmd]
 ----
-C:\path\to\SoapUI-4.6.4\bin\testrunner.bat C:\path\to\soapui-test-project.xml
+C:\path\to\SoapUI-5.0.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml
 ----
 
 ==== running tests on unix
 
 [source,bash]
 ----
-/path/to/SoapUI-4.6.4.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
+/path/to/SoapUI-5.0.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
 ----
 
 ==== running tests using gradle plugin
@@ -105,7 +105,7 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '4.6.4'
+  id 'io.github.daggerok.soapui-runner' version '5.0.0'
 }
 
 testrunner {
@@ -131,7 +131,7 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:4.6.4'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.0.0'
   }
 }
 
@@ -208,7 +208,7 @@ task soapUITestCases(dependsOn: soapUITasks)
 
 - Gradle API 4.0.1
 - Groovy 2.4.11
-- SoapUI 4.6.4
+- SoapUI 5.0.0
 
 there are three plugins available:
 
@@ -218,6 +218,7 @@ there are three plugins available:
 
 ==== support old versions:
 
+- 4.6.4
 - 4.6.3
 - 4.6.2
 - 4.6.1
