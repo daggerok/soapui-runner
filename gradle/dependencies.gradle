@@ -68,7 +68,7 @@ dependencies {
                  gradleApi(),
                  "org.codehaus.groovy:groovy-all:$groovyVersion"
 
-  compile("com.smartbear.soapui:soapui:$soapUIVersion") {
+  implementation("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'teamdev', module: 'jxbrowser'
     exclude group: 'teamdev', module: 'comfyj'
     exclude group: 'teamdev', module: 'winpack'
