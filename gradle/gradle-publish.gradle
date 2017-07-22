@@ -30,9 +30,34 @@
  */
 
 project.group = 'io.github.daggerok'
-project.version = "$soapUIVersion-rc.0"
+project.version = "$soapUIVersion-rc.1"
 project.description = info('Allows run SoapUI testrunner and loadtestrunner.')
 
+gradlePlugin {
+  plugins {
+    soapUITestRunnerPlugin {
+      id = "${group}.soapui-testrunner"
+      implementationClass = "${group}.SoapUITestRunnerPlugin"
+    }
+    soapUILoadTestRunnerPlugin {
+      id = "${group}.soapui-loadtestrunner"
+      implementationClass = "${group}.SoapUILoadTestRunnerPlugin"
+    }
+    soapUIRunnerPlugin {
+      id = "${group}.soapui-runner"
+      implementationClass = "${group}.SoapUIRunnerPlugin"
+    }
+  }
+}
+/*
+publishing {
+  repositories {
+    maven {
+      url "../soapui-runner-example/maven-repo"
+    }
+  }
+}
+*/
 pluginBundle {
 
   website = url
@@ -66,20 +91,17 @@ pluginBundle {
   plugins {
 
     soapUITestRunnerPlugin {
-
       id = "${group}.soapui-testrunner"
       // max length 254 characters:
       description = displayName = info('Allows run SoapUI TestSuites and TestCases using testrunner.')
     }
 
     soapUILoadTestRunnerPlugin {
-
       id = "${group}.soapui-loadtestrunner"
       description = displayName = info('Allows run SoapUI Load Tests using loadtestrunner.')
     }
 
     soapUIRunnerPlugin {
-
       id = "${group}.$rootProject.name"
       displayName = project.description
     }

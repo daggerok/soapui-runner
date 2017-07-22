@@ -29,15 +29,17 @@ package io.github.daggerok
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
+import spock.lang.Ignore
 import spock.lang.Specification
 
 import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-class SoapUIRunnerPlugin461FunctionalTest extends Specification {
+@Ignore
+class SoapUIRunnerPlugin463RC1FunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('4.6.1')
+  static final head = getGradleBuildHead('4.6.3-rc.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 

@@ -26,7 +26,6 @@
  */
 package io.github.daggerok
 
-import groovy.util.logging.Slf4j
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
@@ -36,7 +35,6 @@ import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-@Slf4j
 class SoapUIRunnerPlugin461RC0FunctionalTest extends Specification {
 
   static final head = getGradleBuildHead('4.6.1-rc.0')

@@ -35,9 +35,9 @@ import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-class SoapUIRunnerPlugin461FunctionalTest extends Specification {
+class SoapUIRunnerPlugin463RC0FunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('4.6.1')
+  static final head = getGradleBuildHead('4.6.3-rc.0')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 

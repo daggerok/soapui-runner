@@ -64,9 +64,9 @@ configurations.all {
 
 dependencies {
 
-  compile localGroovy(),
-          gradleApi(),
-          "org.codehaus.groovy:groovy-all:$groovyVersion"
+  implementation localGroovy(),
+                 gradleApi(),
+                 "org.codehaus.groovy:groovy-all:$groovyVersion"
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'teamdev', module: 'jxbrowser'
@@ -90,8 +90,8 @@ dependencies {
     exclude group: 'com.jgoodies', module: 'binding'
   }
 
-  testCompile gradleTestKit()
-  testCompile ("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
+  testImplementation gradleTestKit()
+  testImplementation("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
     exclude module: 'groovy-all'
   }
 }
