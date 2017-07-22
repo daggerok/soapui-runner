@@ -75,7 +75,7 @@ dependencies {
   }
 
   testCompile gradleTestKit()
-  testCompile ("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
+  testCompile("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
     exclude module: 'groovy-all'
   }
 }

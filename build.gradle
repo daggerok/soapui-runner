@@ -40,6 +40,7 @@ plugins {
   id 'groovy'
   id 'maven'
   id 'maven-publish'
+  id 'java-gradle-plugin'
   id 'com.gradle.plugin-publish' version '0.9.7'
   id 'com.github.hierynomus.license' version '0.14.0'
 }

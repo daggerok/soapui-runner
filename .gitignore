@@ -6,4 +6,3 @@ build/
 *.ipr
 *.iws
 *.log
-soapui-test-project.xml
