@@ -14,7 +14,7 @@ This repository contains simple gradle plugin (written in groovy) allowed config
 
 ==== using plugins (gradle 2.1)
 
-[source,groovy]
+[source,gradle]
 ----
 buildscript {
   repositories {
@@ -30,7 +30,7 @@ plugins {
 
 ==== using apply plugin (old way)
 
-[source,groovy]
+[source,gradle]
 ----
 buildscript {
   repositories {
@@ -47,7 +47,7 @@ apply plugin: 'io.github.daggerok.soapui-runner'
 
 ==== runners configuration
 
-[source,groovy]
+[source,gradle]
 ----
 testrunner {
   projectFile 'src/test/resources/soapui-test-project.xml'
@@ -67,7 +67,7 @@ loadtestrunner {
 
 testrunner and loadtestrunner tasks or theirs configurations could be omitted if default properties are good enough for you ([see configuration](https://github.com/daggerok/soapui-runner/tree/master#configurations):
 
-[source,groovy]
+[source,gradle]
 ----
 /*
 testrunner {
@@ -194,7 +194,7 @@ link:https://github.com/daggerok/soapui-runner-example/commit/9a8b40311600ed6317
 
 ==== execute only needed TestSuite list
 
-[source,groovy]
+[source,gradle]
 ----
 apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
 
@@ -216,7 +216,7 @@ link:https://github.com/daggerok/soapui-runner-example/commit/84f71229b08934a059
 
 ==== execute some concrete TestCases
 
-[source,groovy]
+[source,gradle]
 ----
 apply plugin: io.github.daggerok.soapui-testrunner'
 

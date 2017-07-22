@@ -29,14 +29,12 @@ package io.github.daggerok
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-@Ignore // while migration to soap-runner
 class SoapUIRunnerPluginFunctionalTest extends Specification {
 
   final static def versions = [
