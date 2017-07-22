@@ -38,7 +38,7 @@ class SoapUILoadTestRunnerPlugin implements Plugin<Project> {
 
   @Override
   void apply(final Project project) {
-    project.getTasks().create('loadtestrunner', SoapUILoadTestRunnerTask)
+    project.getTasks().create(SoapUILoadTestRunnerTask.NAME, SoapUILoadTestRunnerTask)
     createExtFolder(project)
   }
 }

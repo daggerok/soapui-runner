@@ -30,8 +30,33 @@
  */
 
 project.group = 'io.github.daggerok'
-project.version = "$soapUIVersion-rc.0"
+project.version = soapUIVersion
 project.description = info('Allows run SoapUI testrunner and loadtestrunner.')
+
+gradlePlugin {
+  plugins {
+    soapUITestRunnerPlugin {
+      id = "${group}.soapui-testrunner"
+      implementationClass = "${group}.SoapUITestRunnerPlugin"
+    }
+    soapUILoadTestRunnerPlugin {
+      id = "${group}.soapui-loadtestrunner"
+      implementationClass = "${group}.SoapUILoadTestRunnerPlugin"
+    }
+    soapUIRunnerPlugin {
+      id = "${group}.soapui-runner"
+      implementationClass = "${group}.SoapUIRunnerPlugin"
+    }
+  }
+}
+
+publishing {
+  repositories {
+    maven {
+      url '../soapui-runner-example/maven-repo'
+    }
+  }
+}
 
 pluginBundle {
 
@@ -64,22 +89,16 @@ pluginBundle {
   ]
 
   plugins {
-
     soapUITestRunnerPlugin {
-
       id = "${group}.soapui-testrunner"
       // max length 254 characters:
       description = displayName = info('Allows run SoapUI TestSuites and TestCases using testrunner.')
     }
-
     soapUILoadTestRunnerPlugin {
-
       id = "${group}.soapui-loadtestrunner"
       description = displayName = info('Allows run SoapUI Load Tests using loadtestrunner.')
     }
-
     soapUIRunnerPlugin {
-
       id = "${group}.$rootProject.name"
       displayName = project.description
     }
@@ -96,7 +115,7 @@ static String info(final String suffix) {
   """\
      |SoapUI Runner Gradle Plugin.
      |
-     |Please, make sure you have added required plugin repository in buildscript: 
+     |Please, make sure you have also added required plugin repository in your buildscript: 
      |maven { url 'http://smartbearsoftware.com/repository/maven2/' }
      |
      |$suffix""".stripMargin()

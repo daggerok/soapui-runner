@@ -51,4 +51,4 @@ apply from: "$rootDir/gradle/soapui-runner.gradle"
 apply from: "$rootDir/gradle/maven-publish.gradle"
 apply from: "$rootDir/gradle/gradle-publish.gradle"
 
-println "use local version: $project.version"
+println "using version: $project.version"

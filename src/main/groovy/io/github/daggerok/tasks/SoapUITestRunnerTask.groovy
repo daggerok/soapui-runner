@@ -39,7 +39,7 @@ import static io.github.daggerok.utils.ExecutionUtils.*
 @CompileStatic
 class SoapUITestRunnerTask extends AbstractSoapUITask {
 
-  static final String name = 'testrunner'
+  public static final String NAME = 'testrunner'
 
   @Optional @Input String testSuite
   @Optional @Input String testCase
@@ -55,7 +55,7 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
   @Optional @Input int maxErrors = 5
 
   SoapUITestRunnerTask() {
-    super(name)
+    super(NAME)
   }
 
   /**
@@ -64,16 +64,16 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
   @Override
   void action() {
 
-    tryWithMessage(usage(name)) {
-      validate project.file(projectFile), name, failOnError
+    tryWithMessage(usage(NAME)) {
+      validate project.file(projectFile), NAME, failOnError
     }
 
-    final def testRunner = new SoapUITestRunner("running $name of $project.name: ${today()}")
+    final def testRunner = new SoapUITestRunner("running $NAME of $project.name: ${today()}")
 
     setupParent testRunner
     setupProps testRunner
 
-    log.info "start $name execution..."
+    log.info "start $NAME execution..."
 
     tryOrThrowIf(failOnError) {
       testRunner.run()
@@ -97,10 +97,11 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
     runner.setExportAll exportAll
     runner.setIgnoreErrors ignoreErrors
     runner.setJUnitReport junitReport
+    // // not available until SoapUI 5.2.1
     // runner.setJUnitReportWithProperties junitReportWithProperties
     runner.setSaveAfterRun saveAfterRun
 
-    log.info "$name props configured."
+    log.info "$NAME props configured."
   }
 
   // setters
