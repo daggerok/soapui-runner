@@ -69,13 +69,29 @@ dependencies {
           "org.codehaus.groovy:groovy-all:$groovyVersion"
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
+    exclude group: 'teamdev', module: 'jxbrowser'
+    exclude group: 'teamdev', module: 'comfyj'
+    exclude group: 'teamdev', module: 'winpack'
+    exclude group: 'teamdev', module: 'xulrunner-windows'
+    exclude group: 'teamdev', module: 'xulrunner-linux64'
+    exclude group: 'teamdev', module: 'xulrunner-linux'
+    exclude group: 'teamdev', module: 'xulrunner-mac'
+    exclude group: 'teamdev', module: 'MozillaInterfaces'
+    exclude group: 'teamdev', module: 'engine-gecko'
+    exclude group: 'teamdev', module: 'engine-gecko15'
+    exclude group: 'teamdev', module: 'engine-ie'
+    exclude group: 'teamdev', module: 'engine-webkit'
+    exclude group: 'teamdev', module: 'jniwrap'
+    exclude group: 'teamdev', module: 'xulrunner15-mac'
+    exclude group: 'teamdev', module: 'xulrunner15-windows'
+
     exclude group: 'com.jgoodies', module: 'forms'
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
   }
 
   testCompile gradleTestKit()
-  testCompile ("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
+  testCompile("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
     exclude module: 'groovy-all'
   }
 }
