@@ -69,7 +69,7 @@ class SoapUIRunnerPlugin463RC1FunctionalTest extends Specification {
     !new File(testProjectDir.root, 'build/soapui').exists()
   }
 
-  def 'testrunner task FAILED with failOnStart = true (no suapui test project file was found).'() {
+  def 'testrunner task FAILED with failOnError = true (no suapui test project file was found).'() {
 
     given:
     buildFile << """$head
