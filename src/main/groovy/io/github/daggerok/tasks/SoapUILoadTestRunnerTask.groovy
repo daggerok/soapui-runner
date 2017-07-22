@@ -39,7 +39,7 @@ import static io.github.daggerok.utils.ExecutionUtils.*
 @CompileStatic
 class SoapUILoadTestRunnerTask extends AbstractSoapUITask {
 
-  static final String name = 'loadtestrunner'
+  static final String NAME = 'loadtestrunner'
 
   @Optional @Input String testSuite
   @Optional @Input String testCase
@@ -52,7 +52,7 @@ class SoapUILoadTestRunnerTask extends AbstractSoapUITask {
   @Optional @Input long threadCount = -1
 
   SoapUILoadTestRunnerTask() {
-    super(name)
+    super(NAME)
   }
 
   /**
@@ -61,16 +61,16 @@ class SoapUILoadTestRunnerTask extends AbstractSoapUITask {
   @Override
   void action() {
 
-    tryWithMessage(usage(name)) {
-      validate project.file(projectFile), name, failOnError
+    tryWithMessage(usage(NAME)) {
+      validate project.file(projectFile), NAME, failOnError
     }
 
-    final def testRunner = new SoapUILoadRunner("running $name of $project.name: ${today()}")
+    final def testRunner = new SoapUILoadRunner("running $NAME of $project.name: ${today()}")
 
     setupParent testRunner
     setupProps testRunner
 
-    log.info "start $name execution..."
+    log.info "start $NAME execution..."
 
     tryOrThrowIf(failOnError) {
       testRunner.run()
@@ -95,7 +95,7 @@ class SoapUILoadTestRunnerTask extends AbstractSoapUITask {
     if (limit > 0) runner.setLimit limit
     if (threadCount > 0) runner.setThreadCount threadCount
 
-    log.info "$name props configured."
+    log.info "$runner props configured."
   }
 
   // setters

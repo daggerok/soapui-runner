@@ -32,6 +32,12 @@ import groovy.transform.CompileStatic
 class TestUtils {
 
   static getGradleBuildHead(final String pluginVersion) {
+    return usePlugins(pluginVersion)
+//    return useApplyPlugin(pluginVersion, true)
+//    return useApplyPlugin(pluginVersion, false)
+  }
+
+  private static usePlugins(final String pluginVersion) {
     """
     buildscript {
       repositories {
@@ -43,6 +49,22 @@ class TestUtils {
     plugins {
       id 'io.github.daggerok.soapui-runner' version '$pluginVersion'
     }
+    """
+  }
+
+  private static useApplyPlugin(final String pluginVersion, final boolean isLocal) {
+    """
+    buildscript {
+      repositories {
+        ${isLocal ? 'mavenLocal()' : ''}
+        maven { url 'https://plugins.gradle.org/m2/' }
+        maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+      }
+      dependencies {
+        classpath '${isLocal ? '' : 'gradle.plugin.'}io.github.daggerok:soapui-runner:$pluginVersion'
+      }
+    }
+    apply plugin: 'io.github.daggerok.soapui-runner'
     """
   }
 
