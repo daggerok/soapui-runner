@@ -30,7 +30,7 @@
  */
 
 project.group = 'io.github.daggerok'
-project.version = "$soapUIVersion"
+project.version = "$soapUIVersion-rc.0"
 project.description = info('Allows run SoapUI testrunner and loadtestrunner.')
 
 pluginBundle {
