@@ -38,7 +38,9 @@ import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 class SoapUIRunnerPluginFunctionalTest extends Specification {
 
   final static def versions = [
+      '4.6.1-rc.0',
       '4.6.1',
+      '4.6.2-rc.0',
   ]
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()

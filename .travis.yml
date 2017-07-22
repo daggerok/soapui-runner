@@ -15,8 +15,7 @@ before_install:
   - java -version
   - bash gradlew -v
 script:
-  - bash gradlew clean assemble
-  - bash gradlew check
+  - bash gradlew clean build
   - bash gradlew license install publishToMavenLocal publish
 before_cache:
   - gradle --stop
