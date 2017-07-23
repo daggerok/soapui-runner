@@ -27,8 +27,6 @@
 
 buildscript {
   ext {
-    engineVersion = '3.3'
-    xulrunnerVersion = '3.3'
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
@@ -36,27 +34,11 @@ buildscript {
 }
 
 /*
- * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/4.6.4/soapui-maven-plugin-4.6.4.pom
+ * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
  */
 configurations.all {
   resolutionStrategy {
-    force 'teamdev:jxbrowser:3.3',
-          'teamdev:comfyj:2.9',
-          'teamdev:winpack:3.8.3',
-          "teamdev:xulrunner-windows:$xulrunnerVersion",
-          "teamdev:xulrunner-linux64:$xulrunnerVersion",
-          "teamdev:xulrunner-linux:$xulrunnerVersion",
-          "teamdev:xulrunner-mac:$xulrunnerVersion",
-          'teamdev:MozillaInterfaces:3.0',
-          "teamdev:engine-gecko:$engineVersion",
-          "teamdev:engine-gecko15:$engineVersion",
-          "teamdev:engine-ie:$engineVersion",
-          "teamdev:engine-webkit:$engineVersion",
-          'teamdev:jniwrap:3.8.4',
-          "teamdev:xulrunner15-mac:$xulrunnerVersion",
-          "teamdev:xulrunner15-windows:$xulrunnerVersion",
-
-          "com.jgoodies:binding:$jgoodiesBindingVersion",
+    force "com.jgoodies:binding:$jgoodiesBindingVersion",
           "com.jgoodies:forms:$jgoodiesFormsVersion",
           "com.jgoodies:looks:$jgoodiesLooksVersion"
   }
@@ -69,22 +51,6 @@ dependencies {
                  "org.codehaus.groovy:groovy-all:$groovyVersion"
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
-    exclude group: 'teamdev', module: 'jxbrowser'
-    exclude group: 'teamdev', module: 'comfyj'
-    exclude group: 'teamdev', module: 'winpack'
-    exclude group: 'teamdev', module: 'xulrunner-windows'
-    exclude group: 'teamdev', module: 'xulrunner-linux64'
-    exclude group: 'teamdev', module: 'xulrunner-linux'
-    exclude group: 'teamdev', module: 'xulrunner-mac'
-    exclude group: 'teamdev', module: 'MozillaInterfaces'
-    exclude group: 'teamdev', module: 'engine-gecko'
-    exclude group: 'teamdev', module: 'engine-gecko15'
-    exclude group: 'teamdev', module: 'engine-ie'
-    exclude group: 'teamdev', module: 'engine-webkit'
-    exclude group: 'teamdev', module: 'jniwrap'
-    exclude group: 'teamdev', module: 'xulrunner15-mac'
-    exclude group: 'teamdev', module: 'xulrunner15-windows'
-
     exclude group: 'com.jgoodies', module: 'forms'
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
