@@ -29,19 +29,15 @@ package io.github.daggerok
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-@Ignore // while migration to soap-runner
 class SoapUIRunnerPluginFunctionalTest extends Specification {
 
-  final static def versions = [
-      '4.6.1',
-  ]
+  final static String head = getGradleBuildHead('4.6.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
@@ -53,72 +49,63 @@ class SoapUIRunnerPluginFunctionalTest extends Specification {
 
   def 'testrunner task SUCCESS without execution (no suapui test project file was found).'() {
 
-    versions.collect { version -> getGradleBuildHead(version) }.each { head ->
-
-      given:
-      buildFile << """$head
-      testrunner {
-        projectFile "soapui-test-project.xml"
-        outputFolder "soapui"
-        failOnError false
-      }
-      """
-
-      when:
-      def result = GradleRunner.create()
-          .withProjectDir(testProjectDir.root)
-          .withArguments('testrunner')
-          .build()
-      then:
-      result.task(':testrunner').outcome == SUCCESS
-      result.output.contains('Please, make sure you properly configured testrunner task.')
-      !new File(testProjectDir.root, 'build/soapui').exists()
+    given:
+    buildFile << """$head
+    testrunner {
+      projectFile "soapui-test-project.xml"
+      outputFolder "soapui"
+      failOnError false
     }
+    """
+
+    when:
+    def result = GradleRunner.create()
+        .withProjectDir(testProjectDir.root)
+        .withArguments('testrunner')
+        .build()
+    then:
+    result.task(':testrunner').outcome == SUCCESS
+    result.output.contains('Please, make sure you properly configured testrunner task.')
+    !new File(testProjectDir.root, 'build/soapui').exists()
   }
 
   def 'testrunner task FAILED with failOnStart = true (no suapui test project file was found).'() {
 
-    versions.collect { version -> getGradleBuildHead(version) }.each { head ->
-
-      given:
-      buildFile << """$head
-      testrunner {
-        failOnError = true
-      }
-      """
-
-      when:
-      def result = GradleRunner.create()
-                               .withProjectDir(testProjectDir.root)
-                               .withArguments('testrunner')
-                               .buildAndFail()
-      then:
-      result.task(':testrunner').outcome == FAILED
-      result.output.contains('Please, make sure you properly configured testrunner task.')
-      !new File(testProjectDir.root, 'build/soapui').exists()
+    given:
+    buildFile << """$head
+    testrunner {
+      failOnError = true
     }
+    """
+
+    when:
+    def result = GradleRunner.create()
+                             .withProjectDir(testProjectDir.root)
+                             .withArguments('testrunner')
+                             .buildAndFail()
+    then:
+    result.task(':testrunner').outcome == FAILED
+    result.output.contains('Please, make sure you properly configured testrunner task.')
+    !new File(testProjectDir.root, 'build/soapui').exists()
   }
 
   def 'task testrunner and loadtestrunner are exists on applied plugin.'() {
 
-    versions.collect { version -> getGradleBuildHead(version) }.each { head ->
+    given:
+    buildFile << """$head
+    // testrunner {}
+    // loadtestrunner {}
+    """
 
-      given:
-      buildFile << """$head
-      // testrunner {}
-      // loadtestrunner {}
-      """
-
-      when:
-      def result = GradleRunner.create()
-                               .withProjectDir(testProjectDir.root)
-                               .withArguments('tasks', '--all')
-                               .build()
-      then:
-      result.task(':tasks').outcome == SUCCESS
-      result.output.contains('SoapUI runner tasks')
-      result.output.contains('testrunner - SoapUI testrunner task')
-      result.output.contains('loadtestrunner - SoapUI loadtestrunner task')
-    }
+    when:
+    def result = GradleRunner.create()
+                             .withProjectDir(testProjectDir.root)
+                             .withArguments('tasks', '--all')
+                             .build()
+    then:
+    result.task(':tasks').outcome == SUCCESS
+    result.output.contains('SoapUI runner tasks')
+    result.output.contains('testrunner - SoapUI testrunner task')
+    result.output.contains('loadtestrunner - SoapUI loadtestrunner task')
   }
 }
