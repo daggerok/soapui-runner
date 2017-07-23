@@ -35,9 +35,9 @@ import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-class SoapUIRunnerPlugin461FunctionalTest extends Specification {
+class SoapUIRunnerPluginFunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('4.6.1')
+  static final head = getGradleBuildHead('5.0.0-hotfix.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
@@ -69,7 +69,7 @@ class SoapUIRunnerPlugin461FunctionalTest extends Specification {
     !new File(testProjectDir.root, 'build/soapui').exists()
   }
 
-  def 'testrunner task FAILED with failOnStart = true (no suapui test project file was found).'() {
+  def 'testrunner task FAILED with failOnError = true (no suapui test project file was found).'() {
 
     given:
     buildFile << """$head
