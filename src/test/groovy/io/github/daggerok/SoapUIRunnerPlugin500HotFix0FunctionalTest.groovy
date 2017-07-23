@@ -37,9 +37,9 @@ import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 @Ignore
-class SoapUIRunnerPlugin462RC0FunctionalTest extends Specification {
+class SoapUIRunnerPlugin500HotFix0FunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('4.6.2-rc.0')
+  static final head = getGradleBuildHead('5.0.0-hotfix.0')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
@@ -102,7 +102,7 @@ class SoapUIRunnerPlugin462RC0FunctionalTest extends Specification {
     when:
     def result = GradleRunner.create()
                              .withProjectDir(testProjectDir.root)
-                             .withArguments('tasks', '--all', ' --stacktrace')
+                             .withArguments('tasks', '--all', '--stacktrace')
                              .build()
     then:
     result.task(':tasks').outcome == SUCCESS

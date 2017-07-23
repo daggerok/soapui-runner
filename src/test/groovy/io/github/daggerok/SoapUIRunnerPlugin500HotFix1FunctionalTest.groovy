@@ -37,7 +37,7 @@ import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 @Ignore
-class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
+class SoapUIRunnerPlugin500HotFix1FunctionalTest extends Specification {
 
   static final head = getGradleBuildHead('5.0.0-hotfix.1')
 
@@ -62,9 +62,9 @@ class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
 
     when:
     def result = GradleRunner.create()
-        .withProjectDir(testProjectDir.root)
-        .withArguments('testrunner')
-        .build()
+                             .withProjectDir(testProjectDir.root)
+                             .withArguments('testrunner', ' --stacktrace')
+                             .build()
     then:
     result.task(':testrunner').outcome == SUCCESS
     result.output.contains('Please, make sure you properly configured testrunner task.')
@@ -83,7 +83,7 @@ class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
     when:
     def result = GradleRunner.create()
                              .withProjectDir(testProjectDir.root)
-                             .withArguments('testrunner')
+                             .withArguments('testrunner', ' --stacktrace')
                              .buildAndFail()
     then:
     result.task(':testrunner').outcome == FAILED
@@ -102,7 +102,7 @@ class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
     when:
     def result = GradleRunner.create()
                              .withProjectDir(testProjectDir.root)
-                             .withArguments('tasks', '--all')
+                             .withArguments('tasks', '--all', ' --stacktrace')
                              .build()
     then:
     result.task(':tasks').outcome == SUCCESS
