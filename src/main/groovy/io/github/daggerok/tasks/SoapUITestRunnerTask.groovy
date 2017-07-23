@@ -97,8 +97,7 @@ class SoapUITestRunnerTask extends AbstractSoapUITask {
     runner.setExportAll exportAll
     runner.setIgnoreErrors ignoreErrors
     runner.setJUnitReport junitReport
-    // // not available until SoapUI 5.2.1
-    // runner.setJUnitReportWithProperties junitReportWithProperties
+    runner.setJUnitReportWithProperties junitReportWithProperties
     runner.setSaveAfterRun saveAfterRun
 
     log.info "$NAME props configured."
