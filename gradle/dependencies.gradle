@@ -30,8 +30,6 @@ buildscript {
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
-    jcommonsVersion = '2.4'
-    jettyVersion = '6.1.26'
   }
 }
 
@@ -44,24 +42,86 @@ configurations.all {
     force "com.jgoodies:binding:$jgoodiesBindingVersion",
           "com.jgoodies:forms:$jgoodiesFormsVersion",
           "com.jgoodies:looks:$jgoodiesLooksVersion",
-
-          'xalan:xalan:2.7.1',
-          'javax.jms:jms:1.1',
-
-          'log4j:log4j:1.2.14',
-          'commons-logging:commons-logging:1.1.1',
-
-          'commons-httpclient:commons-httpclient:3.1',
-
+          'org.spockframework:spock-core:1.0-groovy-2.4'/*,
+          'joda-time:joda-time:1.6.2',
+          'junit:junit:4.11',
+          'org.mockito:mockito-all:1.8.5',
+          'org.hamcrest:hamcrest-all:1.3',
+          'xmlbeans:xbean:fixed-2.4.0',
+          'xmlbeans:xbean_xpath:2.4.0',
+          'xmlbeans:xmlpublic:2.4.0',
+          'javax.xml.bind:jsr173_api:1.0',
+          'com.google.code.findbugs:annotations:2.0.0',
+          'com.google.code.findbugs:jsr305:2.0.0',
+          'com.google.guava:guava:14.0',
           'commons-collections:commons-collections:3.2.1',
-          "commons-collections:commons-lang:$jcommonsVersion",
-          "commons-collections:commons-io:$jcommonsVersion",
-          'com.google.guava:guava:14.0'
+          'commons-lang:commons-lang:2.4',
+          'commons-io:commons-io:2.4',
+          'log4j:log4j:1.2.14',
+          'org.slf4j:slf4j-api:1.7.5',
+          'commons-logging:commons-logging:1.1.1',
+          'com.smartbear.utils.analytics:analytics-core:5.1.0',
+          'com.smartbear.utils.analytics:out-app-analytics-provider:5.1.0',
+          'com.fifesoft:rsyntaxtextarea:2.5.0',
+          'jetty:jetty:6.1.26',
+          'jetty:jetty-util:6.1.26',
+          'jetty:servlet-api:2.5-20081211',
+          'org.apache.ws.security:wss4j:1.6.14',
+          'org.apache.ws.commons.util:ws-commons-util:1.0.2',
+          'net.sourceforge.htmlunit:htmlunit:2.7',
+          'net.sourceforge.htmlunit:htmlunit-core-js:2.7',
+          'org.w3c.css:sac:1.3',
+          'org.apache.httpcomponents:httpclient:4.1.1',
+          'org.apache.httpcomponents:httpmime:4.1.1',
+          'org.apache.httpcomponents:httpclient-cache:4.1.1',
+          'org.apache.httpcomponents:httpcore:4.1.1',
+          'org.apache.httpcomponents:httpcore-nio:4.1.1',
+          'org.apache.oltu.oauth2:org.apache.oltu.oauth2.client:0.31',
+          'org.apache.oltu.oauth2:org.apache.oltu.oauth2.httpclient4:0.31',
+          'org.apache.maven:maven-plugin-api:2.0',
+          'javax.activation:activation:1.1',
+          'javax.mail:mail:1.4',
+          'wsdl4j:wsdl4j:1.6.2-fixed',
+          'commons-ssl:not-yet-commons-ssl:0.3.11',
+          'commons-cli:commons-cli:1.0',
+          'commons-beanutils:commons-beanutils:1.7.0',
+          'json:json-lib:2.2.2-jdk15',
+          'ezmorph:ezmorph:1.0.5',
+          'xom:xom:1.1',
+          'swingx:swingx:soapui',
+          'commons-codec:commons-codec:1.3',
+          //'org.codehaus.groovy:groovy-all:2.1.7',
+          'rhino:js:1.7R2',
+          'saxon:saxon:9.1.0.8j',
+          'saxon:saxon-dom:9.1.0.8j',
+          'xmlunit:xmlunit:1.2',
+          'xalan:xalan:2.7.1',
+          'bouncycastle:bcprov-jdk15:144',
+          'jtidy:jtidy:r872-jdk15',
+          'javax.jms:jms:1.1',
+          'hermesjms:hermes:1.14',
+          'amf:flex-messaging-common:1.0',
+          'amf:flex-messaging-core:1.0',
+          'amf:flex-messaging-opt:1.0',
+          'amf:flex-messaging-proxy:1.0',
+          'amf:flex-messaging-remoting:1.0',
+          'thoughtworks:xstream:1.3.1',
+          'net.sourceforge.cssparser:cssparser:0.9.5',
+          'net.sourceforge.nekohtml:nekohtml:1.9.14',
+          'org.samba.jcifs:jcifs:1.2.9',
+          'l2fprod:l2fprod-common-directorychooser:7.3',
+          'l2fprod:l2fprod-common-fontchooser:7.3',
+          'org.apache.santuario:xmlsec:1.4.5',
+          'org.apache.xerces:xml-apis:2.9.1',
+          'xalan:serializer:2.7.1',
+          'gnu.cajo:cajo:1.142',
+          'com.btr:proxy-vole:20131209',
+          'com.jayway.jsonpath:json-path:0.9.1',
+          'commons-httpclient:commons-httpclient:3.1'
 
-    /*
     dependencySubstitution {
       substitute module('jtidy:jtidy:r872-jdk15') with module('net.sf.jtidy:jtidy:r938')
-      substitute module("jetty:jetty:$jettyVersion") with module("org.mortbay.jetty:jetty:$jettyVersion")
+      substitute module('jetty:jetty:6.1.26') with module('org.mortbay.jetty:jetty:6.1.26')
     }
     */
   }
@@ -74,7 +134,6 @@ dependencies {
           "org.codehaus.groovy:groovy-all:$groovyVersion"
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
-    exclude module: 'cajo'
     exclude group: 'com.jgoodies', module: 'forms'
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
