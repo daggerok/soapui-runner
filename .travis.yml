@@ -14,8 +14,6 @@ script:
   - bash gradlew clean build license install publish
 before_cache:
   - gradle --stop
-  - rm -rf $HOME/.m2/repository/io/github/daggerok
-  - rm -rf $HOME/.gradle/caches/modules-2/files-2.1/gradle.plugin*
   - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:

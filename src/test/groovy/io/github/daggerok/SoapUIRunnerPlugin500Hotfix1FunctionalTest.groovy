@@ -35,9 +35,9 @@ import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
+class SoapUIRunnerPlugin500Hotfix1FunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('5.0.0-hotfix.0')
+  static final head = getGradleBuildHead('5.0.0-hotfix.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
