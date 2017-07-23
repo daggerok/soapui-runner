@@ -30,7 +30,7 @@
  */
 
 project.group = 'io.github.daggerok'
-project.version = "$soapUIVersion"
+project.version = "$soapUIVersion-hotfix.0"
 project.description = info('Allows run SoapUI testrunner and loadtestrunner.')
 
 gradlePlugin {

@@ -30,17 +30,40 @@ buildscript {
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
+    jcommonsVersion = '2.4'
+    jettyVersion = '6.1.26'
   }
 }
 
 /*
+ * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui/5.1.2/soapui-5.1.2.pom
  * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
  */
 configurations.all {
   resolutionStrategy {
     force "com.jgoodies:binding:$jgoodiesBindingVersion",
           "com.jgoodies:forms:$jgoodiesFormsVersion",
-          "com.jgoodies:looks:$jgoodiesLooksVersion"
+          "com.jgoodies:looks:$jgoodiesLooksVersion",
+
+          'xalan:xalan:2.7.1',
+          'javax.jms:jms:1.1',
+
+          'log4j:log4j:1.2.14',
+          'commons-logging:commons-logging:1.1.1',
+
+          'commons-httpclient:commons-httpclient:3.1',
+
+          'commons-collections:commons-collections:3.2.1',
+          "commons-collections:commons-lang:$jcommonsVersion",
+          "commons-collections:commons-io:$jcommonsVersion",
+          'com.google.guava:guava:14.0'
+
+    /*
+    dependencySubstitution {
+      substitute module('jtidy:jtidy:r872-jdk15') with module('net.sf.jtidy:jtidy:r938')
+      substitute module("jetty:jetty:$jettyVersion") with module("org.mortbay.jetty:jetty:$jettyVersion")
+    }
+    */
   }
 }
 
@@ -51,6 +74,7 @@ dependencies {
           "org.codehaus.groovy:groovy-all:$groovyVersion"
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
+    exclude module: 'cajo'
     exclude group: 'com.jgoodies', module: 'forms'
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
