@@ -26,9 +26,6 @@
  */
 
 repositories {
-  mavenLocal()
   maven { url 'https://plugins.gradle.org/m2/' }
   maven { url 'http://smartbearsoftware.com/repository/maven2/' }
-  mavenCentral()
-  jcenter()
 }

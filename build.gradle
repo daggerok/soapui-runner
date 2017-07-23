@@ -27,7 +27,7 @@
 
 buildscript {
   ext {
-    soapUIVersion = '5.1.3'
+    soapUIVersion = '5.2.0'
     groovyVersion = '2.4.11'
     gradleApiVersion = '4.0.1'
     spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
@@ -46,9 +46,8 @@ plugins {
 }
 
 apply from: "$rootDir/gradle/license.gradle"
-apply from: "$rootDir/gradle/repositories.gradle"
 apply from: "$rootDir/gradle/dependencies.gradle"
-apply from: "$rootDir/gradle/soapui-runner.gradle"
+apply from: "$rootDir/gradle/compatibility.gradle"
 apply from: "$rootDir/gradle/maven-publish.gradle"
 apply from: "$rootDir/gradle/gradle-publish.gradle"
 
