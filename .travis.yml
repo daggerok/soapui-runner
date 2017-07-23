@@ -15,7 +15,7 @@ script:
 before_cache:
   - gradle --stop
   - rm -rf $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -rf $HOME/.gradle/caches/*/plugin-resolution/
+  #- rm -rf $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
     - $HOME/.m2/
