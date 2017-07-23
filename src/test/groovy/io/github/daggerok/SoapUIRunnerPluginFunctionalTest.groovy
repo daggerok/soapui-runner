@@ -29,17 +29,15 @@ package io.github.daggerok
 import org.gradle.testkit.runner.GradleRunner
 import org.junit.Rule
 import org.junit.rules.TemporaryFolder
-import spock.lang.Ignore
 import spock.lang.Specification
 
 import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-@Ignore
-class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
+class SoapUIRunnerPluginFunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('5.0.0-hotfix.0')
+  static final head = getGradleBuildHead('5.0.1-hotfix.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
@@ -62,9 +60,9 @@ class SoapUIRunnerPlugin500Hotfix0FunctionalTest extends Specification {
 
     when:
     def result = GradleRunner.create()
-        .withProjectDir(testProjectDir.root)
-        .withArguments('testrunner')
-        .build()
+                             .withProjectDir(testProjectDir.root)
+                             .withArguments('testrunner')
+                             .build()
     then:
     result.task(':testrunner').outcome == SUCCESS
     result.output.contains('Please, make sure you properly configured testrunner task.')
