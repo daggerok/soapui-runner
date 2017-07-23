@@ -36,10 +36,10 @@ import static io.github.daggerok.utils.TestUtils.getGradleBuildHead
 import static org.gradle.testkit.runner.TaskOutcome.FAILED
 import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
-@Ignore
-class SoapUIRunnerPlugin462RC0FunctionalTest extends Specification {
+//@Ignore
+class SoapUIRunnerPluginFunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('4.6.2-rc.0')
+  static final head = getGradleBuildHead('5.0.1-hotfix.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
@@ -63,7 +63,7 @@ class SoapUIRunnerPlugin462RC0FunctionalTest extends Specification {
     when:
     def result = GradleRunner.create()
                              .withProjectDir(testProjectDir.root)
-                             .withArguments('testrunner', ' --stacktrace')
+                             .withArguments('testrunner')
                              .build()
     then:
     result.task(':testrunner').outcome == SUCCESS
@@ -83,7 +83,7 @@ class SoapUIRunnerPlugin462RC0FunctionalTest extends Specification {
     when:
     def result = GradleRunner.create()
                              .withProjectDir(testProjectDir.root)
-                             .withArguments('testrunner', ' --stacktrace')
+                             .withArguments('testrunner')
                              .buildAndFail()
     then:
     result.task(':testrunner').outcome == FAILED
@@ -102,7 +102,7 @@ class SoapUIRunnerPlugin462RC0FunctionalTest extends Specification {
     when:
     def result = GradleRunner.create()
                              .withProjectDir(testProjectDir.root)
-                             .withArguments('tasks', '--all', ' --stacktrace')
+                             .withArguments('tasks', '--all')
                              .build()
     then:
     result.task(':tasks').outcome == SUCCESS

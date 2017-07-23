@@ -41,6 +41,14 @@ configurations.all {
     force "com.jgoodies:binding:$jgoodiesBindingVersion",
           "com.jgoodies:forms:$jgoodiesFormsVersion",
           "com.jgoodies:looks:$jgoodiesLooksVersion"
+    /*
+    'gnu.cajo:cajo:1.142',
+    'gnu.cajo:cajo:1.142',
+    'joda-time:joda-time:1.6.2',
+    'org.apache.ws.commons.util:ws-commons-util:1.0.2',
+    'com.btr:proxy-vole:20131209',
+    'commons-httpclient:commons-httpclient:3.1'
+     */
   }
 }
 
