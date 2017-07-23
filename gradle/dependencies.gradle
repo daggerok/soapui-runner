@@ -47,8 +47,8 @@ configurations.all {
 dependencies {
 
   compile localGroovy(),
-                 gradleApi(),
-                 "org.codehaus.groovy:groovy-all:$groovyVersion"
+          gradleApi(),
+          "org.codehaus.groovy:groovy-all:$groovyVersion"
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'com.jgoodies', module: 'forms'
