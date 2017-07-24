@@ -37,7 +37,7 @@ import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 class SoapUIRunnerPluginFunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('5.2.0')
+  static final head = getGradleBuildHead('5.2.1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
