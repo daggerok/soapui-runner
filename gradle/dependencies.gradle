@@ -27,17 +27,17 @@
 
 buildscript {
   ext {
+    spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
     engineVersion = '3.3'
     xulrunnerVersion = '3.3'
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
+    gradleApiVersion = '4.0.1'
+    groovyVersion = '2.4.11'
   }
 }
 
-/*
- * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/4.6.4/soapui-maven-plugin-4.6.4.pom
- */
 configurations.all {
   resolutionStrategy {
     force 'teamdev:jxbrowser:3.3',
@@ -67,6 +67,10 @@ dependencies {
   compile localGroovy(),
           gradleApi(),
           "org.codehaus.groovy:groovy-all:$groovyVersion"
+  /*
+   * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui/5.3.0/soapui-5.3.0.pom
+   * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
+   */
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'teamdev', module: 'jxbrowser'
