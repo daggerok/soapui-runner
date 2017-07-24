@@ -38,9 +38,6 @@ buildscript {
   }
 }
 
-/*
- * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
- */
 configurations.all {
   resolutionStrategy {
     force 'teamdev:jxbrowser:3.3',
@@ -70,6 +67,10 @@ dependencies {
   compile localGroovy(),
           gradleApi(),
           "org.codehaus.groovy:groovy-all:$groovyVersion"
+  /*
+   * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui/5.3.0/soapui-5.3.0.pom
+   * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
+   */
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'teamdev', module: 'jxbrowser'
