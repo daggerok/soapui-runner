@@ -29,23 +29,29 @@
  * read more: https://guides.gradle.org/publishing-plugins-to-gradle-plugin-portal/
  */
 
-project.group = 'io.github.daggerok'
-project.version = '5.0.1-hotfix.1'
-project.description = info('Allows run SoapUI testrunner and loadtestrunner.')
+buildscript {
+  ext {
+    url = 'https://github.com/daggerok/soapui-runner'
+  }
+}
+
+group = 'io.github.daggerok'
+version = '5.0.1'
+description = info('Allows run SoapUI testrunner and loadtestrunner.')
 
 gradlePlugin {
   plugins {
     soapUITestRunnerPlugin {
-      id = "${group}.soapui-testrunner"
-      implementationClass = "${group}.SoapUITestRunnerPlugin"
+      id = "${project.group}.soapui-testrunner"
+      implementationClass = "${project.group}.SoapUITestRunnerPlugin"
     }
     soapUILoadTestRunnerPlugin {
-      id = "${group}.soapui-loadtestrunner"
-      implementationClass = "${group}.SoapUILoadTestRunnerPlugin"
+      id = "${project.group}.soapui-loadtestrunner"
+      implementationClass = "${project.group}.SoapUILoadTestRunnerPlugin"
     }
     soapUIRunnerPlugin {
-      id = "${group}.soapui-runner"
-      implementationClass = "${group}.SoapUIRunnerPlugin"
+      id = "${project.group}.soapui-runner"
+      implementationClass = "${project.group}.SoapUIRunnerPlugin"
     }
   }
 }
@@ -60,8 +66,8 @@ publishing {
 
 pluginBundle {
 
-  website = url
-  vcsUrl = "${url}.git"
+  website = project.url
+  vcsUrl = "${project.url}.git"
   description = project.description
   tags = [
       'SoapUI',
@@ -90,16 +96,16 @@ pluginBundle {
 
   plugins {
     soapUITestRunnerPlugin {
-      id = "${group}.soapui-testrunner"
+      id = "${project.group}.soapui-testrunner"
       // max length 254 characters:
       description = displayName = info('Allows run SoapUI TestSuites and TestCases using testrunner.')
     }
     soapUILoadTestRunnerPlugin {
-      id = "${group}.soapui-loadtestrunner"
+      id = "${project.group}.soapui-loadtestrunner"
       description = displayName = info('Allows run SoapUI Load Tests using loadtestrunner.')
     }
     soapUIRunnerPlugin {
-      id = "${group}.$rootProject.name"
+      id = "${project.group}.$rootProject.name"
       displayName = project.description
     }
   }

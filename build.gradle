@@ -28,10 +28,6 @@
 buildscript {
   ext {
     soapUIVersion = '5.0.0-beta'
-    groovyVersion = '2.4.11'
-    gradleApiVersion = '4.0.1'
-    spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
-    url = 'https://github.com/daggerok/soapui-runner'
   }
   apply from: "$rootDir/gradle/repositories.gradle"
 }
@@ -46,10 +42,9 @@ plugins {
 }
 
 apply from: "$rootDir/gradle/license.gradle"
-apply from: "$rootDir/gradle/repositories.gradle"
 apply from: "$rootDir/gradle/dependencies.gradle"
-apply from: "$rootDir/gradle/soapui-runner.gradle"
+apply from: "$rootDir/gradle/compatibility.gradle"
 apply from: "$rootDir/gradle/maven-publish.gradle"
 apply from: "$rootDir/gradle/gradle-publish.gradle"
 
-println "using version: $project.version"
+println "using version: $version"

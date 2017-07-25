@@ -27,28 +27,12 @@
 
 buildscript {
   ext {
+    spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
-  }
-}
-
-/*
- * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
- */
-configurations.all {
-  resolutionStrategy {
-    force "com.jgoodies:binding:$jgoodiesBindingVersion",
-          "com.jgoodies:forms:$jgoodiesFormsVersion",
-          "com.jgoodies:looks:$jgoodiesLooksVersion"
-    /*
-    'gnu.cajo:cajo:1.142',
-    'gnu.cajo:cajo:1.142',
-    'joda-time:joda-time:1.6.2',
-    'org.apache.ws.commons.util:ws-commons-util:1.0.2',
-    'com.btr:proxy-vole:20131209',
-    'commons-httpclient:commons-httpclient:3.1'
-     */
+    gradleApiVersion = '4.0.1'
+    groovyVersion = '2.4.11'
   }
 }
 
@@ -57,12 +41,20 @@ dependencies {
   compile localGroovy(),
           gradleApi(),
           "org.codehaus.groovy:groovy-all:$groovyVersion"
+  /*
+   * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui/5.3.0/soapui-5.3.0.pom
+   * see http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.0/soapui-maven-plugin-5.3.0.pom
+   */
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
     exclude group: 'com.jgoodies', module: 'forms'
     exclude group: 'com.jgoodies', module: 'looks'
     exclude group: 'com.jgoodies', module: 'binding'
   }
+
+  compile "com.jgoodies:binding:$jgoodiesBindingVersion",
+          "com.jgoodies:forms:$jgoodiesFormsVersion",
+          "com.jgoodies:looks:$jgoodiesLooksVersion"
 
   testCompile gradleTestKit()
   testCompile("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
