@@ -2,10 +2,25 @@ group: edge
 language: java
 jdk: oraclejdk8
 install: true
+before_install:
+  # sdkman installation
+  - curl -s "https://get.sdkman.io" | bash
+  - mkdir -p "$HOME/.sdkman/etc"
+  - touch "$HOME/.sdkman/etc/config"
+  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
+  - source "$HOME/.sdkman/bin/sdkman-init.sh"
 script:
+  # testing main version
   - bash gradlew clean assemble --stacktrace
   - bash gradlew check license build --stacktrace
   - bash gradlew install publish --stacktrace
+  # testing other gradle versions:
+  - >
+    for version in 4.0-rc-1 4.0-rc-2 4.0-rc-3 4.0 4.0.1 4.1-rc-1; do
+      sdk use gradle $version;
+      source "$HOME/.sdkman/bin/sdkman-init.sh";
+      gradle clean build install publish --stacktrace;
+    done;
 before_cache:
   - bash gradlew --stop
   - rm -rf $HOME/.m2/repository/io/github/daggerok
