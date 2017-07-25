@@ -27,7 +27,7 @@
 
 buildscript {
   ext {
-    soapUIVersion = '5.0.0-beta'
+    soapUIVersion = '5.0.1'
   }
   apply from: "$rootDir/gradle/repositories.gradle"
 }

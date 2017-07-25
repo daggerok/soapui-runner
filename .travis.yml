@@ -2,13 +2,6 @@ group: edge
 language: java
 jdk: oraclejdk8
 install: true
-before_install:
-  # sdkman installation
-  - curl -s "https://get.sdkman.io" | bash
-  - mkdir -p "$HOME/.sdkman/etc"
-  - touch "$HOME/.sdkman/etc/config"
-  - sed -i -e 's/^sdkman_auto_answer=false$/sdkman_auto_answer=true/g' "$HOME/.sdkman/etc/config"
-  - source "$HOME/.sdkman/bin/sdkman-init.sh"
 script:
   # testing main version
   - bash gradlew clean assemble --stacktrace
@@ -20,7 +13,6 @@ script:
       gradle wrapper --gradle-version $version;
       bash gradlew -v;
       bash gradlew clean check license build install publish --stacktrace;
-      rm -rf $HOME/.gradle;
     done;
 before_cache:
   - bash gradlew --stop
