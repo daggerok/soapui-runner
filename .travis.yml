@@ -16,10 +16,11 @@ script:
   - bash gradlew install publish --stacktrace
   # testing other gradle versions:
   - >
-    for version in 4.0-rc-1 4.0-rc-2 4.0-rc-3 4.0 4.0.1 4.1-rc-1; do
-      sdk use gradle $version;
-      source "$HOME/.sdkman/bin/sdkman-init.sh";
-      gradle clean build install publish --stacktrace;
+    for version in 4.0 4.0.1; do
+      gradle wrapper --gradle-version $version;
+      bash gradlew -v;
+      bash gradlew clean check license build install publish --stacktrace;
+      rm -rf $HOME/.gradle;
     done;
 before_cache:
   - bash gradlew --stop
