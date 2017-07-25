@@ -36,7 +36,7 @@ buildscript {
 }
 
 group = 'io.github.daggerok'
-version = '5.0.1'
+version = "$soapUIVersion"
 description = info('Allows run SoapUI testrunner and loadtestrunner.')
 
 gradlePlugin {
