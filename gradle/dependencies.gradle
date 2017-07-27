@@ -31,7 +31,7 @@ buildscript {
     jgoodiesBindingVersion = '2.0.1'
     jgoodiesFormsVersion = '1.0.7'
     jgoodiesLooksVersion = '2.2.0'
-    gradleApiVersion = '4.0.1'
+    gradleApiVersion = '4.0.2'
     groovyVersion = '2.4.11'
   }
 }

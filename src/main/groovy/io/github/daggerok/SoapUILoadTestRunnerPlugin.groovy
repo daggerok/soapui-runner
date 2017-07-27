@@ -28,17 +28,21 @@ package io.github.daggerok
 
 import groovy.transform.CompileStatic
 import io.github.daggerok.tasks.SoapUILoadTestRunnerTask
+import io.github.daggerok.utils.ConfigurationUtils
+import io.github.daggerok.utils.PluginUtils
+import io.github.daggerok.utils.ProjectUtils
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-
-import static io.github.daggerok.utils.ExecutionUtils.createExtFolder
 
 @CompileStatic
 class SoapUILoadTestRunnerPlugin implements Plugin<Project> {
 
   @Override
   void apply(final Project project) {
-    project.getTasks().create(SoapUILoadTestRunnerTask.NAME, SoapUILoadTestRunnerTask)
-    createExtFolder(project)
+
+    PluginUtils.setSoapUIExtLibraries(project)
+    ConfigurationUtils.createExtDirConfiguration(project)
+    project.getTasks().maybeCreate(SoapUILoadTestRunnerTask.NAME, SoapUILoadTestRunnerTask)
+    ProjectUtils.afterEvaluate(project)
   }
 }

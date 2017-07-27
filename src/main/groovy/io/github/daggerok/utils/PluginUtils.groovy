@@ -35,7 +35,13 @@ import java.text.DateFormat
 
 @Slf4j
 @CompileStatic
-class ExecutionUtils {
+class PluginUtils {
+
+  final static String SOAPUI_EXT_LIBRARIES = 'soapui.ext.libraries'
+
+  static final void setSoapUIExtLibraries(final Project project) {
+    System.properties.setProperty(SOAPUI_EXT_LIBRARIES, ProjectUtils.extDirPath(project))
+  }
 
   static final String usage(final String taskName) {
     """\
@@ -59,23 +65,6 @@ class ExecutionUtils {
 
   static String today() {
     DateFormat.getDateTimeInstance().format new Date()
-  }
-
-  /**
-   * Try execute clojure. If error occurs then just log it and continue execution...
-   * <br/>
-   * @param closure closure to be executed.
-   */
-  static void tryWithLog(final Closure closure) {
-
-    try {
-
-      closure()
-
-    } catch (final Exception e) {
-
-      log.error "continue execution with error: {}", e?.localizedMessage, e
-    }
   }
 
   /**
@@ -137,30 +126,5 @@ class ExecutionUtils {
     }
   }
 
-  /**
-   * SoapUI runner looking for ext folder.
-   * All inside could be used as external scripts or libraries.
-   * <br/>
-   * I will create that folder if it's not exists.
-   * Otherwise if it's exists and it's not a directory it might cause some unexpected issues...
-   *
-   * @param project applied to
-   */
-  static void createExtFolder(final Project project) {
-
-    final String extDirName = 'ext'
-    final File extDir = project.file(extDirName)
-
-    if (extDir.exists()) {
-      if (extDir.isDirectory()) return
-      log.info "$extDirName is reserved name for SoapUI libraries folder."
-      return
-    }
-
-    tryWithLog {
-      project.mkdir(extDirName)
-    }
-  }
-
-  private ExecutionUtils() {}
+  private PluginUtils() {}
 }

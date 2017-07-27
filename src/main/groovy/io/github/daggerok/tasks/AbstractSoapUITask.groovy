@@ -29,12 +29,12 @@ package io.github.daggerok.tasks
 import com.eviware.soapui.tools.AbstractSoapUITestRunner
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import io.github.daggerok.utils.ProjectUtils
+import io.github.daggerok.utils.TaskUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-
-import static io.github.daggerok.utils.ExecutionUtils.tryWithLogMessage
 
 @Slf4j
 @CompileStatic
@@ -42,12 +42,12 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   @Optional @Input boolean failOnError = true
 
-  @Optional @Input String outputFolder = "$project.buildDir/soapui"
-  @Optional @Input String projectFile = 'soapui-test-project.xml'
+  @Optional @Input String projectFile = ProjectUtils.DEFAULT_PROJECT_FILE
+  @Optional @Input String outputFolder = ProjectUtils.defaultOutputPath(project)
 
-  @Optional @Input String[] systemProperties
-  @Optional @Input String[] globalProperties
-  @Optional @Input String[] projectProperties
+  @Optional @Input List<String> systemProperties = []
+  @Optional @Input List<String> globalProperties = []
+  @Optional @Input List<String> projectProperties = []
 
   @Optional @Input String settingsFile
   @Optional @Input String endpoint
@@ -62,8 +62,8 @@ abstract class AbstractSoapUITask extends DefaultTask {
   @Optional @Input boolean enableUI = false
 
   AbstractSoapUITask(final String id) {
-    description = "SoapUI $id task"
-    group = 'SoapUI runner'
+    group = TaskUtils.GROUP
+    description = TaskUtils.describe(id)
   }
 
   @TaskAction
@@ -88,13 +88,9 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   private void setupProps(final AbstractSoapUITestRunner runner) {
 
-    tryWithLogMessage('parsing system properties failed.') {
-      String[] props = System.properties.collect { "$it.key=$it.value" }
-      runner.setSystemProperties(systemProperties ?: props)
-    }
-
-    if (globalProperties) runner.globalProperties = globalProperties
-    if (projectProperties) runner.projectProperties = projectProperties
+    if (systemProperties && systemProperties.size() > 0) runner.systemProperties = systemProperties as String[]
+    if (globalProperties && globalProperties.size() > 0) runner.globalProperties = globalProperties as String[]
+    if (projectProperties && projectProperties.size() > 0) runner.projectProperties = projectProperties as String[]
 
     if (settingsFile) runner.settingsFile = settingsFile
     if (endpoint) runner.endpoint = endpoint
@@ -142,16 +138,18 @@ abstract class AbstractSoapUITask extends DefaultTask {
     this.settingsFile = settingsFile
   }
 
-  void setSystemProperties(final String[] systemProperties) {
-    this.systemProperties = systemProperties
+  void setSystemProperties(final List<String> systemProperties) {
+    log.warn "adding sysProps: ${systemProperties.size()}"
+    if (systemProperties && systemProperties.size() > 0) this.systemProperties.addAll(systemProperties)
+    log.warn "added sysProps: ${systemProperties.size()}"
   }
 
-  void setGlobalProperties(final String[] globalProperties) {
-    this.globalProperties = globalProperties
+  void setGlobalProperties(final List<String> globalProperties) {
+    if (globalProperties && globalProperties.size() > 0) this.globalProperties.addAll(globalProperties)
   }
 
-  void setProjectProperties(final String[] projectProperties) {
-    this.projectProperties = projectProperties
+  void setProjectProperties(final List<String> projectProperties) {
+    if (projectProperties && projectProperties.size() > 0) this.projectProperties.addAll(projectProperties)
   }
 
   /**
