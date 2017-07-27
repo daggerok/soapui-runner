@@ -24,29 +24,50 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
-package io.github.daggerok
+package io.github.daggerok.utils
 
-import groovy.transform.CompileStatic
-import io.github.daggerok.tasks.SoapUILoadTestRunnerTask
-import io.github.daggerok.tasks.SoapUITestRunnerTask
-import io.github.daggerok.utils.ConfigurationUtils
-import io.github.daggerok.utils.PluginUtils
-import io.github.daggerok.utils.ProjectUtils
-import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.artifacts.Configuration
 
-@CompileStatic
-class SoapUIRunnerPlugin implements Plugin<Project> {
+class ConfigurationUtils {
 
-  @Override
-  void apply(final Project project) {
-
-    PluginUtils.setSoapUIExtLibraries(project)
-    ConfigurationUtils.createExtDirConfiguration(project)
-
-    project.getTasks().maybeCreate(SoapUITestRunnerTask.NAME, SoapUITestRunnerTask)
-    project.getTasks().maybeCreate(SoapUILoadTestRunnerTask.NAME, SoapUILoadTestRunnerTask)
-
-    ProjectUtils.afterEvaluate(project)
+  static final String CONFIGURATION_NAME = 'extDir'
+  /**
+   * @param project plugin applied project
+   * @return extDir configuration
+   */
+  static Configuration createExtDirConfiguration(final Project project) {
+    def config = project.configurations.maybeCreate(CONFIGURATION_NAME)
+    config.transitive = false
+    return config
   }
+
+  /**
+   * @param project plugin applied project
+   * @return true if extDir configuration exists
+   */
+  static boolean hasNoConfig(final Project project) {
+    null == getByProject(project)
+  }
+
+  /**
+   * load external libraries for SoapUI project execution
+   *
+   * @param project plugin applied project
+   */
+  static void loadExtLibraries(final Project project) {
+    getByProject(project).collect({ File file ->
+        GroovyObject.class.classLoader.addURL(file.toURI().toURL())
+    })
+  }
+
+  /**
+   * @param project plugin applied project
+   * @return configuration.
+   */
+  static Configuration getByProject(final Project project) {
+    project.configurations[CONFIGURATION_NAME]
+  }
+
+  private ConfigurationUtils() {}
 }

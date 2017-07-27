@@ -24,29 +24,37 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
-package io.github.daggerok
+package io.github.daggerok.utils
 
-import groovy.transform.CompileStatic
-import io.github.daggerok.tasks.SoapUILoadTestRunnerTask
-import io.github.daggerok.tasks.SoapUITestRunnerTask
-import io.github.daggerok.utils.ConfigurationUtils
-import io.github.daggerok.utils.PluginUtils
-import io.github.daggerok.utils.ProjectUtils
-import org.gradle.api.Plugin
 import org.gradle.api.Project
+import org.gradle.api.Task
+import org.gradle.api.tasks.Copy
 
-@CompileStatic
-class SoapUIRunnerPlugin implements Plugin<Project> {
+import static io.github.daggerok.utils.ConfigurationUtils.CONFIGURATION_NAME
 
-  @Override
-  void apply(final Project project) {
+class TaskUtils {
 
-    PluginUtils.setSoapUIExtLibraries(project)
-    ConfigurationUtils.createExtDirConfiguration(project)
+  static String GROUP = 'SoapUI runner'
 
-    project.getTasks().maybeCreate(SoapUITestRunnerTask.NAME, SoapUITestRunnerTask)
-    project.getTasks().maybeCreate(SoapUILoadTestRunnerTask.NAME, SoapUILoadTestRunnerTask)
-
-    ProjectUtils.afterEvaluate(project)
+  /**
+   * @param project plugin applied project
+   * @return extDir task.
+   */
+  static Task createExtDirTask(final Project project) {
+    project.getTasks().create(name: CONFIGURATION_NAME, type: Copy, group: GROUP, description: describe(CONFIGURATION_NAME)) {
+      from ConfigurationUtils.getByProject(project)
+      into ProjectUtils.extDirPath(project)
+    }
   }
+
+  /**
+   * @param id task identifier
+   * @return task descripotion
+   * @see `gradle tasks --all`
+   */
+  static String describe(final String id) {
+    "SoapUI $id task"
+  }
+
+  private TaskUtils() {}
 }

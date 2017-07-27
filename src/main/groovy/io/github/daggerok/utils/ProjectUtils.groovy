@@ -24,29 +24,50 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
-package io.github.daggerok
+package io.github.daggerok.utils
 
 import groovy.transform.CompileStatic
-import io.github.daggerok.tasks.SoapUILoadTestRunnerTask
-import io.github.daggerok.tasks.SoapUITestRunnerTask
-import io.github.daggerok.utils.ConfigurationUtils
-import io.github.daggerok.utils.PluginUtils
-import io.github.daggerok.utils.ProjectUtils
-import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+import java.nio.file.Paths
+
 @CompileStatic
-class SoapUIRunnerPlugin implements Plugin<Project> {
+class ProjectUtils {
 
-  @Override
-  void apply(final Project project) {
+  static final String DEFAULT_PROJECT_FILE = 'soapui-test-project.xml'
 
-    PluginUtils.setSoapUIExtLibraries(project)
-    ConfigurationUtils.createExtDirConfiguration(project)
-
-    project.getTasks().maybeCreate(SoapUITestRunnerTask.NAME, SoapUITestRunnerTask)
-    project.getTasks().maybeCreate(SoapUILoadTestRunnerTask.NAME, SoapUILoadTestRunnerTask)
-
-    ProjectUtils.afterEvaluate(project)
+  /**
+   * <ol>
+   *   <li>skip if no extDir configuration exists</li>
+   *   <li>configure classpath for any libraries from soapUIExtLibraries config</li>
+   *   <li>create create "extDir" task to do generate needed ext folder for project execution</li>
+   * </ol>
+   *
+   * @param project plugin applied project
+   */
+  static void afterEvaluate(final Project project) {
+    project.afterEvaluate {
+      if (ConfigurationUtils.hasNoConfig(project)) return
+      ConfigurationUtils.loadExtLibraries(project)
+      TaskUtils.createExtDirTask(project)
+    }
   }
+
+  /**
+   * @param project plugin applied project
+   * @return default soapui.ext.libraries path
+   */
+  static String defaultOutputPath(final Project project) {
+    Paths.get(project.rootProject.buildDir.absolutePath, 'soapui').toString()
+  }
+
+  /**
+   * @param project plugin applied project
+   * @return default soapui.ext.libraries path
+   */
+  static String extDirPath(final Project project) {
+    Paths.get(defaultOutputPath(project), 'ext').toString()
+  }
+
+  private PluginUtils() {}
 }

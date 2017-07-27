@@ -246,6 +246,28 @@ Task[] soapUITasks = [
 task soapUITestCases(dependsOn: soapUITasks)
 ----
 
+==== external libraries folder generation
+
+sometimes we need use some external packages, like jdbc drivers.
+for that purposes we have to add them inside $SOAPUI_HOME/bin/ext directory
+to simplify that process, we can generate needed ext folder to copy it later inside SoapUI ext dir
+
+[source,gradle]
+----
+dependencies {
+  soapUIExtLibraries 'org.postgresql:postgresql:9.4.1212.jre7'
+}
+----
+
+[source,gradle]
+----
+gradle extDir
+...
+cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext
+----
+
+see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libraries=...`
+
 == supported Gradle wrapper versions
 
 . plugin:
@@ -261,7 +283,7 @@ task soapUITestCases(dependsOn: soapUITasks)
 
 ==== current milestone version
 
-=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.1-RC[5.3.1-RC]
+=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.1-RC[5.3.1-RC (plugin: 5.3.1-RC-0)]
 
 ==== support old versions
 

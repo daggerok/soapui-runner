@@ -33,7 +33,7 @@ import io.github.daggerok.tasks.runners.SoapUITestRunner
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 
-import static io.github.daggerok.utils.ExecutionUtils.*
+import static io.github.daggerok.utils.PluginUtils.*
 
 @Slf4j
 @CompileStatic

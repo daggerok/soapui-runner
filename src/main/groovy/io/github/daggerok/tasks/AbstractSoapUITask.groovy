@@ -29,12 +29,13 @@ package io.github.daggerok.tasks
 import com.eviware.soapui.tools.AbstractSoapUITestRunner
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
+import io.github.daggerok.utils.PluginUtils
+import io.github.daggerok.utils.ProjectUtils
+import io.github.daggerok.utils.TaskUtils
 import org.gradle.api.DefaultTask
 import org.gradle.api.tasks.Input
 import org.gradle.api.tasks.Optional
 import org.gradle.api.tasks.TaskAction
-
-import static io.github.daggerok.utils.ExecutionUtils.tryWithLogMessage
 
 @Slf4j
 @CompileStatic
@@ -42,8 +43,8 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   @Optional @Input boolean failOnError = true
 
-  @Optional @Input String outputFolder = "$project.buildDir/soapui"
-  @Optional @Input String projectFile = 'soapui-test-project.xml'
+  @Optional @Input String projectFile = ProjectUtils.DEFAULT_PROJECT_FILE
+  @Optional @Input String outputFolder = ProjectUtils.defaultOutputPath(project)
 
   @Optional @Input String[] systemProperties
   @Optional @Input String[] globalProperties
@@ -62,8 +63,8 @@ abstract class AbstractSoapUITask extends DefaultTask {
   @Optional @Input boolean enableUI = false
 
   AbstractSoapUITask(final String id) {
-    description = "SoapUI $id task"
-    group = 'SoapUI runner'
+    group = TaskUtils.GROUP
+    description = TaskUtils.describe(id)
   }
 
   @TaskAction
@@ -88,11 +89,7 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   private void setupProps(final AbstractSoapUITestRunner runner) {
 
-    tryWithLogMessage('parsing system properties failed.') {
-      String[] props = System.properties.collect { "$it.key=$it.value" }
-      runner.setSystemProperties(systemProperties ?: props)
-    }
-
+    if (systemProperties) runner.systemProperties = systemProperties
     if (globalProperties) runner.globalProperties = globalProperties
     if (projectProperties) runner.projectProperties = projectProperties
 
