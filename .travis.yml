@@ -20,7 +20,7 @@ script:
       gradle wrapper --gradle-version $version;
       bash gradlew -v;
       bash gradlew clean check license build install publish --stacktrace;
-      rm -rf $HOME/.gradle;
+      bash gradlew --stop;
     done;
 before_cache:
   - bash gradlew --stop

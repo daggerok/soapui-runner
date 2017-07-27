@@ -24,7 +24,7 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '5.3.0'
+  id 'io.github.daggerok.soapui-runner' version '5.3.0-0'
 }
 ----
 
@@ -38,7 +38,7 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-0'
   }
 }
 
@@ -254,8 +254,9 @@ to simplify that process, we can generate needed ext folder to copy it later ins
 
 [source,gradle]
 ----
+repositories { /* ... */ }
 dependencies {
-  soapUIExtLibraries 'org.postgresql:postgresql:9.4.1212.jre7'
+  extDir 'org.postgresql:postgresql:9.4.1212.jre7'
 }
 ----
 
@@ -279,7 +280,7 @@ see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libra
 
 ==== latest release version
 
-=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.0[5.3.0]
+=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.0[5.3.0 (plugin: 5.3.0-0)]
 
 ==== current milestone version
 
