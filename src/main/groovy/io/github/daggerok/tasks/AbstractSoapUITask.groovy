@@ -139,9 +139,7 @@ abstract class AbstractSoapUITask extends DefaultTask {
   }
 
   void setSystemProperties(final List<String> systemProperties) {
-    log.warn "adding sysProps: ${systemProperties.size()}"
     if (systemProperties && systemProperties.size() > 0) this.systemProperties.addAll(systemProperties)
-    log.warn "added sysProps: ${systemProperties.size()}"
   }
 
   void setGlobalProperties(final List<String> globalProperties) {
