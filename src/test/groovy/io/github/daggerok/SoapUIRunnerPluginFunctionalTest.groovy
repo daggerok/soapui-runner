@@ -37,7 +37,7 @@ import static org.gradle.testkit.runner.TaskOutcome.SUCCESS
 
 class SoapUIRunnerPluginFunctionalTest extends Specification {
 
-  static final head = getGradleBuildHead('5.3.1-RC-0')
+  static final head = getGradleBuildHead('5.3.0-1')
 
   @Rule final TemporaryFolder testProjectDir = new TemporaryFolder()
 
@@ -105,6 +105,7 @@ class SoapUIRunnerPluginFunctionalTest extends Specification {
     then:
     result.task(':tasks').outcome == SUCCESS
     result.output.contains('SoapUI runner tasks')
+    result.output.contains('extDir - SoapUI extDir task')
     result.output.contains('testrunner - SoapUI testrunner task')
     result.output.contains('loadtestrunner - SoapUI loadtestrunner task')
   }

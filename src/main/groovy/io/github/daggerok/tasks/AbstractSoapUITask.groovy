@@ -29,7 +29,6 @@ package io.github.daggerok.tasks
 import com.eviware.soapui.tools.AbstractSoapUITestRunner
 import groovy.transform.CompileStatic
 import groovy.util.logging.Slf4j
-import io.github.daggerok.utils.PluginUtils
 import io.github.daggerok.utils.ProjectUtils
 import io.github.daggerok.utils.TaskUtils
 import org.gradle.api.DefaultTask
@@ -46,9 +45,9 @@ abstract class AbstractSoapUITask extends DefaultTask {
   @Optional @Input String projectFile = ProjectUtils.DEFAULT_PROJECT_FILE
   @Optional @Input String outputFolder = ProjectUtils.defaultOutputPath(project)
 
-  @Optional @Input String[] systemProperties
-  @Optional @Input String[] globalProperties
-  @Optional @Input String[] projectProperties
+  @Optional @Input List<String> systemProperties = []
+  @Optional @Input List<String> globalProperties = []
+  @Optional @Input List<String> projectProperties = []
 
   @Optional @Input String settingsFile
   @Optional @Input String endpoint
@@ -89,9 +88,9 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   private void setupProps(final AbstractSoapUITestRunner runner) {
 
-    if (systemProperties) runner.systemProperties = systemProperties
-    if (globalProperties) runner.globalProperties = globalProperties
-    if (projectProperties) runner.projectProperties = projectProperties
+    if (systemProperties && systemProperties.size() > 0) runner.systemProperties = systemProperties as String[]
+    if (globalProperties && globalProperties.size() > 0) runner.globalProperties = globalProperties as String[]
+    if (projectProperties && projectProperties.size() > 0) runner.projectProperties = projectProperties as String[]
 
     if (settingsFile) runner.settingsFile = settingsFile
     if (endpoint) runner.endpoint = endpoint
@@ -139,16 +138,40 @@ abstract class AbstractSoapUITask extends DefaultTask {
     this.settingsFile = settingsFile
   }
 
-  void setSystemProperties(final String[] systemProperties) {
-    this.systemProperties = systemProperties
+  void setSystemProperties(final List<String> systemProperties) {
+    addOrReplace(systemProperties, this.systemProperties)
   }
 
-  void setGlobalProperties(final String[] globalProperties) {
-    this.globalProperties = globalProperties
+  void setGlobalProperties(final List<String> globalProperties) {
+    addOrReplace(globalProperties, this.globalProperties)
   }
 
-  void setProjectProperties(final String[] projectProperties) {
-    this.projectProperties = projectProperties
+  void setProjectProperties(final List<String> projectProperties) {
+    addOrReplace(projectProperties, this.projectProperties)
+  }
+
+  /**
+   * Add all items from -> to. Replace any old to-items with new from-items.
+   *
+   * @param from new items.
+   * @param to target container.
+   */
+  private void addOrReplace(final List<String> from, final List<String> to) {
+    if (from && from.size() > 0) {
+      def keys = from.collect({ getKey(it) })
+      to.removeAll { keys.contains(getKey(it)) }
+      to.addAll(from)
+    }
+  }
+
+  /**
+   * Parse and get key from "key=value" input string.
+   *
+   * @param input string to be parsed.
+   * @return key.
+   */
+  private String getKey(final String input) {
+    input.split('=')[0]
   }
 
   /**
