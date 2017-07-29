@@ -24,7 +24,7 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '5.3.0-1'
+  id 'io.github.daggerok.soapui-runner' version '5.3.0-2'
 }
 ----
 
@@ -38,7 +38,7 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-1'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-2'
   }
 }
 
@@ -269,6 +269,48 @@ cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext
 
 see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libraries=...`
 
+== adding and override properties
+
+if you are using gradle multi-project build, you can define base configuration inside parent build:
+
+[source,gradle]
+----
+// gradle.build:
+allprojects {
+  testrunner {
+    projectProperties = [
+        'os=base',
+        'url=https://example.com'
+    ]
+    systemProperties = [
+        "soapui.ext.libraries=$buildDir"
+    ]
+    // ...
+  }
+}
+----
+
+...and later override it using children build:
+
+[source,gradle]
+----
+// ./modules/windows/gradle.build
+testrunner {
+  projectProperties = [
+      // add new:
+      'newPropjectProp=adding',
+      // override existing:
+      'os=windows',
+      'url=https://microsoft.com'
+  ]
+  systemProperties = [
+      // override existing:
+      "soapui.ext.libraries=C:/path/to/SoapUI-5.3.0/bin/ext"
+  ]
+  // ...
+}
+----
+
 == supported Gradle wrapper versions
 
 . plugin:
@@ -280,11 +322,11 @@ see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libra
 
 ==== latest release version
 
-=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.0[5.3.0 (plugin: 5.3.0-1)]
+=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.0[5.3.0 (plugin: 5.3.0-2)]
 
 ==== current milestone version
 
-=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.1-RC[5.3.1-RC (plugin: 5.3.1-RC-0)]
+=== link:https://github.com/daggerok/soapui-runner/releases/tag/5.3.1-RC[5.3.1-RC (plugin: 5.3.1-RC-2)]
 
 ==== support old versions
 
@@ -355,3 +397,9 @@ mv -f $HOME/.soapuios $HOME/NOT.soapuios
 ----
 
 link:https://stackoverflow.com/questions/31409653/classnotfoundexception-after-updating-to-soapui-5-2-0[read more]
+
+== license
+
+=== link:https://github.com/daggerok/soapui-runner/blob/master/LICENSE[MIT]
+
+enjoy! :)
