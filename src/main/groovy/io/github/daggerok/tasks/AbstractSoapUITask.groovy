@@ -139,15 +139,21 @@ abstract class AbstractSoapUITask extends DefaultTask {
   }
 
   void setSystemProperties(final List<String> systemProperties) {
+    log.info "adding systemProperties to: ${this.systemProperties}"
     addOrReplace(systemProperties, this.systemProperties)
+    log.info "done. now sysemProperties are: ${this.systemProperties}"
   }
 
   void setGlobalProperties(final List<String> globalProperties) {
+    log.info "adding globalProperties to: ${this.globalProperties}"
     addOrReplace(globalProperties, this.globalProperties)
+    log.info "done. now globalProperties are: ${this.globalProperties}"
   }
 
   void setProjectProperties(final List<String> projectProperties) {
+    log.info "adding projectProperties to: ${this.projectProperties}"
     addOrReplace(projectProperties, this.projectProperties)
+    log.info "done. now projectProperties are: ${this.projectProperties}"
   }
 
   /**
@@ -156,11 +162,12 @@ abstract class AbstractSoapUITask extends DefaultTask {
    * @param from new items.
    * @param to target container.
    */
-  private void addOrReplace(final List<String> from, final List<String> to) {
+  private static void addOrReplace(final List<String> from, final List<String> to) {
     if (from && from.size() > 0) {
       def keys = from.collect({ getKey(it) })
-      to.removeAll { keys.contains(getKey(it)) }
+      def removed = to.removeAll { keys.contains(getKey(it)) }
       to.addAll(from)
+      log.info "properties was overriden: $removed"
     }
   }
 
@@ -170,7 +177,7 @@ abstract class AbstractSoapUITask extends DefaultTask {
    * @param input string to be parsed.
    * @return key.
    */
-  private String getKey(final String input) {
+  private static String getKey(final String input) {
     input.split('=')[0]
   }
 
