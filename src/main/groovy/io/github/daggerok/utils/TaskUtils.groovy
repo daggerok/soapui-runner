@@ -26,12 +26,14 @@
  */
 package io.github.daggerok.utils
 
+import groovy.util.logging.Slf4j
 import org.gradle.api.Project
 import org.gradle.api.Task
 import org.gradle.api.tasks.Copy
 
 import static io.github.daggerok.utils.ConfigurationUtils.CONFIGURATION_NAME
 
+@Slf4j
 class TaskUtils {
 
   static String GROUP = 'SoapUI runner'
@@ -41,6 +43,13 @@ class TaskUtils {
    * @return extDir task.
    */
   static Task createExtDirTask(final Project project) {
+
+    // read more: https://github.com/daggerok/soapui-runner/issues/1
+    if (project.getTasksByName(CONFIGURATION_NAME, true).size() > 0) return
+
+    // create extDit task only if it's not exists
+    log.info "create $CONFIGURATION_NAME task for $project.name project"
+
     project.getTasks().create(name: CONFIGURATION_NAME, type: Copy, group: GROUP, description: describe(CONFIGURATION_NAME)) {
       from ConfigurationUtils.getByProject(project)
       into ProjectUtils.extDirPath(project)
