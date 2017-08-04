@@ -44,12 +44,16 @@ class TaskUtils {
    */
   static Task createExtDirTask(final Project project) {
 
+    // singleton extDir task in multi-projects configuration
+    boolean extDirSingleton = false
+
     // read more: https://github.com/daggerok/soapui-runner/issues/1
-    if (project.getTasksByName(CONFIGURATION_NAME, true).size() > 0) return
+    if (project.getTasksByName(CONFIGURATION_NAME, extDirSingleton).size() > 0) return
 
     // create extDit task only if it's not exists
     log.info "create $CONFIGURATION_NAME task for $project.name project"
 
+    // TODO: refactor for using project.getTasks().maybeCreate(...)
     project.getTasks().create(name: CONFIGURATION_NAME, type: Copy, group: GROUP, description: describe(CONFIGURATION_NAME)) {
       from ConfigurationUtils.getByProject(project)
       into ProjectUtils.extDirPath(project)
