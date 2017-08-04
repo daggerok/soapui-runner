@@ -5,7 +5,7 @@ install: true
 script:
   - >
     for version in 4.0 4.0.1 4.0.2; do
-      gradle wrapper --gradle-version $version;
+      gradle wrapper --gradle-version $version  --distribution-type=all;
       bash gradlew -v;
       bash gradlew clean check license build install publish --stacktrace;
       bash gradlew --stop;
