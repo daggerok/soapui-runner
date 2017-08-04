@@ -35,6 +35,8 @@ import java.nio.file.Paths
 class ProjectUtils {
 
   static final String DEFAULT_PROJECT_FILE = 'soapui-test-project.xml'
+  static final String DEFAULT_OUTPUT_DIR = 'soapui'
+  static final String DEFAULT_EXT_DIR = 'ext'
 
   /**
    * <ol>
@@ -57,8 +59,16 @@ class ProjectUtils {
    * @param project plugin applied project
    * @return default soapui.ext.libraries path
    */
+  static String defaultProjectFile(final Project project) {
+    resolvePath(project.projectDir.absolutePath, DEFAULT_PROJECT_FILE)
+  }
+
+  /**
+   * @param project plugin applied project
+   * @return default soapui.ext.libraries path
+   */
   static String defaultOutputPath(final Project project) {
-    Paths.get(project.rootProject.buildDir.absolutePath, 'soapui').toString()
+    resolvePath(project.rootProject.buildDir.absolutePath, DEFAULT_OUTPUT_DIR)
   }
 
   /**
@@ -66,7 +76,11 @@ class ProjectUtils {
    * @return default soapui.ext.libraries path
    */
   static String extDirPath(final Project project) {
-    Paths.get(defaultOutputPath(project), 'ext').toString()
+    resolvePath(defaultOutputPath(project), DEFAULT_EXT_DIR)
+  }
+
+  private static String resolvePath(final String parent, final String child) {
+    Paths.get(parent, child).toString()
   }
 
   private PluginUtils() {}
