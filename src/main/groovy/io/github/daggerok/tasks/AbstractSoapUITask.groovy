@@ -42,7 +42,7 @@ abstract class AbstractSoapUITask extends DefaultTask {
 
   @Optional @Input boolean failOnError = true
 
-  @Optional @Input String projectFile = ProjectUtils.DEFAULT_PROJECT_FILE
+  @Optional @Input String projectFile = ProjectUtils.defaultProjectFile(project)
   @Optional @Input String outputFolder = ProjectUtils.defaultOutputPath(project)
 
   @Optional @Input List<String> systemProperties = []
