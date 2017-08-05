@@ -6,6 +6,8 @@ This repository contains simple gradle plugin (written in groovy) allowed config
 
 == usage
 
+link:https://daggerok.github.io/soapui-runner[Documentation in progress...]
+
 === three plugins available on Gradle Portal
 
 . link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[SoapUI Test Runner Plugin] soapui-testrunner (`io.github.daggerok.soapui-testrunner`)
@@ -341,17 +343,22 @@ note: strike through version [line-through]#x.y.z# cloud be buggy. You have to u
 
 Feel free to contribute or link:https://github.com/daggerok/soapui-runner/issues[open an issue]
 
-Publish locally for development purpose:
+* Publish locally for development purpose:
 
 [source,gradle]
 bash gradlew clean build install publish
 
-For testing locally published plugin into maven repo publishing use link:https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle[this] example
+* For testing locally published plugin into maven repo publishing use link:https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle[this] example
 
-Don't try publish new version of plugin to gradle portal (it's available only for owner)
+* Don't try publish new version of plugin to gradle portal (it's available only for owner)
 
 [source,gradle]
 bash gradlew publishPlugins
+
+* Also Don't try publish new version of plugin documentation to GitHub pages (it's available only for owner)
+
+[source,gradle]
+bash gradlew gitPublishPush
 
 == FYI
 
