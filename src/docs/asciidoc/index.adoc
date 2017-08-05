@@ -1,0 +1,58 @@
+= SoapUI Runner Gradle Plugin DRAFT
+Maksim Kostromin <daggerok@gmail.com>
+2017-08-05
+:toc:
+:revnumber: {project-version}
+:example-caption!:
+ifndef::sourcedir[:sourcedir: ../groovy]
+:icons: font
+:toc: left
+:numbered:
+:github_url: https://github.com/daggerok/soapui-runner
+:github_project_path: {github_url}/tree/master
+:github_fork_badge: https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png
+
+[discrete]
+== Introduction
+
+This is a user manual for an soapui-runner.
+SoapUI Runner Gradle Plugin helps you simplify configuration and load / test cases SoapUI test project execution.
+
+== Installation
+
+TODO
+
+== Configuration
+
+=== Available plugins and runners
+
+TODO
+
+=== Test Case runner configuration
+
+TODO
+
+=== Load Test runner configuration
+
+TODO
+
+=== Generate $SOAPUI_HOME/bin/ext directory
+
+TODO
+
+== Tasks available for execution
+
+TODO
+
+== Debug info
+
+.Built-in
+asciidoctor-version:: {asciidoctor-version}
+safe-mode-name:: {safe-mode-name}
+docdir:: {docdir}
+docfile:: {docfile}
+
+.Custom
+project-version:: {project-version}
+sourcedir:: {sourcedir}
+endpoint-url:: {endpoint-url}
