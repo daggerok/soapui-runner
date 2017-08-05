@@ -41,6 +41,7 @@ plugins {
   id 'com.gradle.plugin-publish' version '0.9.7'
   id 'org.ajoberstar.git-publish' version '0.2.1'
   id 'com.github.hierynomus.license' version '0.14.0'
+  id 'com.github.ben-manes.versions' version '0.15.0'
 }
 
 apply from: "$rootDir/gradle/license.gradle"
