@@ -20,9 +20,9 @@ soap-runner it's a gradle plugin written in groovy.
 It simplified configuration of SoapUI test projects and provides theirs cross-platform execution
 (at the moment supports only testrunner and loadtestrunner, but it could be very easilly extend - feel free to contribute).
 
-== why?
+== Why?
 
-=== officially, gradle plugin is not supported
+=== Officially, gradle plugin is not supported
 
 Currently SmartBear is not supporting gradle plugin. At the moment only link:http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom[SoapUI Maven Plugin] officially supported.
 
@@ -37,7 +37,7 @@ C:\path\to\SoapUI-5.3.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml
 [source,bash]
 /path/to/SoapUI-5.3.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
 
-=== running tests using soapui-runner gradle plugin
+=== Running tests using soapui-runner gradle plugin
 
 Using preconfigured build script you only need to execute a single command:
 
@@ -45,7 +45,7 @@ Using preconfigured build script you only need to execute a single command:
 gradle testrunner # or:
 gradle loadtestrunner
 
-== what's inside?
+== What's inside?
 
 There are few plugins and tasks you have to get all functionality you might need
 ...almost :) Currently, in my daily work and for testing API of my projects, I was required to use only testrunner
@@ -55,15 +55,15 @@ and loadtestrunner
 [NOTE]
 Anyway, All other existing runner in SoapUI could be easily added to soapui-runner plugin, really. Contributors are welcome!
 
-=== Available plugins and runners
+=== Available plugins and tasks
 
-==== three plugins available on Gradle Portal
+==== Three plugins available on Gradle Portal
 
 . link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[SoapUI Test Runner Plugin] soapui-testrunner (`io.github.daggerok.soapui-testrunner`)
 . link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-loadtestrunner[SoapUI Load Test Runner Plugin] soapui-loadtestrunner (`io.github.daggerok.soapui-loadtestrunner`)
 . link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-runner[SoapUI Runner Plugin] soapui-runner (`io.github.daggerok.soapui-runner`) - contains all tasks: testrunner and loadtestrunner
 
-==== three tasks available right now
+==== Three tasks available right now
 
 . extDir: helpful task for generating ext folder to be copied inside `$SOAPUI_HOME/bin` (see <<extDir>>)
 . testrunner: task run SoapUI Test Suites and/or Test Cases (see <<testrunner>>)
@@ -88,11 +88,11 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '{project-version}'
+  id 'io.github.daggerok.soapui-runner' version '5.3.0-4'
 }
 ----
 
-=== multi-project build
+=== Multi-project build
 
 If you are using multi-project build or for some reasons you don't want apply runner-plugin immediately:
 
@@ -107,7 +107,7 @@ buildscript {
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '{project-version}' apply false
+  id 'io.github.daggerok.soapui-runner' version '5.3.0-4' apply false
 }
 
 subprojects {
@@ -116,7 +116,7 @@ subprojects {
 }
 ----
 
-=== Gradle <= 3.0
+=== Gradle version less then 3.0
 
 If you are using gradle <= 3.0, then use apply plugin approach only:
 
@@ -129,7 +129,7 @@ buildscript {
     maven { url 'http://smartbearsoftware.com/repository/maven2/' }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:{project-version}'
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-4'
   }
 }
 
@@ -217,7 +217,7 @@ testrunner {
 [source,groovy]
 gradle testrunner
 
-==== testrunner configuration customization
+==== Test runner configuration customization
 
 Using groovy inside gradle build files we can do pretty much whatever we want.
 
@@ -364,9 +364,9 @@ testrunner {
 == Appendix
 
 [[runners-properties]]
-=== runners properties
+=== Runners properties
 
-==== base (allowed for testrunner and loadtestrunner tasks)
+==== Base (allowed for testrunner and loadtestrunner tasks)
 
 [width="100%"]
 |==============================================================================================================================================================================================================================================================================
@@ -401,7 +401,7 @@ testrunner {
 |==============================================================================================================================================================================================================================================================================
 
 [[testrunner-properties]]
-==== testrunner specific configuration properties
+==== Test runner specific configuration properties
 
 [width="100%"]
 |================================================================================================================================
@@ -418,7 +418,7 @@ testrunner {
 |================================================================================================================================
 
 [[loadtestrunner-properties]]
-==== loadtestrunner specific configuration properties
+==== Load test runner specific configuration properties
 
 [width="100%"]
 |=======================================================================================================================================================
@@ -432,7 +432,7 @@ testrunner {
 
 == Examples
 
-See some usage examples link:link:https://github.com/daggerok/soapui-testrunner-groovy-example[here]
+See some usage examples link:https://github.com/daggerok/soapui-testrunner-example[here]
 
 == Frequently asked questions
 
@@ -511,8 +511,8 @@ NOTE: Strike through version [line-through]#x.y.z# cloud be buggy. You have to u
 .Recomendations
 NOTE: We are recommend use latest stable release versions - it should be able support old SoapUI test project file format as well.
 
-== license
+== License
 
 link:https://github.com/daggerok/soapui-runner/blob/master/LICENSE[MIT]
 
-= enjoy! :)
+= Enjoy! :)
