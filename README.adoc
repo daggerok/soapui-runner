@@ -3,7 +3,7 @@ Maksim Kostromin <daggerok@gmail.com>
 2017-08-13
 :toc:
 
-This repository contains simple gradle plugin (written in groovy) allowed configure and run SoapUI tests using gradle. link:https://github.com/daggerok/soapui-testrunner-groovy-example[see usage example]
+This repository contains simple gradle plugin (written in groovy) allowed configure and run SoapUI tests using gradle.
 
 == link:https://daggerok.github.io/soapui-runner[Documentation]
 
@@ -81,6 +81,10 @@ loadtestrunner {
 gradle extDir
 gradle testrunner
 gradle loadtestrunner
+
+== Examples
+
+See some usage examples link:link:https://github.com/daggerok/soapui-testrunner-groovy-example[here]
 
 == license
 
