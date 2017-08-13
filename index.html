@@ -527,21 +527,21 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#why">1. why?</a>
+<li><a href="#why">1. Why?</a>
 <ul class="sectlevel2">
-<li><a href="#officially-gradle-plugin-is-not-supported">1.1. officially, gradle plugin is not supported</a></li>
-<li><a href="#running-tests-using-soapui-runner-gradle-plugin">1.2. running tests using soapui-runner gradle plugin</a></li>
+<li><a href="#officially-gradle-plugin-is-not-supported">1.1. Officially, gradle plugin is not supported</a></li>
+<li><a href="#running-tests-using-soapui-runner-gradle-plugin">1.2. Running tests using soapui-runner gradle plugin</a></li>
 </ul>
 </li>
-<li><a href="#what-s-inside">2. what&#8217;s inside?</a>
+<li><a href="#what-s-inside">2. What&#8217;s inside?</a>
 <ul class="sectlevel2">
-<li><a href="#available-plugins-and-runners">2.1. Available plugins and runners</a></li>
+<li><a href="#available-plugins-and-tasks">2.1. Available plugins and tasks</a></li>
 </ul>
 </li>
 <li><a href="#installation">3. Installation</a>
 <ul class="sectlevel2">
-<li><a href="#multi-project-build">3.1. multi-project build</a></li>
-<li><a href="#gradle-3-0">3.2. Gradle &#8656; 3.0</a></li>
+<li><a href="#multi-project-build">3.1. Multi-project build</a></li>
+<li><a href="#gradle-version-less-then-3-0">3.2. Gradle version less then 3.0</a></li>
 </ul>
 </li>
 <li><a href="#configuration-plugins-tasks">4. Configuration plugins tasks</a>
@@ -554,7 +554,7 @@ table.CodeRay td.code>pre{padding:0}
 </li>
 <li><a href="#appendix">5. Appendix</a>
 <ul class="sectlevel2">
-<li><a href="#runners-properties">5.1. runners properties</a></li>
+<li><a href="#runners-properties">5.1. Runners properties</a></li>
 </ul>
 </li>
 <li><a href="#examples">6. Examples</a></li>
@@ -568,8 +568,8 @@ table.CodeRay td.code>pre{padding:0}
 <li><a href="#supported-gradle-versions">8.1. Supported gradle versions</a></li>
 </ul>
 </li>
-<li><a href="#license">9. license</a></li>
-<li><a href="#enjoy">enjoy! :)</a></li>
+<li><a href="#license">9. License</a></li>
+<li><a href="#enjoy">Enjoy! :)</a></li>
 </ul>
 </div>
 </div>
@@ -586,10 +586,10 @@ It simplified configuration of SoapUI test projects and provides theirs cross-pl
 </div>
 </div>
 <div class="sect1">
-<h2 id="why">1. why?</h2>
+<h2 id="why">1. Why?</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="officially-gradle-plugin-is-not-supported">1.1. officially, gradle plugin is not supported</h3>
+<h3 id="officially-gradle-plugin-is-not-supported">1.1. Officially, gradle plugin is not supported</h3>
 <div class="paragraph">
 <p>Currently SmartBear is not supporting gradle plugin. At the moment only <a href="http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom">SoapUI Maven Plugin</a> officially supported.</p>
 </div>
@@ -611,7 +611,7 @@ For example, to execute SoapUI tests using testrunner (version: 5.3.0) tool you 
 </div>
 </div>
 <div class="sect2">
-<h3 id="running-tests-using-soapui-runner-gradle-plugin">1.2. running tests using soapui-runner gradle plugin</h3>
+<h3 id="running-tests-using-soapui-runner-gradle-plugin">1.2. Running tests using soapui-runner gradle plugin</h3>
 <div class="paragraph">
 <p>Using preconfigured build script you only need to execute a single command:</p>
 </div>
@@ -625,7 +625,7 @@ gradle loadtestrunner</code></pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="what-s-inside">2. what&#8217;s inside?</h2>
+<h2 id="what-s-inside">2. What&#8217;s inside?</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p>There are few plugins and tasks you have to get all functionality you might need
@@ -646,9 +646,9 @@ Anyway, All other existing runner in SoapUI could be easily added to soapui-runn
 </table>
 </div>
 <div class="sect2">
-<h3 id="available-plugins-and-runners">2.1. Available plugins and runners</h3>
+<h3 id="available-plugins-and-tasks">2.1. Available plugins and tasks</h3>
 <div class="sect3">
-<h4 id="three-plugins-available-on-gradle-portal">2.1.1. three plugins available on Gradle Portal</h4>
+<h4 id="three-plugins-available-on-gradle-portal">2.1.1. Three plugins available on Gradle Portal</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -664,7 +664,7 @@ Anyway, All other existing runner in SoapUI could be easily added to soapui-runn
 </div>
 </div>
 <div class="sect3">
-<h4 id="three-tasks-available-right-now">2.1.2. three tasks available right now</h4>
+<h4 id="three-tasks-available-right-now">2.1.2. Three tasks available right now</h4>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -709,7 +709,7 @@ plugins {
 </div>
 </div>
 <div class="sect2">
-<h3 id="multi-project-build">3.1. multi-project build</h3>
+<h3 id="multi-project-build">3.1. Multi-project build</h3>
 <div class="paragraph">
 <p>If you are using multi-project build or for some reasons you don&#8217;t want apply runner-plugin immediately:</p>
 </div>
@@ -735,7 +735,7 @@ subprojects {
 </div>
 </div>
 <div class="sect2">
-<h3 id="gradle-3-0">3.2. Gradle &#8656; 3.0</h3>
+<h3 id="gradle-version-less-then-3-0">3.2. Gradle version less then 3.0</h3>
 <div class="paragraph">
 <p>If you are using gradle &#8656; 3.0, then use apply plugin approach only:</p>
 </div>
@@ -819,7 +819,7 @@ loadtestrunner {
 </div>
 </div>
 <div class="paragraph">
-<p>Feel free omit all runners configurations if <a href="#runners-properties">runners properties</a> are good enough for you:</p>
+<p>Feel free omit all runners configurations if <a href="#runners-properties">Runners properties</a> are good enough for you:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -841,7 +841,7 @@ loadtestrunner {
 <div class="sect2">
 <h3 id="testrunner">4.1. Test (suites and cases) runner</h3>
 <div class="paragraph">
-<p>Very extendable and configurable SoapUI testrunner task. For details see: <a href="#testrunner-properties">testrunner specific configuration properties</a></p>
+<p>Very extendable and configurable SoapUI testrunner task. For details see: <a href="#testrunner-properties">Test runner specific configuration properties</a></p>
 </div>
 <div class="listingblock">
 <div class="title">Example of testrunner task configuration</div>
@@ -859,7 +859,7 @@ loadtestrunner {
 </div>
 </div>
 <div class="sect3">
-<h4 id="testrunner-configuration-customization">4.1.1. testrunner configuration customization</h4>
+<h4 id="test-runner-configuration-customization">4.1.1. Test runner configuration customization</h4>
 <div class="paragraph">
 <p>Using groovy inside gradle build files we can do pretty much whatever we want.</p>
 </div>
@@ -938,7 +938,7 @@ task soapUITestCases(<span class="key">dependsOn</span>: soapUITasks)</code></pr
 <div class="sect2">
 <h3 id="loadtestrunner">4.2. Load Tests runner</h3>
 <div class="paragraph">
-<p>Expandable and configurable load test runner task. See <a href="#loadtestrunner-properties">loadtestrunner specific configuration properties</a> for more details</p>
+<p>Expandable and configurable load test runner task. See <a href="#loadtestrunner-properties">Load test runner specific configuration properties</a> for more details</p>
 </div>
 <div class="listingblock">
 <div class="title">Example of loadtestrunner task configuration</div>
@@ -1033,9 +1033,9 @@ testrunner {
 <h2 id="appendix">5. Appendix</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="runners-properties">5.1. runners properties</h3>
+<h3 id="runners-properties">5.1. Runners properties</h3>
 <div class="sect3">
-<h4 id="base-allowed-for-testrunner-and-loadtestrunner-tasks">5.1.1. base (allowed for testrunner and loadtestrunner tasks)</h4>
+<h4 id="base-allowed-for-testrunner-and-loadtestrunner-tasks">5.1.1. Base (allowed for testrunner and loadtestrunner tasks)</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 25%;">
@@ -1176,7 +1176,7 @@ testrunner {
 </table>
 </div>
 <div class="sect3">
-<h4 id="testrunner-properties">5.1.2. testrunner specific configuration properties</h4>
+<h4 id="testrunner-properties">5.1.2. Test runner specific configuration properties</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 25%;">
@@ -1233,7 +1233,7 @@ testrunner {
 </table>
 </div>
 <div class="sect3">
-<h4 id="loadtestrunner-properties">5.1.3. loadtestrunner specific configuration properties</h4>
+<h4 id="loadtestrunner-properties">5.1.3. Load test runner specific configuration properties</h4>
 <table class="tableblock frame-all grid-all spread">
 <colgroup>
 <col style="width: 25%;">
@@ -1462,20 +1462,20 @@ We are recommend use latest stable release versions - it should be able support 
 </div>
 </div>
 <div class="sect1">
-<h2 id="license">9. license</h2>
+<h2 id="license">9. License</h2>
 <div class="sectionbody">
 <div class="paragraph">
 <p><a href="https://github.com/daggerok/soapui-runner/blob/master/LICENSE">MIT</a></p>
 </div>
 </div>
 </div>
-<h1 id="enjoy" class="sect0">enjoy! :)</h1>
+<h1 id="enjoy" class="sect0">Enjoy! :)</h1>
 
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 5.3.0-4<br>
-Last updated 2017-08-13 05:09:34 EEST
+Last updated 2017-08-13 05:16:08 EEST
 </div>
 </div>
 </body>
