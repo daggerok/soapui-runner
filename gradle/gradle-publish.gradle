@@ -31,7 +31,8 @@
 
 buildscript {
   ext {
-    url = 'https://github.com/daggerok/soapui-runner'
+    website = 'https://daggerok.github.io/soapui-runner'
+    vcsUrl = 'https://github.com/daggerok/soapui-runner.git'
   }
 }
 
@@ -66,8 +67,8 @@ publishing {
 
 pluginBundle {
 
-  website = project.url
-  vcsUrl = "${project.url}.git"
+  website = "$project.website"
+  vcsUrl = "$project.vcsUrl"
   description = project.description
   tags = [
       'SoapUI',

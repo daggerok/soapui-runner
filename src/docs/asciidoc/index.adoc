@@ -1,4 +1,4 @@
-= SoapUI Runner Gradle Plugin ({project-version})
+= SoapUI Runner Gradle Plugin ({project-version}) image:https://travis-ci.org/daggerok/soapui-runner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-runner"]
 Maksim Kostromin <daggerok@gmail.com>
 2017-08-13
 :toc:
@@ -78,7 +78,7 @@ It's better to not include soapui-runner gradle project as subproject of main pr
 In general, it could be installed just like so:
 
 .Using plugins approach
-[source,gradle]
+[source,groovy]
 ----
 buildscript {
   repositories {
@@ -97,7 +97,7 @@ plugins {
 If you are using multi-project build or for some reasons you don't want apply runner-plugin immediately:
 
 .Do not apply plugin in plugins block
-[source,gradle]
+[source,groovy]
 ----
 buildscript {
   repositories {
@@ -121,7 +121,7 @@ subprojects {
 If you are using gradle <= 3.0, then use apply plugin approach only:
 
 .Use apply plugin approach
-[source,gradle]
+[source,groovy]
 ----
 buildscript {
   repositories {
@@ -164,7 +164,7 @@ apply plugin: 'io.github.daggerok.soapui-runner'
 You can pre-configure once all needed properties / configurations using runner tasks closures
 
 .Configuration example
-[source,gradle]
+[source,groovy]
 ----
 testrunner {
   projectFile 'src/test/resources/soapui-test-project.xml'
@@ -184,7 +184,7 @@ loadtestrunner {
 
 Feel free omit all runners configurations if <<runners-properties>> are good enough for you:
 
-[source,gradle]
+[source,groovy]
 ----
 /*
 testrunner {
@@ -207,14 +207,14 @@ loadtestrunner {
 Very extendable and configurable SoapUI testrunner task. For details see: <<testrunner-properties>>
 
 .Example of testrunner task configuration
-[source,gradle]
+[source,groovy]
 testrunner {
   projectFile = 'soapui-test-project.xml'
   outputFolder = 'build/soapui
 }
 
 .Execution of test runner task
-[source,gradle]
+[source,groovy]
 gradle testrunner
 
 ==== testrunner configuration customization
@@ -225,7 +225,7 @@ link:https://github.com/daggerok/soapui-runner-example/commit/9a8b40311600ed6317
 you can specify exact testSuites for run]
 
 .Example of testrunner task configuration: how to execute only needed TestSuite list
-[source,gradle]
+[source,groovy]
 ----
 apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
 
@@ -249,7 +249,7 @@ link:https://github.com/daggerok/soapui-runner-example/commit/84f71229b08934a059
 execute only needed test cases]
 
 .Example of testrunner execution for some concrete TestCases
-[source,gradle]
+[source,groovy]
 ----
 apply plugin: io.github.daggerok.soapui-testrunner'
 
@@ -285,14 +285,14 @@ task soapUITestCases(dependsOn: soapUITasks)
 Expandable and configurable load test runner task. See <<loadtestrunner-properties>> for more details
 
 .Example of loadtestrunner task configuration
-[source,gradle]
+[source,groovy]
 loadtestrunner {
   projectFile = 'soapui-test-project.xml'
   outputFolder = 'build/soapui
 }
 
 .Load test runner execution
-[source,gradle]
+[source,groovy]
 gradle loadtestrunner
 
 [[extDir]]
@@ -302,7 +302,7 @@ Sometimes we need use some external packages, like jdbc drivers.
 for that purposes we have to add them inside $SOAPUI_HOME/bin/ext directory
 to simplify that process, we can generate needed ext folder to copy it later inside SoapUI ext dir
 
-[source,gradle]
+[source,groovy]
 ----
 repositories { jcenter() }
 dependencies {
@@ -310,7 +310,7 @@ dependencies {
 }
 ----
 
-[source,gradle]
+[source,groovy]
 ----
 gradle extDir
 ...
@@ -323,7 +323,7 @@ see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libra
 
 If you are using gradle multi-project build, you can define base configuration inside parent build:
 
-[source,gradle]
+[source,groovy]
 ----
 // gradle.build:
 allprojects {
@@ -342,7 +342,7 @@ allprojects {
 
 ...and later you might need to override it inside some of your children builds:
 
-[source,gradle]
+[source,groovy]
 ----
 // ./modules/windows/gradle.build
 testrunner {
@@ -430,6 +430,10 @@ testrunner {
 
 |=======================================================================================================================================================
 
+== Examples
+
+See some usage examples link:link:https://github.com/daggerok/soapui-testrunner-groovy-example[here]
+
 == Frequently asked questions
 
 === soapuios
@@ -462,19 +466,19 @@ Feel free to contribute or link:https://github.com/daggerok/soapui-runner/issues
 
 * Publish locally for development purpose:
 
-[source,gradle]
+[source,groovy]
 bash gradlew clean build install publish
 
 * For testing locally published plugin into maven repo publishing use link:https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle[this] example
 
 * Don't try publish new version of plugin to gradle portal (it's available only for owner)
 
-[source,gradle]
+[source,groovy]
 bash gradlew publishPlugins
 
 * Also Don't try publish new version of plugin documentation to GitHub pages (it's available only for owner)
 
-[source,gradle]
+[source,groovy]
 bash gradlew gitPublishPush
 
 === Supported gradle versions

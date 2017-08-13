@@ -45,10 +45,10 @@ plugins {
 }
 
 apply from: "$rootDir/gradle/license.gradle"
-apply from: "$rootDir/gradle/asciidoctor.gradle"
 apply from: "$rootDir/gradle/dependencies.gradle"
 apply from: "$rootDir/gradle/compatibility.gradle"
 apply from: "$rootDir/gradle/maven-publish.gradle"
 apply from: "$rootDir/gradle/gradle-publish.gradle"
+apply from: "$rootDir/gradle/asciidoctor.gradle"
 
 println "using version: $version"
