@@ -6,7 +6,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
 <meta name="author" content="Maksim Kostromin">
-<title>SoapUI Runner Gradle Plugin DRAFT</title>
+<title>SoapUI Runner Gradle Plugin (5.3.0-4)</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -514,27 +514,58 @@ table.CodeRay td.code>pre{padding:0}
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>SoapUI Runner Gradle Plugin DRAFT</h1>
+<h1>SoapUI Runner Gradle Plugin (5.3.0-4)</h1>
 <div class="details">
 <span id="author" class="author">Maksim Kostromin</span><br>
 <span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
 <span id="revnumber">version 5.3.0-4,</span>
-<span id="revdate">2017-08-05</span>
+<span id="revdate">2017-08-13</span>
 </div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel1">
-<li><a href="#installation">1. Installation</a></li>
-<li><a href="#configuration">2. Configuration</a>
+<li><a href="#why">1. why?</a>
 <ul class="sectlevel2">
-<li><a href="#available-plugins-and-runners">2.1. Available plugins and runners</a></li>
-<li><a href="#test-case-runner-configuration">2.2. Test Case runner configuration</a></li>
-<li><a href="#load-test-runner-configuration">2.3. Load Test runner configuration</a></li>
-<li><a href="#generate-soapui_home-bin-ext-directory">2.4. Generate $SOAPUI_HOME/bin/ext directory</a></li>
+<li><a href="#officially-gradle-plugin-is-not-supported">1.1. officially, gradle plugin is not supported</a></li>
+<li><a href="#running-tests-using-soapui-runner-gradle-plugin">1.2. running tests using soapui-runner gradle plugin</a></li>
 </ul>
 </li>
-<li><a href="#tasks-available-for-execution">3. Tasks available for execution</a></li>
-<li><a href="#debug-info">4. Debug info</a></li>
+<li><a href="#what-s-inside">2. what&#8217;s inside?</a>
+<ul class="sectlevel2">
+<li><a href="#available-plugins-and-runners">2.1. Available plugins and runners</a></li>
+</ul>
+</li>
+<li><a href="#installation">3. Installation</a>
+<ul class="sectlevel2">
+<li><a href="#multi-project-build">3.1. multi-project build</a></li>
+<li><a href="#gradle-3-0">3.2. Gradle &#8656; 3.0</a></li>
+</ul>
+</li>
+<li><a href="#configuration-plugins-tasks">4. Configuration plugins tasks</a>
+<ul class="sectlevel2">
+<li><a href="#testrunner">4.1. Test (suites and cases) runner</a></li>
+<li><a href="#loadtestrunner">4.2. Load Tests runner</a></li>
+<li><a href="#extDir">4.3. Generate directory for external libraries</a></li>
+<li><a href="#adding-new-and-override-generic-parent-properties">4.4. Adding new and override generic (parent) properties</a></li>
+</ul>
+</li>
+<li><a href="#appendix">5. Appendix</a>
+<ul class="sectlevel2">
+<li><a href="#runners-properties">5.1. runners properties</a></li>
+</ul>
+</li>
+<li><a href="#frequently-asked-questions">6. Frequently asked questions</a>
+<ul class="sectlevel2">
+<li><a href="#soapuios">6.1. soapuios</a></li>
+</ul>
+</li>
+<li><a href="#development-and-contribution">7. Development and contribution</a>
+<ul class="sectlevel2">
+<li><a href="#supported-gradle-versions">7.1. Supported gradle versions</a></li>
+</ul>
+</li>
+<li><a href="#license">8. license</a></li>
+<li><a href="#enjoy">enjoy! :)</a></li>
 </ul>
 </div>
 </div>
@@ -543,104 +574,896 @@ table.CodeRay td.code>pre{padding:0}
 <div class="sectionbody">
 <h2 id="introduction" class="discrete">Introduction</h2>
 <div class="paragraph">
-<p>This is a user manual for an soapui-runner.
-SoapUI Runner Gradle Plugin helps you simplify configuration and load / test cases SoapUI test project execution.</p>
+<p>This is a user manual of soapui-runner.
+soap-runner it&#8217;s a gradle plugin written in groovy.
+It simplified configuration of SoapUI test projects and provides theirs cross-platform execution
+(at the moment supports only testrunner and loadtestrunner, but it could be very easilly extend - feel free to contribute).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="installation">1. Installation</h2>
+<h2 id="why">1. why?</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="officially-gradle-plugin-is-not-supported">1.1. officially, gradle plugin is not supported</h3>
+<div class="paragraph">
+<p>Currently SmartBear is not supporting gradle plugin. At the moment only <a href="http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom">SoapUI Maven Plugin</a> officially supported.</p>
+</div>
+<div class="paragraph">
+<p>SmartBear provides platform dependant scripts for SoapUI test project execution, but it&#8217;s not so convenient.
+For example, to execute SoapUI tests using testrunner (version: 5.3.0) tool you can use these commands:</p>
+</div>
+<div class="listingblock">
+<div class="title">Example, how to execute tests on windows using SoapUI testrunner.bat</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="cmd">C:\path\to\SoapUI-5.3.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Example, how to execute testrunner.sh on unix</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">/path/to/SoapUI-5.3.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="running-tests-using-soapui-runner-gradle-plugin">1.2. running tests using soapui-runner gradle plugin</h3>
+<div class="paragraph">
+<p>Using preconfigured build script you only need to execute a single command:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">gradle testrunner # or:
+gradle loadtestrunner</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="what-s-inside">2. what&#8217;s inside?</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>There are few plugins and tasks you have to get all functionality you might need
+&#8230;&#8203;almost :) Currently, in my daily work and for testing API of my projects, I was required to use only testrunner
+and loadtestrunner</p>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+Anyway, All other existing runner in SoapUI could be easily added to soapui-runner plugin, really. Contributors are welcome!
+</td>
+</tr>
+</table>
 </div>
-</div>
-<div class="sect1">
-<h2 id="configuration">2. Configuration</h2>
-<div class="sectionbody">
 <div class="sect2">
 <h3 id="available-plugins-and-runners">2.1. Available plugins and runners</h3>
-<div class="paragraph">
-<p>TODO</p>
+<div class="sect3">
+<h4 id="three-plugins-available-on-gradle-portal">2.1.1. three plugins available on Gradle Portal</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner">SoapUI Test Runner Plugin</a> soapui-testrunner (<code>io.github.daggerok.soapui-testrunner</code>)</p>
+</li>
+<li>
+<p><a href="https://plugins.gradle.org/plugin/io.github.daggerok.soapui-loadtestrunner">SoapUI Load Test Runner Plugin</a> soapui-loadtestrunner (<code>io.github.daggerok.soapui-loadtestrunner</code>)</p>
+</li>
+<li>
+<p><a href="https://plugins.gradle.org/plugin/io.github.daggerok.soapui-runner">SoapUI Runner Plugin</a> soapui-runner (<code>io.github.daggerok.soapui-runner</code>) - contains all tasks: testrunner and loadtestrunner</p>
+</li>
+</ol>
 </div>
 </div>
-<div class="sect2">
-<h3 id="test-case-runner-configuration">2.2. Test Case runner configuration</h3>
-<div class="paragraph">
-<p>TODO</p>
+<div class="sect3">
+<h4 id="three-tasks-available-right-now">2.1.2. three tasks available right now</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>extDir: helpful task for generating ext folder to be copied inside <code>$SOAPUI_HOME/bin</code> (see <a href="#extDir">Generate directory for external libraries</a>)</p>
+</li>
+<li>
+<p>testrunner: task run SoapUI Test Suites and/or Test Cases (see <a href="#testrunner">Test (suites and cases) runner</a>)</p>
+</li>
+<li>
+<p>loadtestrunner: task run SoapUI Load Tests (see <a href="#loadtestrunner">Load Tests runner</a>)</p>
+</li>
+</ol>
 </div>
-</div>
-<div class="sect2">
-<h3 id="load-test-runner-configuration">2.3. Load Test runner configuration</h3>
-<div class="paragraph">
-<p>TODO</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="generate-soapui_home-bin-ext-directory">2.4. Generate $SOAPUI_HOME/bin/ext directory</h3>
-<div class="paragraph">
-<p>TODO</p>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="tasks-available-for-execution">3. Tasks available for execution</h2>
+<h2 id="installation">3. Installation</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>TODO</p>
+<p>There are few ways to integrate soapui-runner in your gradle project.
+We are recommending you usi that plugin in separate project.
+It&#8217;s better to not include soapui-runner gradle project as subproject of main project is going to be tested to avoid complexity of dependency resolution, but this is not required.</p>
+</div>
+<div class="paragraph">
+<p>In general, it could be installed just like so:</p>
+</div>
+<div class="listingblock">
+<div class="title">Using plugins approach</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+}
+
+plugins {
+  id 'io.github.daggerok.soapui-runner' version '{project-version}'
+}</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="multi-project-build">3.1. multi-project build</h3>
+<div class="paragraph">
+<p>If you are using multi-project build or for some reasons you don&#8217;t want apply runner-plugin immediately:</p>
+</div>
+<div class="listingblock">
+<div class="title">Do not apply plugin in plugins block</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+}
+
+plugins {
+  id 'io.github.daggerok.soapui-runner' version '{project-version}' apply false
+}
+
+subprojects {
+  apply plugin: 'io.github.daggerok.soapui-runner'
+  // ...
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="gradle-3-0">3.2. Gradle &#8656; 3.0</h3>
+<div class="paragraph">
+<p>If you are using gradle &#8656; 3.0, then use apply plugin approach only:</p>
+</div>
+<div class="listingblock">
+<div class="title">Use apply plugin approach</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+  dependencies {
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:{project-version}'
+  }
+}
+
+apply plugin: 'io.github.daggerok.soapui-runner'</code></pre>
+</div>
+</div>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="title">Important</div>
+Make sure you have added required smartbear software maven repository
+           in your buildscript for correct plugin dependencies resolution.
+</td>
+</tr>
+</table>
+</div>
+<div class="sect3">
+<h4 id="many-ways-apply-plugins">3.2.1. Many ways apply plugins&#8230;&#8203;</h4>
+<div class="paragraph">
+<p>You can apply FQDN class name for each plugin instead (see plugins main classes source code for details):</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// turns on extDir and testrunner tasks:</span>
+apply <span class="key">plugin</span>: io.github.daggerok.SoapUITestRunnerPlugin <span class="comment">// or:</span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">'</span><span class="content">io.github.daggerok.soapui-testrunner</span><span class="delimiter">'</span></span>
+
+<span class="comment">// turns on extDir and loadtestrunner tasks:</span>
+apply <span class="key">plugin</span>: io.github.daggerok.SoapUILoadTestRunnerPlugin <span class="comment">// or:</span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">'</span><span class="content">io.github.daggerok.soapui-loadtestrunner</span><span class="delimiter">'</span></span>
+
+<span class="comment">// turns on all tasks: extDir, testrunner and loadtestrunner:</span>
+apply <span class="key">plugin</span>: io.github.daggerok.SoapUIRunnerPlugin <span class="comment">// or:</span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">'</span><span class="content">io.github.daggerok.soapui-runner</span><span class="delimiter">'</span></span></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="debug-info">4. Debug info</h2>
+<h2 id="configuration-plugins-tasks">4. Configuration plugins tasks</h2>
 <div class="sectionbody">
-<div class="dlist">
-<div class="title">Built-in</div>
-<dl>
-<dt class="hdlist1">asciidoctor-version</dt>
-<dd>
-<p>1.5.5</p>
-</dd>
-<dt class="hdlist1">safe-mode-name</dt>
-<dd>
-<p>unsafe</p>
-</dd>
-<dt class="hdlist1">docdir</dt>
-<dd>
-<p>/Users/mak/Documents/code/test/gradle/soapui-runner/src/docs/asciidoc</p>
-</dd>
-<dt class="hdlist1">docfile</dt>
-<dd>
-<p>/Users/mak/Documents/code/test/gradle/soapui-runner/src/docs/asciidoc/index.adoc</p>
-</dd>
-</dl>
+<div class="paragraph">
+<p>You can pre-configure once all needed properties / configurations using runner tasks closures</p>
 </div>
-<div class="dlist">
-<div class="title">Custom</div>
-<dl>
-<dt class="hdlist1">project-version</dt>
-<dd>
-<p>5.3.0-4</p>
-</dd>
-<dt class="hdlist1">sourcedir</dt>
-<dd>
-<p>../groovy</p>
-</dd>
-<dt class="hdlist1">endpoint-url</dt>
-<dd>
-<p><a href="https://daggerok.github.io/soapui-runner" class="bare">https://daggerok.github.io/soapui-runner</a></p>
-</dd>
-</dl>
+<div class="listingblock">
+<div class="title">Configuration example</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">testrunner {
+  projectFile 'src/test/resources/soapui-test-project.xml'
+  outputFolder 'out/tests'
+  failOnError true
+
+  projectProperties = [
+    'apiBaseUrl=https://api.github.com'
+  ]
+}
+
+loadtestrunner {
+  projectFile = &quot;$projectDir/soapui-load-tests.xml&quot;
+  outputFolder = &quot;buildDir/soapui/load&quot;
+}</code></pre>
 </div>
 </div>
+<div class="paragraph">
+<p>Feel free omit all runners configurations if <a href="#runners-properties">runners properties</a> are good enough for you:</p>
 </div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">/*
+testrunner {
+  projectFile = 'soapui-test-project.xml'
+  outputFolder = 'build/soapui
+  // ...
+}
+
+loadtestrunner {
+  projectFile = 'soapui-test-project.xml'
+  outputFolder = 'build/soapui
+  // ...
+}
+*/</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="testrunner">4.1. Test (suites and cases) runner</h3>
+<div class="paragraph">
+<p>Very extendable and configurable SoapUI testrunner task. For details see: <a href="#testrunner-properties">testrunner specific configuration properties</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Example of testrunner task configuration</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">testrunner {
+  projectFile = 'soapui-test-project.xml'
+  outputFolder = 'build/soapui
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Execution of test runner task</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">gradle testrunner</code></pre>
+</div>
+</div>
+<div class="sect3">
+<h4 id="testrunner-configuration-customization">4.1.1. testrunner configuration customization</h4>
+<div class="paragraph">
+<p>Using groovy inside gradle build files we can do pretty much whatever we want.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner-example/commit/9a8b40311600ed631703e7c0de1effa3e29e805d">Look, how easy
+you can specify exact testSuites for run</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Example of testrunner task configuration: how to execute only needed TestSuite list</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
+
+task soapUITestSuites(dependsOn: [
+
+  'TestSuite 1',
+  'TestSuite 2',
+
+].collect { suiteName -&gt;
+  tasks.create(name: suiteName, type: io.github.daggerok.tasks.SoapUITestRunnerTask) {
+    testSuite = suiteName
+    outputFolder = &quot;$buildDir/soapui/$suiteName&quot;
+  }
+})</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+same approach can be used for testCases.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner-example/commit/84f71229b08934a0598fdef18acd497b8dacb1a1">Look, how to
+execute only needed test cases</a></p>
+</div>
+<div class="listingblock">
+<div class="title">Example of testrunner execution for some concrete TestCases</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">apply plugin: io.github.daggerok.soapui-testrunner'
+
+import io.github.daggerok.tasks.SoapUITestRunnerTask
+
+Task[] soapUITasks = [
+
+    'TestCase 1',
+    'TestCase 2',
+    'TestCase 3',
+    'TestCase 4',
+    'TestCase 5',
+
+].collect { testCaseName -&gt;
+
+  def noSpaceCase = testCaseName.replaceAll(/\s+$/, '').capitalize()
+
+  tasks.create(name: noSpaceCase, type: SoapUITestRunnerTask) {
+    testCase = noSpaceCase
+    outputFolder = &quot;$buildDir/soapui/testCases/$noSpaceCase&quot;
+    projectProperties = [
+        'apiEndpoint=https://jsonplaceholder.typicode.com'
+    ]
+  }
+}
+
+task soapUITestCases(dependsOn: soapUITasks)</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="loadtestrunner">4.2. Load Tests runner</h3>
+<div class="paragraph">
+<p>Expandable and configurable load test runner task. See <a href="#loadtestrunner-properties">loadtestrunner specific configuration properties</a> for more details</p>
+</div>
+<div class="listingblock">
+<div class="title">Example of loadtestrunner task configuration</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">loadtestrunner {
+  projectFile = 'soapui-test-project.xml'
+  outputFolder = 'build/soapui
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="title">Load test runner execution</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">gradle loadtestrunner</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="extDir">4.3. Generate directory for external libraries</h3>
+<div class="paragraph">
+<p>Sometimes we need use some external packages, like jdbc drivers.
+for that purposes we have to add them inside $SOAPUI_HOME/bin/ext directory
+to simplify that process, we can generate needed ext folder to copy it later inside SoapUI ext dir</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">repositories { jcenter() }
+dependencies {
+  extDir 'org.postgresql:postgresql:9.4.1212.jre7'
+}</code></pre>
+</div>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">gradle extDir
+...
+cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>see SoapUI systemProperty: soapui.ext.libraries: <code>testrunnert -Dsoapui.ext.libraries=&#8230;&#8203;</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="adding-new-and-override-generic-parent-properties">4.4. Adding new and override generic (parent) properties</h3>
+<div class="paragraph">
+<p>If you are using gradle multi-project build, you can define base configuration inside parent build:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">// gradle.build:
+allprojects {
+  testrunner {
+    projectProperties = [
+        'os=base',
+        'url=https://example.com'
+    ]
+    systemProperties = [
+        &quot;soapui.ext.libraries=$buildDir&quot;
+    ]
+    // ...
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>&#8230;&#8203;and later you might need to override it inside some of your children builds:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">// ./modules/windows/gradle.build
+testrunner {
+  projectProperties = [
+      // add new:
+      'newPropjectProp=adding',
+      // override existing:
+      'os=windows',
+      'url=https://microsoft.com'
+  ]
+  systemProperties = [
+      // override existing:
+      &quot;soapui.ext.libraries=C:/path/to/SoapUI-5.3.0/bin/ext&quot;
+  ]
+  // ...
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="appendix">5. Appendix</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="runners-properties">5.1. runners properties</h3>
+<div class="sect3">
+<h4 id="base-allowed-for-testrunner-and-loadtestrunner-tasks">5.1.1. base (allowed for testrunner and loadtestrunner tasks)</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">property</th>
+<th class="tableblock halign-left valign-top">arg</th>
+<th class="tableblock halign-left valign-top">default</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failOnError</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets if gradle plugin execution should stop and fails on any plugin configuration errors occurs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">projectFile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">soapui-test-project.xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the SoapUI project file containing the tests to run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">outputFolder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-f</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">build/soapui</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the output folder to export results to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">projectProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-P</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" project properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">globalProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-G</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" global properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">systemProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-D</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" system properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">settingsFile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-t</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the SoapUI settings file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">endpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-e</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the endpoint to use for all test requests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-d</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the domain to use for any authentications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-h</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the host to use by all test-requests, the existing endpoint port and path will be used</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-u</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the username to use for any authentications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-p</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the password to use for any authentications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wssPasswordType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-w</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the WSS password-type to use for any authentications. Setting this will result in the addition of WS-Security UsernamePassword tokens to any outgoing request containing the specified username and password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">projectPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets SoapUI project password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">soapUISettingsPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-v</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets SoapUI settings password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enableUI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enables Swing UI components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testSuite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-s</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the TestSuite to run. If not set all TestSuites in the specified project file are run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testCase</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-c</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the TestCase to run. If not set all TestCases in the specified project file are run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">printReport</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-r</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a flag controlling if a summary should be printed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">saveAfterRun</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">saves the project after running the tests</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="testrunner-properties">5.1.2. testrunner specific configuration properties</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">property</th>
+<th class="tableblock halign-left valign-top">arg</th>
+<th class="tableblock halign-left valign-top">default</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exportAll</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">adds console appender results to groovy log</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">junitReport</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-j</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">сollects TestRun results and creates JUnitReports</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">junitReportWithProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-J</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">include JUnit XML reports adding test</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreErrors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-I</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a flag controlling if errors are ignored</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">printAlertSiteReport</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">creates a Test Run Log Report in XML format</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxErrors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the maximum number of TestStep errors to save for each testcase</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect3">
+<h4 id="loadtestrunner-properties">5.1.3. loadtestrunner specific configuration properties</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">property</th>
+<th class="tableblock halign-left valign-top">arg</th>
+<th class="tableblock halign-left valign-top">default</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">loadTest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-l</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the Load Test to run. If not set all Load Tests in the specified project file are run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-m</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">override limit property of Load Test</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">threadCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-n</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">override thread count property of Load Test</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="frequently-asked-questions">6. Frequently asked questions</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="soapuios">6.1. soapuios</h3>
+<div class="paragraph">
+<p>If you faced with errors like</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">An error occurred [com.eviware.soapui.plugins.auto.factories.AutoDiscoveryMethodFactory], see error log for details
+java.lang.ClassNotFoundException: com.eviware.soapui.plugins.auto.factories.AutoDiscoveryMethodFactory
+...</code></pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">From 5.2 Release Notes (2015-07-02):</div>
+SoapUI failed to load plugins when you run tests with testrunner.bat and the current directory differed from &lt;SoapUI&gt;\bin
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Fix: rename $HOME/.soapuios folder to NOT.soapuios</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="bash">mv -f $HOME/.soapuios $HOME/NOT.soapuios</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://stackoverflow.com/questions/31409653/classnotfoundexception-after-updating-to-soapui-5-2-0">Read more</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="development-and-contribution">7. Development and contribution</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Feel free to contribute or <a href="https://github.com/daggerok/soapui-runner/issues">open an issue</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Publish locally for development purpose:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">bash gradlew clean build install publish</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For testing locally published plugin into maven repo publishing use <a href="https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle">this</a> example</p>
+</li>
+<li>
+<p>Don&#8217;t try publish new version of plugin to gradle portal (it&#8217;s available only for owner)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">bash gradlew publishPlugins</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Also Don&#8217;t try publish new version of plugin documentation to GitHub pages (it&#8217;s available only for owner)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="gradle">bash gradlew gitPublishPush</code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="supported-gradle-versions">7.1. Supported gradle versions</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>plugin:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>4:</strong> 4.0.2, 4.0.1, 4.0</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>client:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>4:</strong> 4.0.2, 4.0.1, 4.0</p>
+</li>
+<li>
+<p><strong>3:</strong> 3.5, 3.4.1, 3.4, 3.3, 3.2, 3.1, 3.0</p>
+</li>
+<li>
+<p><strong>2 (apply plugin only):</strong> 2.14, 2.13, 2.12, 2.11, 2.10, 2.9, 2.8</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect3">
+<h4 id="latest-plugin-release-version">7.1.1. Latest plugin release version</h4>
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner/releases/tag/5.3.0">5.3.0 (plugin: 5.3.0-4)</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="current-plugin-milestone-version">7.1.2. Current plugin milestone version</h4>
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner/releases/tag/5.3.1-RC">5.3.1-RC (plugin: 5.3.1-RC-4)</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="support-soapui-old-versions">7.1.3. Support SoapUI old versions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>5.2:</strong> 5.2.1, 5.2.0</p>
+</li>
+<li>
+<p><strong>5.1:</strong> 5.1.3, 5.1.2-hotfix.2, 5.1.2</p>
+</li>
+<li>
+<p><strong>5.0:</strong> 5.0.1-hotfix.0 (5.0.0-beta), <span class="line-through">5.0.1</span>, 5.0.0</p>
+</li>
+<li>
+<p><strong>4.6:</strong> 4.6.4, 4.6.3, 4.6.2, 4.6.1</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+Strike through version <span class="line-through">x.y.z</span> cloud be buggy. You have to use next one instead.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Recomendations</div>
+We are recommend use latest stable release versions - it should be able support old SoapUI test project file format as well.
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="license">8. license</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner/blob/master/LICENSE">MIT</a></p>
+</div>
+</div>
+</div>
+<h1 id="enjoy" class="sect0">enjoy! :)</h1>
+
 </div>
 <div id="footer">
 <div id="footer-text">
 Version 5.3.0-4<br>
-Last updated 2017-08-05 07:59:30 EEST
+Last updated 2017-08-13 04:09:10 EEST
 </div>
 </div>
 </body>
