@@ -1,17 +1,17 @@
-
 #### Versions:
-- gradle (gradlew) version
-- java version
+- gradle (gradlew) version:
+- java version:
 
 ### Plugin installation and tasks configuration:
-- plugin installation (build.gradle)
-- plugin configuration (build.gradle)
+- plugin installation (build.gradle):
+- plugin configuration (build.gradle):
 
 ### Description:
-- general problems description
+- general problems description:
 
 ### Steps To Reproduce:
-- input project file / plugin configuration
-- expected result / behavior
-- actual result / behavior
-- or better is provide some github repository where everithing is configured, so I can cloned and tested it quickly
+- input project file / plugin configuration:
+- expected result / behavior:
+- actual result / behavior:
+
+*note: it would be better if you can provide some github repository where everything is configured, so I can cloned and reproduce problem quickly*
