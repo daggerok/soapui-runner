@@ -5,8 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<meta name="author" content="Maksim Kostromin">
-<title>SoapUI Runner Gradle Plugin (soapui-runner 5.3.0-4)</title>
+<title>Runners properties</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -510,136 +509,260 @@ table.CodeRay td.code>pre{padding:0}
 .CodeRay .change .change{color:#66f}
 .CodeRay .head .head{color:#f4f}
 </style>
-<meta name="keywords" content="REST, SOAP, SoapUI, testrunner, loadtestrunner, soapui-runner, gradle plugin, documentation">
-<meta name="description" content="The SoapUI Runner Gradle Plugin documentation.">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.js"></script>
-<link rel="shortcut icon" type="image/x-icon" href="images/favicon.ico">
-<!-- https://github.com/blog/273-github-ribbons -->
-<a href="https://github.com/daggerok/soapui-runner">
-  <img style="display: block; width: 149px; height: 149px; position: absolute; right: 0; top: 0;"
-       src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67"
-       alt="Fork me on GitHub"
-       data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"/>
-</a>
 </head>
 <body class="article toc2 toc-left">
 <div id="header">
-<h1>SoapUI Runner Gradle Plugin (soapui-runner 5.3.0-4) <span class="image"><a class="image" href="https://travis-ci.org/daggerok/soapui-runner"><img src="https://travis-ci.org/daggerok/soapui-runner.svg?branch=master" alt="Build Status"></a></span></h1>
-<div class="details">
-<span id="author" class="author">Maksim Kostromin</span><br>
-<span id="email" class="email"><a href="mailto:daggerok@gmail.com">daggerok@gmail.com</a></span><br>
-<span id="revnumber">version 5.3.0-4,</span>
-<span id="revdate">2017-09-22 07:23:02 EEST</span>
-</div>
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
-<ul class="sectlevel1">
-<li><a href="#why">1. Why?</a></li>
-<li><a href="#what-s-inside">2. What&#8217;s inside?</a></li>
-<li><a href="#installation">3. Installation</a></li>
-<li><a href="#configuration-plugins-tasks">4. Configuration plugins tasks</a></li>
-<li><a href="#appendix">5. Appendix</a></li>
-<li><a href="#examples">6. Examples</a></li>
-<li><a href="#frequently-asked-questions">7. Frequently asked questions</a></li>
-<li><a href="#development-and-contribution">8. Development and contribution</a></li>
-<li><a href="#license">9. License</a></li>
-<li><a href="#enjoy">10. Enjoy!</a></li>
+<ul class="sectlevel2">
+<li><a href="#runners-properties">Runners properties</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div id="preamble">
-<div class="sectionbody">
-<h2 id="introduction" class="discrete">Introduction</h2>
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/Introduction.adoc[]</p>
+<div class="sect2">
+<h3 id="runners-properties">Runners properties</h3>
+<div class="sect3">
+<h4 id="base-allowed-for-testrunner-and-loadtestrunner-tasks">Base (allowed for testrunner and loadtestrunner tasks)</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">property</th>
+<th class="tableblock halign-left valign-top">arg</th>
+<th class="tableblock halign-left valign-top">default</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">failOnError</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets if gradle plugin execution should stop and fails on any plugin configuration errors occurs</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">projectFile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">soapui-test-project.xml</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the SoapUI project file containing the tests to run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">outputFolder</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-f</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">build/soapui</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the output folder to export results to</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">projectProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-P</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" project properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">globalProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-G</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" global properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">systemProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-D</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" system properties</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">settingsFile</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-t</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the SoapUI settings file</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">endpoint</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-e</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the endpoint to use for all test requests</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-d</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the domain to use for any authentications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">host</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-h</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the host to use by all test-requests, the existing endpoint port and path will be used</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-u</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the username to use for any authentications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-p</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the password to use for any authentications</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">wssPasswordType</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-w</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the WSS password-type to use for any authentications. Setting this will result in the addition of WS-Security UsernamePassword tokens to any outgoing request containing the specified username and password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">projectPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-x</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets SoapUI project password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">soapUISettingsPassword</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-v</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets SoapUI settings password</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enableUI</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-i</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">enables Swing UI components</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testSuite</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-s</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the TestSuite to run. If not set all TestSuites in the specified project file are run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">testCase</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-c</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the TestCase to run. If not set all TestCases in the specified project file are run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">printReport</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-r</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a flag controlling if a summary should be printed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">saveAfterRun</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-S</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">saves the project after running the tests</p></td>
+</tr>
+</tbody>
+</table>
 </div>
+<div class="sect3">
+<h4 id="testrunner-properties">Test runner specific configuration properties</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">property</th>
+<th class="tableblock halign-left valign-top">arg</th>
+<th class="tableblock halign-left valign-top">default</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">exportAll</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">adds console appender results to groovy log</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">junitReport</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-j</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">сollects TestRun results and creates JUnitReports</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">junitReportWithProperties</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-J</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">include JUnit XML reports adding test</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreErrors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-I</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">a flag controlling if errors are ignored</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">printAlertSiteReport</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-M</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">creates a Test Run Log Report in XML format</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">maxErrors</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-m</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the maximum number of TestStep errors to save for each testcase</p></td>
+</tr>
+</tbody>
+</table>
 </div>
-</div>
-<div class="sect1">
-<h2 id="why">1. Why?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/Why.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="what-s-inside">2. What&#8217;s inside?</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/WhatIsInside.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="installation">3. Installation</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/Installation.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="configuration-plugins-tasks">4. Configuration plugins tasks</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/Configuration.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="appendix">5. Appendix</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/Appendix.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="examples">6. Examples</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>See some usage examples <a href="https://github.com/daggerok/soapui-testrunner-example">here</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="frequently-asked-questions">7. Frequently asked questions</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/FAQ.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="development-and-contribution">8. Development and contribution</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>Unresolved directive in index.adoc - include::includes/Contribution.adoc[]</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="license">9. License</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://github.com/daggerok/soapui-runner/blob/master/LICENSE">MIT</a></p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="enjoy">10. Enjoy!</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>(;</p>
-</div>
+<div class="sect3">
+<h4 id="loadtestrunner-properties">Load test runner specific configuration properties</h4>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+<col style="width: 25%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">property</th>
+<th class="tableblock halign-left valign-top">arg</th>
+<th class="tableblock halign-left valign-top">default</th>
+<th class="tableblock halign-left valign-top">description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">loadTest</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-l</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sets the Load Test to run. If not set all Load Tests in the specified project file are run</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">limit</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-m</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">override limit property of Load Test</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">threadCount</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-n</p></td>
+<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">override thread count property of Load Test</p></td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Version 5.3.0-4<br>
 Last updated 2017-09-22 07:23:02 EEST
 </div>
 </div>
