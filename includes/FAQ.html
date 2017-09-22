@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Test (suites and cases) runner</title>
+<title>soapuios</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -515,101 +515,21 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
-<li><a href="#testrunner">Test (suites and cases) runner</a></li>
-<li><a href="#loadtestrunner">Load Tests runner</a></li>
-<li><a href="#extDir">Generate directory for external libraries</a></li>
-<li><a href="#adding-new-and-override-generic-parent-properties">Adding new and override generic (parent) properties</a></li>
+<li><a href="#soapuios">soapuios</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
-<div class="paragraph">
-<p>You can pre-configure once all needed properties / configurations using runner tasks closures</p>
-</div>
-<div class="listingblock">
-<div class="title">Configuration example</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">testrunner {
-  projectFile <span class="string"><span class="delimiter">'</span><span class="content">src/test/resources/soapui-test-project.xml</span><span class="delimiter">'</span></span>
-  outputFolder <span class="string"><span class="delimiter">'</span><span class="content">out/tests</span><span class="delimiter">'</span></span>
-  failOnError <span class="predefined-constant">true</span>
-
-  projectProperties = [
-    <span class="string"><span class="delimiter">'</span><span class="content">apiBaseUrl=https://api.github.com</span><span class="delimiter">'</span></span>
-  ]
-}
-
-loadtestrunner {
-  projectFile = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">$</span>projectDir</span><span class="content">/soapui-load-tests.xml</span><span class="delimiter">&quot;</span></span>
-  outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="content">buildDir/soapui/load</span><span class="delimiter">&quot;</span></span>
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>Feel free omit all runners configurations if <a href="#runners-properties">[runners-properties]</a> are good enough for you:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">/*
-testrunner {
-  projectFile = 'soapui-test-project.xml'
-  outputFolder = 'build/soapui
-  // ...
-}
-
-loadtestrunner {
-  projectFile = 'soapui-test-project.xml'
-  outputFolder = 'build/soapui
-  // ...
-}
-*/</span></code></pre>
-</div>
-</div>
 <div class="sect2">
-<h3 id="testrunner">Test (suites and cases) runner</h3>
+<h3 id="soapuios">soapuios</h3>
 <div class="paragraph">
-<p>Very extendable and configurable SoapUI testrunner task. For details see: <a href="#testrunner-properties">[testrunner-properties]</a></p>
+<p>If you faced with errors like</p>
 </div>
 <div class="listingblock">
-<div class="title">Example of testrunner task configuration</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">testrunner {
-  projectFile = <span class="string"><span class="delimiter">'</span><span class="content">soapui-test-project.xml</span><span class="delimiter">'</span></span>
-  outputFolder = <span class="string"><span class="delimiter">'</span><span class="content">build/soapui</span></span><span class="error">
-</span>}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Execution of test runner task</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">gradle testrunner</code></pre>
-</div>
-</div>
-<div class="sect3">
-<h4 id="test-runner-configuration-customization">Test runner configuration customization</h4>
-<div class="paragraph">
-<p>Using groovy inside gradle build files we can do pretty much whatever we want.</p>
-</div>
-<div class="paragraph">
-<p><a href="https://github.com/daggerok/soapui-runner-example/commit/9a8b40311600ed631703e7c0de1effa3e29e805d">Look, how easy
-you can specify exact testSuites for run</a></p>
-</div>
-<div class="listingblock">
-<div class="title">Example of testrunner task configuration: how to execute only needed TestSuite list</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">apply <span class="key">plugin</span>: io.github.daggerok.SoapUITestRunnerPlugin
-
-task soapUITestSuites(<span class="key">dependsOn</span>: [
-
-  <span class="string"><span class="delimiter">'</span><span class="content">TestSuite 1</span><span class="delimiter">'</span></span>,
-  <span class="string"><span class="delimiter">'</span><span class="content">TestSuite 2</span><span class="delimiter">'</span></span>,
-
-].collect { suiteName -&gt;
-  tasks.create(<span class="key">name</span>: suiteName, <span class="key">type</span>: io.github.daggerok.tasks.SoapUITestRunnerTask) {
-    testSuite = suiteName
-    outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">$</span>buildDir</span><span class="content">/soapui/</span><span class="inline"><span class="inline-delimiter">$</span>suiteName</span><span class="delimiter">&quot;</span></span>
-  }
-})</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">An error occurred [com.eviware.soapui.plugins.auto.factories.AutoDiscoveryMethodFactory], see error log for details
+java.lang.ClassNotFoundException: com.eviware.soapui.plugins.auto.factories.AutoDiscoveryMethodFactory
+...</code></pre>
 </div>
 </div>
 <div class="admonitionblock note">
@@ -619,145 +539,28 @@ task soapUITestSuites(<span class="key">dependsOn</span>: [
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-<div class="title">Note</div>
-same approach can be used for testCases.
+<div class="title">From 5.2 Release Notes (2015-07-02):</div>
+SoapUI failed to load plugins when you run tests with testrunner.bat and the current directory differed from &lt;SoapUI&gt;\bin
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><a href="https://github.com/daggerok/soapui-runner-example/commit/84f71229b08934a0598fdef18acd497b8dacb1a1">Look, how to
-execute only needed test cases</a></p>
-</div>
-<div class="listingblock">
-<div class="title">Example of testrunner execution for some concrete TestCases</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">apply <span class="key">plugin</span>: io.github.daggerok.soapui-testrunner<span class="string"><span class="delimiter">'</span></span><span class="error">
-</span>
-<span class="keyword">import</span> <span class="include">io.github.daggerok.tasks.SoapUITestRunnerTask</span>
-
-Task<span class="type">[]</span> soapUITasks = [
-
-    <span class="string"><span class="delimiter">'</span><span class="content">TestCase 1</span><span class="delimiter">'</span></span>,
-    <span class="string"><span class="delimiter">'</span><span class="content">TestCase 2</span><span class="delimiter">'</span></span>,
-    <span class="string"><span class="delimiter">'</span><span class="content">TestCase 3</span><span class="delimiter">'</span></span>,
-    <span class="string"><span class="delimiter">'</span><span class="content">TestCase 4</span><span class="delimiter">'</span></span>,
-    <span class="string"><span class="delimiter">'</span><span class="content">TestCase 5</span><span class="delimiter">'</span></span>,
-
-].collect { testCaseName -&gt;
-
-  <span class="keyword">def</span> noSpaceCase = testCaseName.replaceAll(<span class="regexp"><span class="delimiter">/</span><span class="char">\s</span><span class="content">+</span><span class="content">$</span><span class="delimiter">/</span></span>, <span class="string"><span class="delimiter">'</span><span class="delimiter">'</span></span>).capitalize()
-
-  tasks.create(<span class="key">name</span>: noSpaceCase, <span class="key">type</span>: SoapUITestRunnerTask) {
-    testCase = noSpaceCase
-    outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">$</span>buildDir</span><span class="content">/soapui/testCases/</span><span class="inline"><span class="inline-delimiter">$</span>noSpaceCase</span><span class="delimiter">&quot;</span></span>
-    projectProperties = [
-        <span class="string"><span class="delimiter">'</span><span class="content">apiEndpoint=https://jsonplaceholder.typicode.com</span><span class="delimiter">'</span></span>
-    ]
-  }
-}
-
-task soapUITestCases(<span class="key">dependsOn</span>: soapUITasks)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="loadtestrunner">Load Tests runner</h3>
-<div class="paragraph">
-<p>Expandable and configurable load test runner task. See <a href="#loadtestrunner-properties">[loadtestrunner-properties]</a> for more details</p>
-</div>
-<div class="listingblock">
-<div class="title">Example of loadtestrunner task configuration</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">loadtestrunner {
-  projectFile = <span class="string"><span class="delimiter">'</span><span class="content">soapui-test-project.xml</span><span class="delimiter">'</span></span>
-  outputFolder = <span class="string"><span class="delimiter">'</span><span class="content">build/soapui</span></span><span class="error">
-</span>}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="title">Load test runner execution</div>
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">gradle loadtestrunner</code></pre>
-</div>
-</div>
-</div>
-<div class="sect2">
-<h3 id="extDir">Generate directory for external libraries</h3>
-<div class="paragraph">
-<p>Sometimes we need use some external packages, like jdbc drivers.
-for that purposes we have to add them inside $SOAPUI_HOME/bin/ext directory
-to simplify that process, we can generate needed ext folder to copy it later inside SoapUI ext dir</p>
+<p>Fix: rename $HOME/.soapuios folder to NOT.soapuios</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">repositories { jcenter() }
-dependencies {
-  extDir <span class="string"><span class="delimiter">'</span><span class="content">org.postgresql:postgresql:9.4.1212.jre7</span><span class="delimiter">'</span></span>
-}</code></pre>
-</div>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">gradle extDir
-...
-cp -Rf build/soapui/ext <span class="error">$</span>SOAPUI_HOME/bin/ext</code></pre>
+<pre class="CodeRay highlight"><code data-lang="bash">mv -f $HOME/.soapuios $HOME/NOT.soapuios</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>see SoapUI systemProperty: soapui.ext.libraries: <code>testrunnert -Dsoapui.ext.libraries=&#8230;&#8203;</code></p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="adding-new-and-override-generic-parent-properties">Adding new and override generic (parent) properties</h3>
-<div class="paragraph">
-<p>If you are using gradle multi-project build, you can define base configuration inside parent build:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// gradle.build:</span>
-allprojects {
-  testrunner {
-    projectProperties = [
-        <span class="string"><span class="delimiter">'</span><span class="content">os=base</span><span class="delimiter">'</span></span>,
-        <span class="string"><span class="delimiter">'</span><span class="content">url=https://example.com</span><span class="delimiter">'</span></span>
-    ]
-    systemProperties = [
-        <span class="string"><span class="delimiter">&quot;</span><span class="content">soapui.ext.libraries=</span><span class="inline"><span class="inline-delimiter">$</span>buildDir</span><span class="delimiter">&quot;</span></span>
-    ]
-    <span class="comment">// ...</span>
-  }
-}</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>&#8230;&#8203;and later you might need to override it inside some of your children builds:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// ./modules/windows/gradle.build</span>
-testrunner {
-  projectProperties = [
-      <span class="comment">// add new:</span>
-      <span class="string"><span class="delimiter">'</span><span class="content">newPropjectProp=adding</span><span class="delimiter">'</span></span>,
-      <span class="comment">// override existing:</span>
-      <span class="string"><span class="delimiter">'</span><span class="content">os=windows</span><span class="delimiter">'</span></span>,
-      <span class="string"><span class="delimiter">'</span><span class="content">url=https://microsoft.com</span><span class="delimiter">'</span></span>
-  ]
-  systemProperties = [
-      <span class="comment">// override existing:</span>
-      <span class="string"><span class="delimiter">&quot;</span><span class="content">soapui.ext.libraries=C:/path/to/SoapUI-5.3.0/bin/ext</span><span class="delimiter">&quot;</span></span>
-  ]
-  <span class="comment">// ...</span>
-}</code></pre>
-</div>
+<p><a href="https://stackoverflow.com/questions/31409653/classnotfoundexception-after-updating-to-soapui-5-2-0">Read more</a></p>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-22 07:23:02 EEST
+Last updated 2017-09-22 07:24:21 EEST
 </div>
 </div>
 </body>

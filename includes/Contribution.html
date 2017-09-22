@@ -5,7 +5,7 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.5">
-<title>Runners properties</title>
+<title>Supported gradle versions</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
 <style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
@@ -515,255 +515,147 @@ table.CodeRay td.code>pre{padding:0}
 <div id="toc" class="toc2">
 <div id="toctitle">Table of Contents</div>
 <ul class="sectlevel2">
-<li><a href="#runners-properties">Runners properties</a></li>
+<li><a href="#supported-gradle-versions">Supported gradle versions</a></li>
 </ul>
 </div>
 </div>
 <div id="content">
+<div class="paragraph">
+<p>Feel free to contribute or <a href="https://github.com/daggerok/soapui-runner/issues">open an issue</a></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Publish locally for development purpose:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew clean build install publish</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>For testing locally published plugin into maven repo publishing use <a href="https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle">this</a> example</p>
+</li>
+<li>
+<p>Don&#8217;t try publish new version of plugin to gradle portal (it&#8217;s available only for owner)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew publishPlugins</code></pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Also Don&#8217;t try publish new version of plugin documentation to GitHub pages (it&#8217;s available only for owner)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew gitPublishPush</code></pre>
+</div>
+</div>
 <div class="sect2">
-<h3 id="runners-properties">Runners properties</h3>
-<div class="sect3">
-<h4 id="base-allowed-for-testrunner-and-loadtestrunner-tasks">Base (allowed for testrunner and loadtestrunner tasks)</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">property</th>
-<th class="tableblock halign-left valign-top">arg</th>
-<th class="tableblock halign-left valign-top">default</th>
-<th class="tableblock halign-left valign-top">description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">failOnError</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets if gradle plugin execution should stop and fails on any plugin configuration errors occurs</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">projectFile</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">N/A</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">soapui-test-project.xml</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the SoapUI project file containing the tests to run</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">outputFolder</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-f</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">build/soapui</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the output folder to export results to</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">projectProperties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-P</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" project properties</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">globalProperties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-G</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" global properties</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">systemProperties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-D</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets list of "key=value" system properties</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">settingsFile</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-t</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the SoapUI settings file</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">endpoint</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-e</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the endpoint to use for all test requests</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">domain</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-d</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the domain to use for any authentications</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">host</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-h</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the host to use by all test-requests, the existing endpoint port and path will be used</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">username</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-u</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the username to use for any authentications</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">password</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-p</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the password to use for any authentications</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">wssPasswordType</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-w</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the WSS password-type to use for any authentications. Setting this will result in the addition of WS-Security UsernamePassword tokens to any outgoing request containing the specified username and password</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">projectPassword</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-x</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets SoapUI project password</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">soapUISettingsPassword</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-v</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets SoapUI settings password</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enableUI</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-i</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">enables Swing UI components</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">testSuite</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-s</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the TestSuite to run. If not set all TestSuites in the specified project file are run</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">testCase</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-c</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the TestCase to run. If not set all TestCases in the specified project file are run</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">printReport</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-r</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">a flag controlling if a summary should be printed</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">saveAfterRun</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-S</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">saves the project after running the tests</p></td>
-</tr>
-</tbody>
-</table>
+<h3 id="supported-gradle-versions">Supported gradle versions</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>plugin:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>4:</strong> 4.0.2, 4.0.1, 4.0</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>client:</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><strong>4:</strong> 4.0.2, 4.0.1, 4.0</p>
+</li>
+<li>
+<p><strong>3:</strong> 3.5, 3.4.1, 3.4, 3.3, 3.2, 3.1, 3.0</p>
+</li>
+<li>
+<p><strong>2 (apply plugin only):</strong> 2.14, 2.13, 2.12, 2.11, 2.10, 2.9, 2.8</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 <div class="sect3">
-<h4 id="testrunner-properties">Test runner specific configuration properties</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
-<tr>
-<th class="tableblock halign-left valign-top">property</th>
-<th class="tableblock halign-left valign-top">arg</th>
-<th class="tableblock halign-left valign-top">default</th>
-<th class="tableblock halign-left valign-top">description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">exportAll</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-a</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">adds console appender results to groovy log</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">junitReport</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-j</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">сollects TestRun results and creates JUnitReports</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">junitReportWithProperties</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-J</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">include JUnit XML reports adding test</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">ignoreErrors</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-I</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">false</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">a flag controlling if errors are ignored</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">printAlertSiteReport</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-M</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">true</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">creates a Test Run Log Report in XML format</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">maxErrors</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-m</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the maximum number of TestStep errors to save for each testcase</p></td>
-</tr>
-</tbody>
-</table>
+<h4 id="latest-plugin-release-version">Latest plugin release version</h4>
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner/releases/tag/5.3.0">5.3.0 (plugin: 5.3.0-4)</a></p>
+</div>
 </div>
 <div class="sect3">
-<h4 id="loadtestrunner-properties">Load test runner specific configuration properties</h4>
-<table class="tableblock frame-all grid-all spread">
-<colgroup>
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-<col style="width: 25%;">
-</colgroup>
-<thead>
+<h4 id="current-plugin-milestone-version">Current plugin milestone version</h4>
+<div class="paragraph">
+<p><a href="https://github.com/daggerok/soapui-runner/releases/tag/5.3.1-RC">5.3.1-RC (plugin: 5.3.1-RC-4)</a></p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="support-soapui-old-versions">Support SoapUI old versions</h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>5.2:</strong> 5.2.1, 5.2.0</p>
+</li>
+<li>
+<p><strong>5.1:</strong> 5.1.3, 5.1.2-hotfix.2, 5.1.2</p>
+</li>
+<li>
+<p><strong>5.0:</strong> 5.0.1-hotfix.0 (5.0.0-beta), <span class="line-through">5.0.1</span>, 5.0.0</p>
+</li>
+<li>
+<p><strong>4.6:</strong> 4.6.4, 4.6.3, 4.6.2, 4.6.1</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
 <tr>
-<th class="tableblock halign-left valign-top">property</th>
-<th class="tableblock halign-left valign-top">arg</th>
-<th class="tableblock halign-left valign-top">default</th>
-<th class="tableblock halign-left valign-top">description</th>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Note</div>
+Strike through version <span class="line-through">x.y.z</span> cloud be buggy. You have to use next one instead.
+</td>
 </tr>
-</thead>
-<tbody>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">loadTest</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-l</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">sets the Load Test to run. If not set all Load Tests in the specified project file are run</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">limit</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-m</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">override limit property of Load Test</p></td>
-</tr>
-<tr>
-<td class="tableblock halign-left valign-top"><p class="tableblock">threadCount</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">-n</p></td>
-<td class="tableblock halign-left valign-top"></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">override thread count property of Load Test</p></td>
-</tr>
-</tbody>
 </table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="title">Recomendations</div>
+We are recommend use latest stable release versions - it should be able support old SoapUI test project file format as well.
+</td>
+</tr>
+</table>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-22 07:23:02 EEST
+Last updated 2017-09-22 07:24:21 EEST
 </div>
 </div>
 </body>
