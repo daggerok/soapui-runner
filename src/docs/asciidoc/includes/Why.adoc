@@ -1,0 +1,23 @@
+
+=== Officially, gradle plugin is not supported
+
+Currently SmartBear is not supporting gradle plugin. At the moment only link:http://smartbearsoftware.com/repository/maven2/com/smartbear/soapui/soapui-maven-plugin/5.3.1-RC/soapui-maven-plugin-5.3.1-RC.pom[SoapUI Maven Plugin] officially supported.
+
+SmartBear provides platform dependant scripts for SoapUI test project execution, but it's not so convenient.
+For example, to execute SoapUI tests using testrunner (version: 5.3.0) tool you can use these commands:
+
+.Example, how to execute tests on windows using SoapUI testrunner.bat
+[source,cmd]
+C:\path\to\SoapUI-5.3.0\bin\testrunner.bat C:\path\to\soapui-test-project.xml
+
+.Example, how to execute testrunner.sh on unix
+[source,bash]
+/path/to/SoapUI-5.3.0.app/Contents/Resources/app/bin/testrunner.sh /path/to/soapui-test-project.xml
+
+=== Running tests using soapui-runner gradle plugin
+
+Using preconfigured build script you only need to execute a single command:
+
+[source,bash]
+gradle testrunner # or:
+gradle loadtestrunner

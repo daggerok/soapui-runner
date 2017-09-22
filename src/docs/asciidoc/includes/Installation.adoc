@@ -1,0 +1,88 @@
+
+There are few ways to integrate soapui-runner in your gradle project.
+We are recommending you usi that plugin in separate project.
+It's better to not include soapui-runner gradle project as subproject of main project is going to be tested to avoid complexity of dependency resolution, but this is not required.
+
+In general, it could be installed just like so:
+
+.Using plugins approach
+[source,groovy]
+----
+buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+}
+
+plugins {
+  id 'io.github.daggerok.soapui-runner' version '5.3.0-4'
+}
+----
+
+=== Multi-project build
+
+If you are using multi-project build or for some reasons you don't want apply runner-plugin immediately:
+
+.Do not apply plugin in plugins block
+[source,groovy]
+----
+buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+}
+
+plugins {
+  id 'io.github.daggerok.soapui-runner' version '5.3.0-4' apply false
+}
+
+subprojects {
+  apply plugin: 'io.github.daggerok.soapui-runner'
+  // ...
+}
+----
+
+=== Gradle version less then 3.0
+
+If you are using gradle <= 3.0, then use apply plugin approach only:
+
+.Use apply plugin approach
+[source,groovy]
+----
+buildscript {
+  repositories {
+    maven { url 'https://plugins.gradle.org/m2/' }
+    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+  }
+  dependencies {
+    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-4'
+  }
+}
+
+apply plugin: 'io.github.daggerok.soapui-runner'
+----
+
+.Important
+IMPORTANT: Make sure you have added required smartbear software maven repository
+           in your buildscript for correct plugin dependencies resolution.
+
+==== Many ways apply plugins...
+
+You can apply FQDN class name for each plugin instead (see plugins main classes source code for details):
+
+[source,groovy]
+----
+// turns on extDir and testrunner tasks:
+apply plugin: io.github.daggerok.SoapUITestRunnerPlugin // or:
+apply plugin: 'io.github.daggerok.soapui-testrunner'
+
+// turns on extDir and loadtestrunner tasks:
+apply plugin: io.github.daggerok.SoapUILoadTestRunnerPlugin // or:
+apply plugin: 'io.github.daggerok.soapui-loadtestrunner'
+
+// turns on all tasks: extDir, testrunner and loadtestrunner:
+apply plugin: io.github.daggerok.SoapUIRunnerPlugin // or:
+apply plugin: 'io.github.daggerok.soapui-runner'
+----

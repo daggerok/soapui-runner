@@ -1,0 +1,22 @@
+
+There are few plugins and tasks you have to get all functionality you might need
+...almost :) Currently, in my daily work and for testing API of my projects, I was required to use only testrunner
+and loadtestrunner
+
+.Note
+[NOTE]
+Anyway, All other existing runner in SoapUI could be easily added to soapui-runner plugin, really. Contributors are welcome!
+
+=== Available plugins and tasks
+
+==== Three plugins available on Gradle Portal
+
+. link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-testrunner[SoapUI Test Runner Plugin] soapui-testrunner (`io.github.daggerok.soapui-testrunner`)
+. link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-loadtestrunner[SoapUI Load Test Runner Plugin] soapui-loadtestrunner (`io.github.daggerok.soapui-loadtestrunner`)
+. link:https://plugins.gradle.org/plugin/io.github.daggerok.soapui-runner[SoapUI Runner Plugin] soapui-runner (`io.github.daggerok.soapui-runner`) - contains all tasks: testrunner and loadtestrunner
+
+==== Three tasks available right now
+
+. extDir: helpful task for generating ext folder to be copied inside `$SOAPUI_HOME/bin` (see <<extDir>>)
+. testrunner: task run SoapUI Test Suites and/or Test Cases (see <<testrunner>>)
+. loadtestrunner: task run SoapUI Load Tests (see <<loadtestrunner>>)

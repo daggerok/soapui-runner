@@ -1,0 +1,24 @@
+
+=== soapuios
+
+If you faced with errors like
+
+[source,bash]
+----
+An error occurred [com.eviware.soapui.plugins.auto.factories.AutoDiscoveryMethodFactory], see error log for details
+java.lang.ClassNotFoundException: com.eviware.soapui.plugins.auto.factories.AutoDiscoveryMethodFactory
+...
+----
+
+.From 5.2 Release Notes (2015-07-02):
+[NOTE]
+SoapUI failed to load plugins when you run tests with testrunner.bat and the current directory differed from <SoapUI>\bin
+
+Fix: rename $HOME/.soapuios folder to NOT.soapuios
+
+[source,bash]
+----
+mv -f $HOME/.soapuios $HOME/NOT.soapuios
+----
+
+link:https://stackoverflow.com/questions/31409653/classnotfoundexception-after-updating-to-soapui-5-2-0[Read more]
