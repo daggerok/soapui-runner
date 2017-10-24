@@ -43,5 +43,6 @@ include::includes/Contribution.adoc[]
 == License
 link:https://github.com/daggerok/soapui-runner/blob/master/LICENSE[MIT]
 
-== Enjoy!
-(;
+== Enjoy
+
+\^_^
