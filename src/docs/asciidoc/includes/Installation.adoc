@@ -6,17 +6,17 @@ It's better to not include soapui-runner gradle project as subproject of main pr
 In general, it could be installed just like so:
 
 .Using plugins approach
-[source,gradle]
+[source,groovy]
 ----
 buildscript {
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "http://smartbearsoftware.com/repository/maven2/" }
   }
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '5.3.0-4'
+  id "io.github.daggerok.soapui-runner" version "5.3.0-5"
 }
 ----
 
@@ -25,21 +25,21 @@ plugins {
 If you are using multi-project build or for some reasons you don't want apply runner-plugin immediately:
 
 .Do not apply plugin in plugins block
-[source,gradle]
+[source,groovy]
 ----
 buildscript {
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "http://smartbearsoftware.com/repository/maven2/" }
   }
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '5.3.0-4' apply false
+  id "io.github.daggerok.soapui-runner" version "5.3.0-5" apply false
 }
 
 subprojects {
-  apply plugin: 'io.github.daggerok.soapui-runner'
+  apply plugin: "io.github.daggerok.soapui-runner"
   // ...
 }
 ----
@@ -49,19 +49,19 @@ subprojects {
 If you are using gradle <= 3.0, then use apply plugin approach only:
 
 .Use apply plugin approach
-[source,gradle]
+[source,groovy]
 ----
 buildscript {
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "http://smartbearsoftware.com/repository/maven2/" }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-4'
+    classpath "gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-5"
   }
 }
 
-apply plugin: 'io.github.daggerok.soapui-runner'
+apply plugin: "io.github.daggerok.soapui-runner"
 ----
 
 .Important
@@ -72,17 +72,17 @@ IMPORTANT: Make sure you have added required smartbear software maven repository
 
 You can apply FQDN class name for each plugin instead (see plugins main classes source code for details):
 
-[source,gradle]
+[source,groovy]
 ----
 // turns on extDir and testrunner tasks:
 apply plugin: io.github.daggerok.SoapUITestRunnerPlugin // or:
-apply plugin: 'io.github.daggerok.soapui-testrunner'
+apply plugin: "io.github.daggerok.soapui-testrunner"
 
 // turns on extDir and loadtestrunner tasks:
 apply plugin: io.github.daggerok.SoapUILoadTestRunnerPlugin // or:
-apply plugin: 'io.github.daggerok.soapui-loadtestrunner'
+apply plugin: "io.github.daggerok.soapui-loadtestrunner"
 
 // turns on all tasks: extDir, testrunner and loadtestrunner:
 apply plugin: io.github.daggerok.SoapUIRunnerPlugin // or:
-apply plugin: 'io.github.daggerok.soapui-runner'
+apply plugin: "io.github.daggerok.soapui-runner"
 ----

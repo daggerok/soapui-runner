@@ -1,6 +1,6 @@
 = SoapUI Runner Gradle Plugin image:https://travis-ci.org/daggerok/soapui-runner.svg?branch=master["Build Status", link="https://travis-ci.org/daggerok/soapui-runner"]
 Maksim Kostromin <daggerok@gmail.com>
-2017-08-13
+2017-10-24
 :toc:
 
 This repository contains simple gradle plugin (written in groovy) allowed configure and run SoapUI tests using gradle.
@@ -23,13 +23,13 @@ This repository contains simple gradle plugin (written in groovy) allowed config
 ----
 buildscript {
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "http://smartbearsoftware.com/repository/maven2/" }
   }
 }
 
 plugins {
-  id 'io.github.daggerok.soapui-runner' version '5.3.0-4'
+  id "io.github.daggerok.soapui-runner" version "5.3.0-5"
 }
 ----
 
@@ -39,15 +39,15 @@ plugins {
 ----
 buildscript {
   repositories {
-    maven { url 'https://plugins.gradle.org/m2/' }
-    maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+    maven { url "https://plugins.gradle.org/m2/" }
+    maven { url "http://smartbearsoftware.com/repository/maven2/" }
   }
   dependencies {
-    classpath 'gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-4'
+    classpath "gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-5"
   }
 }
 
-apply plugin: 'io.github.daggerok.soapui-runner'
+apply plugin: "io.github.daggerok.soapui-runner"
 ----
 
 === Configuration
@@ -56,16 +56,16 @@ apply plugin: 'io.github.daggerok.soapui-runner'
 ----
 repositories { jcenter() }
 dependencies {
-  extDir 'org.postgresql:postgresql:9.4.1212.jre7'
+  extDir "org.postgresql:postgresql:9.4.1212.jre7"
 }
 
 testrunner {
-  projectFile 'src/test/resources/soapui-test-project.xml'
-  outputFolder 'out/tests'
+  projectFile "src/test/resources/soapui-test-project.xml"
+  outputFolder "out/tests"
   failOnError true
 
   projectProperties = [
-    'apiBaseUrl=https://api.github.com'
+    "apiBaseUrl=https://api.github.com"
   ]
 }
 
