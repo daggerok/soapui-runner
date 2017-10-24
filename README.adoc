@@ -84,7 +84,7 @@ gradle loadtestrunner
 
 == Examples
 
-See some usage examples link:link:https://github.com/daggerok/soapui-testrunner-groovy-example[here]
+See some usage examples link:https://github.com/daggerok/soapui-testrunner-groovy-example[here]
 
 == license
 
