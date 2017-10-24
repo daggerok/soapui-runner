@@ -31,14 +31,14 @@
 
 buildscript {
   ext {
-    website = 'https://daggerok.github.io/soapui-runner'
-    vcsUrl = 'https://github.com/daggerok/soapui-runner.git'
+    website = "https://daggerok.github.io/soapui-runner"
+    vcsUrl = "https://github.com/daggerok/soapui-runner.git"
   }
 }
 
-group = 'io.github.daggerok'
-version = "$soapUIVersion-4"
-description = info('Allows run SoapUI testrunner and loadtestrunner.')
+group = "io.github.daggerok"
+version = "$soapUIVersion-5"
+description = info("Allows run SoapUI testrunner and loadtestrunner.")
 
 gradlePlugin {
   plugins {
@@ -60,7 +60,7 @@ gradlePlugin {
 publishing {
   repositories {
     maven {
-      url '../soapui-runner-example/maven-repo'
+      url "../soapui-runner-example/maven-repo"
     }
   }
 }
@@ -71,39 +71,39 @@ pluginBundle {
   vcsUrl = "$project.vcsUrl"
   description = project.description
   tags = [
-      'SoapUI',
-      'soapui',
-      'smartbear',
-      'soapuirunner',
-      'smartbear.com',
-      'www.soapui.org',
-      'testing',
-      'SOAP',
-      'REST',
-      'runner',
-      'testrunner',
-      'testsuites',
-      'testsuite',
-      'testcases',
-      'testcase',
-      'test',
-      'loadtestrunner',
-      'loadrunner',
-      'loadtests',
-      'loadtest',
-      'load',
-      'QA',
+      "SoapUI",
+      "soapui",
+      "smartbear",
+      "soapuirunner",
+      "smartbear.com",
+      "www.soapui.org",
+      "testing",
+      "SOAP",
+      "REST",
+      "runner",
+      "testrunner",
+      "testsuites",
+      "testsuite",
+      "testcases",
+      "testcase",
+      "test",
+      "loadtestrunner",
+      "loadrunner",
+      "loadtests",
+      "loadtest",
+      "load",
+      "QA",
   ]
 
   plugins {
     soapUITestRunnerPlugin {
       id = "${project.group}.soapui-testrunner"
       // max length 254 characters:
-      description = displayName = info('Allows run SoapUI TestSuites and TestCases using testrunner.')
+      description = displayName = info("Allows run SoapUI TestSuites and TestCases using testrunner.")
     }
     soapUILoadTestRunnerPlugin {
       id = "${project.group}.soapui-loadtestrunner"
-      description = displayName = info('Allows run SoapUI Load Tests using loadtestrunner.')
+      description = displayName = info("Allows run SoapUI Load Tests using loadtestrunner.")
     }
     soapUIRunnerPlugin {
       id = "${project.group}.$rootProject.name"
@@ -123,7 +123,7 @@ static String info(final String suffix) {
      |SoapUI Runner Gradle Plugin.
      |
      |Please, make sure you have also added required plugin repository in your buildscript: 
-     |maven { url 'http://smartbearsoftware.com/repository/maven2/' }
+     |maven { url "http://smartbearsoftware.com/repository/maven2/" }
      |
      |$suffix""".stripMargin()
 }

@@ -2,7 +2,7 @@
 You can pre-configure once all needed properties / configurations using runner tasks closures
 
 .Configuration example
-[source,groovy]
+[source,gradle]
 ----
 testrunner {
   projectFile 'src/test/resources/soapui-test-project.xml'
@@ -20,9 +20,9 @@ loadtestrunner {
 }
 ----
 
-Feel free omit all runners configurations if <<runners-properties>> are good enough for you:
+Feel free omit all runners configurations if default <<runners-properties>> are good enough for you:
 
-[source,groovy]
+[source,gradle]
 ----
 /*
 testrunner {
@@ -45,14 +45,14 @@ loadtestrunner {
 Very extendable and configurable SoapUI testrunner task. For details see: <<testrunner-properties>>
 
 .Example of testrunner task configuration
-[source,groovy]
+[source,gradle]
 testrunner {
   projectFile = 'soapui-test-project.xml'
   outputFolder = 'build/soapui
 }
 
 .Execution of test runner task
-[source,groovy]
+[source,gradle]
 gradle testrunner
 
 ==== Test runner configuration customization
@@ -87,7 +87,7 @@ link:https://github.com/daggerok/soapui-runner-example/commit/84f71229b08934a059
 execute only needed test cases]
 
 .Example of testrunner execution for some concrete TestCases
-[source,groovy]
+[source,gradle]
 ----
 apply plugin: io.github.daggerok.soapui-testrunner'
 
@@ -123,14 +123,14 @@ task soapUITestCases(dependsOn: soapUITasks)
 Expandable and configurable load test runner task. See <<loadtestrunner-properties>> for more details
 
 .Example of loadtestrunner task configuration
-[source,groovy]
+[source,gradle]
 loadtestrunner {
   projectFile = 'soapui-test-project.xml'
   outputFolder = 'build/soapui
 }
 
 .Load test runner execution
-[source,groovy]
+[source,gradle]
 gradle loadtestrunner
 
 [[extDir]]
@@ -140,7 +140,7 @@ Sometimes we need use some external packages, like jdbc drivers.
 for that purposes we have to add them inside $SOAPUI_HOME/bin/ext directory
 to simplify that process, we can generate needed ext folder to copy it later inside SoapUI ext dir
 
-[source,groovy]
+[source,gradle]
 ----
 repositories { jcenter() }
 dependencies {
@@ -148,7 +148,7 @@ dependencies {
 }
 ----
 
-[source,groovy]
+[source,gradle]
 ----
 gradle extDir
 ...
@@ -161,9 +161,9 @@ see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libra
 
 If you are using gradle multi-project build, you can define base configuration inside parent build:
 
-[source,groovy]
+[source,gradle]
 ----
-// gradle.build:
+// build.gradle:
 allprojects {
   testrunner {
     projectProperties = [
@@ -180,9 +180,9 @@ allprojects {
 
 ...and later you might need to override it inside some of your children builds:
 
-[source,groovy]
+[source,gradle]
 ----
-// ./modules/windows/gradle.build
+// ./modules/windows/build.gradle
 testrunner {
   projectProperties = [
       // add new:

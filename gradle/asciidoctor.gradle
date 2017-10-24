@@ -27,33 +27,36 @@
  
  // read more: http://asciidoctor.org/docs/asciidoctor-gradle-plugin/
 asciidoctorj {
-  version = '1.5.5'
+  version = "1.5.5"
 }
 
 asciidoctor {
-  attributes toc: 'left',
-             idprefix: '',
-             docinfo1: '',
-             icons: 'font',
-             idseparator: '-',
-             setanchors: 'true',
-             'source-highlighter': 'coderay',
-             'toc-title': 'Table of Contents',
-             'build-gradle': file('build.gradle'),
-             'endpoint-url': 'https://daggerok.github.io/soapui-runner'
+  attributes toc: "left",
+             idprefix: "",
+             docinfo1: "",
+             icons: "font",
+             idseparator: "-",
+             setanchors: "true",
+             "source-highlighter": "coderay",
+             "toc-title": "Table of Contents",
+             "build-gradle": file("build.gradle"),
+             "endpoint-url": "https://daggerok.github.io/soapui-runner"
 }
 
 // read more: https://github.com/ajoberstar/gradle-git-publish
 gitPublish {
-  repoUri = 'git@github.com:daggerok/soapui-runner.git'
-  branch = 'gh-pages'
+  repoUri = "git@github.com:daggerok/soapui-runner.git"
+  branch = "gh-pages"
   contents {
     from "$buildDir/asciidoc/html5"
     from "$projectDir/src/docs/asciidoc/static"
     from(javadoc) {
-      into 'docs'
+      into "docs"
     }
   }
 }
 
-gitPublishPush.dependsOn asciidoctor
+assemble.dependsOn asciidoctor
+gitPublishPush.shouldRunAfter assemble
+
+task deploy(dependsOn: [assemble, gitPublishPush])

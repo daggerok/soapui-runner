@@ -6,7 +6,7 @@ It's better to not include soapui-runner gradle project as subproject of main pr
 In general, it could be installed just like so:
 
 .Using plugins approach
-[source,groovy]
+[source,gradle]
 ----
 buildscript {
   repositories {
@@ -25,7 +25,7 @@ plugins {
 If you are using multi-project build or for some reasons you don't want apply runner-plugin immediately:
 
 .Do not apply plugin in plugins block
-[source,groovy]
+[source,gradle]
 ----
 buildscript {
   repositories {
@@ -49,7 +49,7 @@ subprojects {
 If you are using gradle <= 3.0, then use apply plugin approach only:
 
 .Use apply plugin approach
-[source,groovy]
+[source,gradle]
 ----
 buildscript {
   repositories {
@@ -72,7 +72,7 @@ IMPORTANT: Make sure you have added required smartbear software maven repository
 
 You can apply FQDN class name for each plugin instead (see plugins main classes source code for details):
 
-[source,groovy]
+[source,gradle]
 ----
 // turns on extDir and testrunner tasks:
 apply plugin: io.github.daggerok.SoapUITestRunnerPlugin // or:
