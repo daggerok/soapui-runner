@@ -26,11 +26,11 @@
  */
 
 license {
-    header rootProject.file('LICENSE')
+    header rootProject.file("LICENSE")
     includes([
-        '**/*.gradle',
-        '**/*.java',
-        '**/*.groovy',
-        '**/*.properties',
+        "**/*.gradle",
+        "**/*.java",
+        "**/*.groovy",
+        "**/*.properties",
     ])
 }

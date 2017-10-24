@@ -27,12 +27,12 @@
 
 buildscript {
   ext {
-    spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, '')
-    jgoodiesBindingVersion = '2.0.1'
-    jgoodiesFormsVersion = '1.0.7'
-    jgoodiesLooksVersion = '2.2.0'
-    gradleApiVersion = '4.0.2'
-    groovyVersion = '2.4.11'
+    spockGroovyVersion = GroovySystem.version.replaceAll(/\.\d+$/, "")
+    jgoodiesBindingVersion = "2.0.1"
+    jgoodiesFormsVersion = "1.0.7"
+    jgoodiesLooksVersion = "2.2.0"
+    gradleApiVersion = "4.2.1"
+    groovyVersion = "2.4.12"
   }
 }
 
@@ -47,9 +47,9 @@ dependencies {
    */
 
   compile("com.smartbear.soapui:soapui:$soapUIVersion") {
-    exclude group: 'com.jgoodies', module: 'forms'
-    exclude group: 'com.jgoodies', module: 'looks'
-    exclude group: 'com.jgoodies', module: 'binding'
+    exclude group: "com.jgoodies", module: "forms"
+    exclude group: "com.jgoodies", module: "looks"
+    exclude group: "com.jgoodies", module: "binding"
   }
 
   compile "com.jgoodies:binding:$jgoodiesBindingVersion",
@@ -58,10 +58,11 @@ dependencies {
 
   testCompile gradleTestKit()
   testCompile("org.spockframework:spock-core:1.1-groovy-$spockGroovyVersion") {
-    exclude module: 'groovy-all'
+    exclude module: "groovy-all"
   }
 }
 
 task wrapper(type: Wrapper) {
   gradleVersion = gradleApiVersion
+  distributionType = "ALL"
 }
