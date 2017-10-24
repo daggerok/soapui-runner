@@ -532,15 +532,15 @@ It&#8217;s better to not include soapui-runner gradle project as subproject of m
 <div class="listingblock">
 <div class="title">Using plugins approach</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">buildscript {
+<pre class="CodeRay highlight"><code data-lang="groovy">buildscript {
   repositories {
-    maven { url &quot;https://plugins.gradle.org/m2/&quot; }
-    maven { url &quot;http://smartbearsoftware.com/repository/maven2/&quot; }
+    maven { url <span class="string"><span class="delimiter">&quot;</span><span class="content">https://plugins.gradle.org/m2/</span><span class="delimiter">&quot;</span></span> }
+    maven { url <span class="string"><span class="delimiter">&quot;</span><span class="content">http://smartbearsoftware.com/repository/maven2/</span><span class="delimiter">&quot;</span></span> }
   }
 }
 
 plugins {
-  id &quot;io.github.daggerok.soapui-runner&quot; version &quot;5.3.0-5&quot;
+  id <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-runner</span><span class="delimiter">&quot;</span></span> version <span class="string"><span class="delimiter">&quot;</span><span class="content">5.3.0-5</span><span class="delimiter">&quot;</span></span>
 }</code></pre>
 </div>
 </div>
@@ -552,20 +552,20 @@ plugins {
 <div class="listingblock">
 <div class="title">Do not apply plugin in plugins block</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">buildscript {
+<pre class="CodeRay highlight"><code data-lang="groovy">buildscript {
   repositories {
-    maven { url &quot;https://plugins.gradle.org/m2/&quot; }
-    maven { url &quot;http://smartbearsoftware.com/repository/maven2/&quot; }
+    maven { url <span class="string"><span class="delimiter">&quot;</span><span class="content">https://plugins.gradle.org/m2/</span><span class="delimiter">&quot;</span></span> }
+    maven { url <span class="string"><span class="delimiter">&quot;</span><span class="content">http://smartbearsoftware.com/repository/maven2/</span><span class="delimiter">&quot;</span></span> }
   }
 }
 
 plugins {
-  id &quot;io.github.daggerok.soapui-runner&quot; version &quot;5.3.0-5&quot; apply false
+  id <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-runner</span><span class="delimiter">&quot;</span></span> version <span class="string"><span class="delimiter">&quot;</span><span class="content">5.3.0-5</span><span class="delimiter">&quot;</span></span> apply <span class="predefined-constant">false</span>
 }
 
 subprojects {
-  apply plugin: &quot;io.github.daggerok.soapui-runner&quot;
-  // ...
+  apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-runner</span><span class="delimiter">&quot;</span></span>
+  <span class="comment">// ...</span>
 }</code></pre>
 </div>
 </div>
@@ -578,17 +578,17 @@ subprojects {
 <div class="listingblock">
 <div class="title">Use apply plugin approach</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">buildscript {
+<pre class="CodeRay highlight"><code data-lang="groovy">buildscript {
   repositories {
-    maven { url &quot;https://plugins.gradle.org/m2/&quot; }
-    maven { url &quot;http://smartbearsoftware.com/repository/maven2/&quot; }
+    maven { url <span class="string"><span class="delimiter">&quot;</span><span class="content">https://plugins.gradle.org/m2/</span><span class="delimiter">&quot;</span></span> }
+    maven { url <span class="string"><span class="delimiter">&quot;</span><span class="content">http://smartbearsoftware.com/repository/maven2/</span><span class="delimiter">&quot;</span></span> }
   }
   dependencies {
-    classpath &quot;gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-5&quot;
+    classpath <span class="string"><span class="delimiter">&quot;</span><span class="content">gradle.plugin.io.github.daggerok:soapui-runner:5.3.0-5</span><span class="delimiter">&quot;</span></span>
   }
 }
 
-apply plugin: &quot;io.github.daggerok.soapui-runner&quot;</code></pre>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-runner</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
 <div class="admonitionblock important">
@@ -612,17 +612,17 @@ Make sure you have added required smartbear software maven repository
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">// turns on extDir and testrunner tasks:
-apply plugin: io.github.daggerok.SoapUITestRunnerPlugin // or:
-apply plugin: &quot;io.github.daggerok.soapui-testrunner&quot;
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">// turns on extDir and testrunner tasks:</span>
+apply <span class="key">plugin</span>: io.github.daggerok.SoapUITestRunnerPlugin <span class="comment">// or:</span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-testrunner</span><span class="delimiter">&quot;</span></span>
 
-// turns on extDir and loadtestrunner tasks:
-apply plugin: io.github.daggerok.SoapUILoadTestRunnerPlugin // or:
-apply plugin: &quot;io.github.daggerok.soapui-loadtestrunner&quot;
+<span class="comment">// turns on extDir and loadtestrunner tasks:</span>
+apply <span class="key">plugin</span>: io.github.daggerok.SoapUILoadTestRunnerPlugin <span class="comment">// or:</span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-loadtestrunner</span><span class="delimiter">&quot;</span></span>
 
-// turns on all tasks: extDir, testrunner and loadtestrunner:
-apply plugin: io.github.daggerok.SoapUIRunnerPlugin // or:
-apply plugin: &quot;io.github.daggerok.soapui-runner&quot;</code></pre>
+<span class="comment">// turns on all tasks: extDir, testrunner and loadtestrunner:</span>
+apply <span class="key">plugin</span>: io.github.daggerok.SoapUIRunnerPlugin <span class="comment">// or:</span>
+apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-runner</span><span class="delimiter">&quot;</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -630,7 +630,7 @@ apply plugin: &quot;io.github.daggerok.soapui-runner&quot;</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-24 14:40:33 EEST
+Last updated 2017-10-24 14:58:21 EEST
 </div>
 </div>
 </body>

@@ -529,19 +529,19 @@ table.CodeRay td.code>pre{padding:0}
 <div class="listingblock">
 <div class="title">Configuration example</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">testrunner {
-  projectFile &quot;src/test/resources/soapui-test-project.xml&quot;
-  outputFolder &quot;out/tests&quot;
-  failOnError true
+<pre class="CodeRay highlight"><code data-lang="groovy">testrunner {
+  projectFile <span class="string"><span class="delimiter">&quot;</span><span class="content">src/test/resources/soapui-test-project.xml</span><span class="delimiter">&quot;</span></span>
+  outputFolder <span class="string"><span class="delimiter">&quot;</span><span class="content">out/tests</span><span class="delimiter">&quot;</span></span>
+  failOnError <span class="predefined-constant">true</span>
 
   projectProperties = [
-    &quot;apiBaseUrl=https://api.github.com&quot;
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">apiBaseUrl=https://api.github.com</span><span class="delimiter">&quot;</span></span>
   ]
 }
 
 loadtestrunner {
-  projectFile = &quot;$projectDir/soapui-load-tests.xml&quot;
-  outputFolder = &quot;buildDir/soapui/load&quot;
+  projectFile = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">$</span>projectDir</span><span class="content">/soapui-load-tests.xml</span><span class="delimiter">&quot;</span></span>
+  outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="content">buildDir/soapui/load</span><span class="delimiter">&quot;</span></span>
 }</code></pre>
 </div>
 </div>
@@ -550,7 +550,7 @@ loadtestrunner {
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">/*
+<pre class="CodeRay highlight"><code data-lang="groovy"><span class="comment">/*
 testrunner {
   projectFile = &quot;soapui-test-project.xml&quot;
   outputFolder = &quot;build/soapui&quot;
@@ -562,7 +562,7 @@ loadtestrunner {
   outputFolder = &quot;build/soapui&quot;
   // ...
 }
-*/</code></pre>
+*/</span></code></pre>
 </div>
 </div>
 <div class="sect2">
@@ -573,16 +573,16 @@ loadtestrunner {
 <div class="listingblock">
 <div class="title">Example of testrunner task configuration</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">testrunner {
-  projectFile = &quot;soapui-test-project.xml&quot;
-  outputFolder = &quot;build/soapui
-}</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">testrunner {
+  projectFile = <span class="string"><span class="delimiter">&quot;</span><span class="content">soapui-test-project.xml</span><span class="delimiter">&quot;</span></span>
+  outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="content">build/soapui</span></span><span class="error">
+</span>}</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Execution of test runner task</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">gradle testrunner</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">gradle testrunner</code></pre>
 </div>
 </div>
 <div class="sect3">
@@ -632,32 +632,32 @@ execute only needed test cases</a></p>
 <div class="listingblock">
 <div class="title">Example of testrunner execution for some concrete TestCases</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">apply plugin: &quot;io.github.daggerok.soapui-testrunner&quot;
+<pre class="CodeRay highlight"><code data-lang="groovy">apply <span class="key">plugin</span>: <span class="string"><span class="delimiter">&quot;</span><span class="content">io.github.daggerok.soapui-testrunner</span><span class="delimiter">&quot;</span></span>
 
-import io.github.daggerok.tasks.SoapUITestRunnerTask
+<span class="keyword">import</span> <span class="include">io.github.daggerok.tasks.SoapUITestRunnerTask</span>
 
-Task[] soapUITasks = [
+Task<span class="type">[]</span> soapUITasks = [
 
-    &quot;TestCase 1&quot;,
-    &quot;TestCase 2&quot;,
-    &quot;TestCase 3&quot;,
-    &quot;TestCase 4&quot;,
-    &quot;TestCase 5&quot;,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">TestCase 1</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">TestCase 2</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">TestCase 3</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">TestCase 4</span><span class="delimiter">&quot;</span></span>,
+    <span class="string"><span class="delimiter">&quot;</span><span class="content">TestCase 5</span><span class="delimiter">&quot;</span></span>,
 
 ].collect { testCaseName -&gt;
 
-  def noSpaceCase = testCaseName.replaceAll(/\s+$/, &quot;&quot;).capitalize()
+  <span class="keyword">def</span> noSpaceCase = testCaseName.replaceAll(<span class="regexp"><span class="delimiter">/</span><span class="char">\s</span><span class="content">+</span><span class="content">$</span><span class="delimiter">/</span></span>, <span class="string"><span class="delimiter">&quot;</span><span class="delimiter">&quot;</span></span>).capitalize()
 
-  tasks.create(name: noSpaceCase, type: SoapUITestRunnerTask) {
+  tasks.create(<span class="key">name</span>: noSpaceCase, <span class="key">type</span>: SoapUITestRunnerTask) {
     testCase = noSpaceCase
-    outputFolder = &quot;$buildDir/soapui/testCases/$noSpaceCase&quot;
+    outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="inline"><span class="inline-delimiter">$</span>buildDir</span><span class="content">/soapui/testCases/</span><span class="inline"><span class="inline-delimiter">$</span>noSpaceCase</span><span class="delimiter">&quot;</span></span>
     projectProperties = [
-        &quot;apiEndpoint=https://jsonplaceholder.typicode.com&quot;
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">apiEndpoint=https://jsonplaceholder.typicode.com</span><span class="delimiter">&quot;</span></span>
     ]
   }
 }
 
-task soapUITestCases(dependsOn: soapUITasks)</code></pre>
+task soapUITestCases(<span class="key">dependsOn</span>: soapUITasks)</code></pre>
 </div>
 </div>
 </div>
@@ -670,16 +670,16 @@ task soapUITestCases(dependsOn: soapUITasks)</code></pre>
 <div class="listingblock">
 <div class="title">Example of loadtestrunner task configuration</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">loadtestrunner {
-  projectFile = &quot;soapui-test-project.xml&quot;
-  outputFolder = &quot;build/soapui&quot;
+<pre class="CodeRay highlight"><code data-lang="groovy">loadtestrunner {
+  projectFile = <span class="string"><span class="delimiter">&quot;</span><span class="content">soapui-test-project.xml</span><span class="delimiter">&quot;</span></span>
+  outputFolder = <span class="string"><span class="delimiter">&quot;</span><span class="content">build/soapui</span><span class="delimiter">&quot;</span></span>
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="title">Load test runner execution</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">gradle loadtestrunner</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">gradle loadtestrunner</code></pre>
 </div>
 </div>
 </div>
@@ -692,20 +692,20 @@ to simplify that process, we can generate needed ext folder to copy it later ins
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">repositories {
+<pre class="CodeRay highlight"><code data-lang="groovy">repositories {
   jcenter()
 }
 
 dependencies {
-  extDir &quot;org.postgresql:postgresql:9.4.1212.jre7&quot;
+  extDir <span class="string"><span class="delimiter">&quot;</span><span class="content">org.postgresql:postgresql:9.4.1212.jre7</span><span class="delimiter">&quot;</span></span>
 }</code></pre>
 </div>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">gradle extDir
+<pre class="CodeRay highlight"><code data-lang="groovy">gradle extDir
 ...
-cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext</code></pre>
+cp -Rf build/soapui/ext <span class="error">$</span>SOAPUI_HOME/bin/ext</code></pre>
 </div>
 </div>
 <div class="paragraph">
@@ -720,16 +720,16 @@ cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext</code></pre>
 <div class="listingblock">
 <div class="title">in build.gradle file</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">allprojects {
+<pre class="CodeRay highlight"><code data-lang="groovy">allprojects {
   testrunner {
     projectProperties = [
-        &quot;os=base&quot;,
-        &quot;url=https://example.com&quot;
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">os=base</span><span class="delimiter">&quot;</span></span>,
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">url=https://example.com</span><span class="delimiter">&quot;</span></span>
     ]
     systemProperties = [
-        &quot;soapui.ext.libraries=$buildDir&quot;
+        <span class="string"><span class="delimiter">&quot;</span><span class="content">soapui.ext.libraries=</span><span class="inline"><span class="inline-delimiter">$</span>buildDir</span><span class="delimiter">&quot;</span></span>
     ]
-    // ...
+    <span class="comment">// ...</span>
   }
 }</code></pre>
 </div>
@@ -740,19 +740,19 @@ cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext</code></pre>
 <div class="listingblock">
 <div class="title">in ./modules/windows/build.gradle file</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="gradle">testrunner {
+<pre class="CodeRay highlight"><code data-lang="groovy">testrunner {
   projectProperties = [
-      // add new:
-      &quot;newPropjectProp=adding&quot;,
-      // override existing:
-      &quot;os=windows&quot;,
-      &quot;url=https://microsoft.com&quot;
+      <span class="comment">// add new:</span>
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">newPropjectProp=adding</span><span class="delimiter">&quot;</span></span>,
+      <span class="comment">// override existing:</span>
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">os=windows</span><span class="delimiter">&quot;</span></span>,
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">url=https://microsoft.com</span><span class="delimiter">&quot;</span></span>
   ]
   systemProperties = [
-      // override existing:
-      &quot;soapui.ext.libraries=C:/path/to/SoapUI-5.3.0/bin/ext&quot;
+      <span class="comment">// override existing:</span>
+      <span class="string"><span class="delimiter">&quot;</span><span class="content">soapui.ext.libraries=C:/path/to/SoapUI-5.3.0/bin/ext</span><span class="delimiter">&quot;</span></span>
   ]
-  // ...
+  <span class="comment">// ...</span>
 }</code></pre>
 </div>
 </div>
@@ -760,7 +760,7 @@ cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext</code></pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-24 14:40:33 EEST
+Last updated 2017-10-24 14:58:21 EEST
 </div>
 </div>
 </body>

@@ -523,44 +523,46 @@ table.CodeRay td.code>pre{padding:0}
 <div class="paragraph">
 <p>Feel free to contribute or <a href="https://github.com/daggerok/soapui-runner/issues">open an issue</a></p>
 </div>
-<div class="ulist">
-<ul>
-<li>
-<p>Publish locally for development purpose:</p>
-</li>
-</ul>
-</div>
 <div class="listingblock">
+<div class="title">build and test</div>
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew clean build install publish</code></pre>
+<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew clean build</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>For testing locally published plugin into maven repo publishing use <a href="https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle">this</a> example</p>
+</div>
+<div class="listingblock">
+<div class="title">publish locally for development purpose</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew clean install publish</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>For testing locally published plugin into maven repo publishing use <a href="https://github.com/daggerok/soapui-runner-example/blob/master/build.gradle">this</a> example</p>
-</li>
-<li>
-<p>Don&#8217;t try publish new version of plugin to gradle portal (it&#8217;s available only for owner)</p>
+<p>note: Don&#8217;t try publish new version of plugin to gradle portal (it&#8217;s available only for owner)</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
+<div class="title">publishing plugin</div>
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew publishPlugins</code></pre>
 </div>
 </div>
+<div class="listingblock">
+<div class="title">publishing documentation</div>
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew clean deploy</code></pre>
+</div>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>Also Don&#8217;t try publish new version of plugin documentation to GitHub pages (it&#8217;s available only for owner)</p>
+<p>note: Don&#8217;t try publish new version of plugin documentation to GitHub pages (it&#8217;s available only for owner)</p>
 </li>
 </ul>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="CodeRay highlight"><code data-lang="groovy">bash gradlew gitPublishPush</code></pre>
-</div>
 </div>
 <div class="sect2">
 <h3 id="supported-gradle-versions">Supported gradle versions</h3>
@@ -655,7 +657,7 @@ We are recommend use latest stable release versions - it should be able support 
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-10-24 14:40:33 EEST
+Last updated 2017-10-24 14:59:55 EEST
 </div>
 </div>
 </body>
