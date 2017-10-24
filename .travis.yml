@@ -4,7 +4,7 @@ jdk: oraclejdk8
 install: true
 script:
   - >
-    for version in 4.0 4.0.1 4.0.2 4.1 4.2-rc-2; do
+    for version in 4.0 4.0.1 4.0.2 4.1 4.2 4.2.1; do
       gradle wrapper --gradle-version $version --distribution-type=all;
       bash gradlew -v;
       bash gradlew clean check license build install publish asciidoctor -S;
