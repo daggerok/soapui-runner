@@ -1,0 +1,203 @@
+
+You can pre-configure once all needed properties / configurations using runner tasks closures
+
+.Configuration example
+[source,groovy]
+----
+testrunner {
+  projectFile "src/test/resources/soapui-test-project.xml"
+  outputFolder "out/tests"
+  failOnError true
+
+  projectProperties = [
+    "apiBaseUrl=https://api.github.com"
+  ]
+}
+
+loadtestrunner {
+  projectFile = "$projectDir/soapui-load-tests.xml"
+  outputFolder = "buildDir/soapui/load"
+}
+----
+
+Feel free omit all runners configurations if default <<runners-properties>> are good enough for you:
+
+[source,groovy]
+----
+/*
+testrunner {
+  projectFile = "soapui-test-project.xml"
+  outputFolder = "build/soapui"
+  // ...
+}
+
+loadtestrunner {
+  projectFile = "soapui-test-project.xml"
+  outputFolder = "build/soapui"
+  // ...
+}
+*/
+----
+
+[[testrunner]]
+=== Test (suites and cases) runner
+
+Very extendable and configurable SoapUI testrunner task. For details see: <<testrunner-properties>>
+
+.Example of testrunner task configuration
+[source,groovy]
+testrunner {
+  projectFile = "soapui-test-project.xml"
+  outputFolder = "build/soapui
+}
+
+.Execution of test runner task
+[source,groovy]
+gradle testrunner
+
+==== Test runner configuration customization
+
+Using groovy inside gradle build files we can do pretty much whatever we want.
+
+link:https://github.com/daggerok/soapui-runner-example/commit/9a8b40311600ed631703e7c0de1effa3e29e805d[Look, how easy
+you can specify exact testSuites for run]
+
+.Example of testrunner task configuration: how to execute only needed TestSuite list
+[source,groovy]
+----
+apply plugin: io.github.daggerok.SoapUITestRunnerPlugin
+
+task soapUITestSuites(dependsOn: [
+
+  "TestSuite 1",
+  "TestSuite 2",
+
+].collect { suiteName ->
+  tasks.create(name: suiteName, type: io.github.daggerok.tasks.SoapUITestRunnerTask) {
+    testSuite = suiteName
+    outputFolder = "$buildDir/soapui/$suiteName"
+  }
+})
+----
+
+.Note
+NOTE: same approach can be used for testCases.
+
+link:https://github.com/daggerok/soapui-runner-example/commit/84f71229b08934a0598fdef18acd497b8dacb1a1[Look, how to
+execute only needed test cases]
+
+.Example of testrunner execution for some concrete TestCases
+[source,groovy]
+----
+apply plugin: "io.github.daggerok.soapui-testrunner"
+
+import io.github.daggerok.tasks.SoapUITestRunnerTask
+
+Task[] soapUITasks = [
+
+    "TestCase 1",
+    "TestCase 2",
+    "TestCase 3",
+    "TestCase 4",
+    "TestCase 5",
+
+].collect { testCaseName ->
+
+  def noSpaceCase = testCaseName.replaceAll(/\s+$/, "").capitalize()
+
+  tasks.create(name: noSpaceCase, type: SoapUITestRunnerTask) {
+    testCase = noSpaceCase
+    outputFolder = "$buildDir/soapui/testCases/$noSpaceCase"
+    projectProperties = [
+        "apiEndpoint=https://jsonplaceholder.typicode.com"
+    ]
+  }
+}
+
+task soapUITestCases(dependsOn: soapUITasks)
+----
+
+[[loadtestrunner]]
+=== Load Tests runner
+
+Expandable and configurable load test runner task. See <<loadtestrunner-properties>> for more details
+
+.Example of loadtestrunner task configuration
+[source,groovy]
+loadtestrunner {
+  projectFile = "soapui-test-project.xml"
+  outputFolder = "build/soapui"
+}
+
+.Load test runner execution
+[source,groovy]
+gradle loadtestrunner
+
+[[extDir]]
+=== Generate directory for external libraries
+
+Sometimes we need use some external packages, like jdbc drivers.
+for that purposes we have to add them inside $SOAPUI_HOME/bin/ext directory
+to simplify that process, we can generate needed ext folder to copy it later inside SoapUI ext dir
+
+[source,groovy]
+----
+repositories {
+  jcenter()
+}
+
+dependencies {
+  extDir "org.postgresql:postgresql:9.4.1212.jre7"
+}
+----
+
+[source,groovy]
+----
+gradle extDir
+...
+cp -Rf build/soapui/ext $SOAPUI_HOME/bin/ext
+----
+
+see SoapUI systemProperty: soapui.ext.libraries: `testrunnert -Dsoapui.ext.libraries=...`
+
+=== Adding new and override generic (parent) properties
+
+If you are using gradle multi-project build, you can define base configuration inside parent build:
+
+.in build.gradle file
+[source,groovy]
+----
+allprojects {
+  testrunner {
+    projectProperties = [
+        "os=base",
+        "url=https://example.com"
+    ]
+    systemProperties = [
+        "soapui.ext.libraries=$buildDir"
+    ]
+    // ...
+  }
+}
+----
+
+...and later you might need to override it inside some of your children builds:
+
+.in ./modules/windows/build.gradle file
+[source,groovy]
+----
+testrunner {
+  projectProperties = [
+      // add new:
+      "newPropjectProp=adding",
+      // override existing:
+      "os=windows",
+      "url=https://microsoft.com"
+  ]
+  systemProperties = [
+      // override existing:
+      "soapui.ext.libraries=C:/path/to/SoapUI-5.3.0/bin/ext"
+  ]
+  // ...
+}
+----

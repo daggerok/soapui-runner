@@ -1,0 +1,5 @@
+
+This is a user manual of soapui-runner.
+soap-runner it's a gradle plugin written in groovy.
+It simplified configuration of SoapUI test projects and provides theirs cross-platform execution
+(at the moment supports only testrunner and loadtestrunner, but it could be very easilly extend - feel free to contribute).
