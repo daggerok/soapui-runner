@@ -24,8 +24,8 @@
  *
  * https://tldrlegal.com/license/mit-license
  */
- 
- // read more: http://asciidoctor.org/docs/asciidoctor-gradle-plugin/
+
+// read more: http://asciidoctor.org/docs/asciidoctor-gradle-plugin/
 asciidoctorj {
   version = "1.5.5"
 }
@@ -43,19 +43,25 @@ asciidoctor {
              "endpoint-url": "https://daggerok.github.io/soapui-runner"
 }
 
-// read more: https://github.com/ajoberstar/gradle-git-publish
-gitPublish {
-  repoUri = "git@github.com:daggerok/soapui-runner.git"
-  branch = "gh-pages"
-  contents {
-    from "$buildDir/asciidoc/html5"
-    from "$projectDir/src/docs/asciidoc/static"
-    from(javadoc) {
-      into "docs"
-    }
+task docs(type: Copy) {
+  from "$buildDir/asciidoc/html5"
+  from "$projectDir/src/docs/asciidoc/static"
+/* // really, nothing to share...
+  from (groovydoc) {
+    into "groovydoc"
   }
+  from (javadoc) {
+    into "javadoc"
+  }
+*/
+  into "docs"
+  dependsOn assemble
+  shouldRunAfter clean, assemble
+}
+
+clean.doFirst {
+  delete "$rootProject.projectDir/docs"
 }
 
 assemble.dependsOn asciidoctor
-gitPublishPush.shouldRunAfter assemble
-task deploy(dependsOn: [assemble, gitPublishPush])
+asciidoctor.shouldRunAfter clean

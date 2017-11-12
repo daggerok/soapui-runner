@@ -1,13 +1,18 @@
 group: edge
 language: java
-jdk: oraclejdk8
+jdk:
+  - oraclejdk8
+  - openjdk8
+env:
+  global:
+    TERM=dumb
 install: true
 script:
   - >
-    for version in 4.0 4.0.1 4.0.2 4.1 4.2 4.2.1; do
-      gradle wrapper --gradle-version $version --distribution-type=all;
+    for version in 4.2.1 4.3 4.3.1; do
+      bash gradlew wrapper --gradle-version $version --distribution-type=all -S;
       bash gradlew -v;
-      bash gradlew clean check license build install publish asciidoctor -S;
+      bash gradlew clean check license build install publish docs -S;
       bash gradlew --stop;
     done;
 before_cache:
